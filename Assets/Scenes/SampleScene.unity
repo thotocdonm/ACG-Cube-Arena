@@ -922,7 +922,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rotationSpeed: 500
-  dashCooldown: 2
+  dashCooldown: 1
   dashSpeed: 10
   dashDuration: 0.5
   dashDrag: 0

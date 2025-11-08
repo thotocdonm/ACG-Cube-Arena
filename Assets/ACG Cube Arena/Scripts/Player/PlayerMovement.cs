@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;  
+using UnityEngine.InputSystem;
+using DG.Tweening;
+
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
@@ -98,17 +100,17 @@ public class PlayerMovement : MonoBehaviour
             dashDirection = new Vector3(moveDirection.x, 0, moveDirection.y);
         }
 
-        rb.velocity = dashDirection * dashSpeed;
+        Vector3 targetPosition = transform.position + dashDirection * dashSpeed;
+        rb.DOMove(targetPosition, dashDuration).SetEase(Ease.OutCubic).OnComplete(() => {
+            currentState = PlayerState.Normal;
+        });
+        
 
     }
     
     private void HandleDashingState()
     {
-        dashTimer += Time.deltaTime;
-        if(dashTimer >= dashDuration){
-            currentState = PlayerState.Normal;
-            dashTimer = 0;
-        }
+        
     }
     
 }
