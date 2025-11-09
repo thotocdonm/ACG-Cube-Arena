@@ -10,8 +10,14 @@ public class MovingState : PlayerBaseState
     {
     }
 
+    public void setMoveInput(Vector2 input)
+    {
+        moveInput = input;
+    }
+
     public override void Enter()
     {
+        player.Animator.Play("Moving");
         Debug.Log("Enter Moving State");
     }
 
@@ -30,7 +36,7 @@ public class MovingState : PlayerBaseState
     }
 
     public override void HandleMove(Vector2 input){
-        moveInput = input;
+        setMoveInput(input);
         if(input.magnitude < 0.1f)
         {
             player.ChangeState(player.idleState);
@@ -47,4 +53,5 @@ public class MovingState : PlayerBaseState
     public override void HandleAttack(){
         Debug.Log("Handle Attack in Moving State");
     }
+    
 }

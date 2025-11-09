@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Elements")]
     private Rigidbody rb;
+    [SerializeField] private Animator animator;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public DashingState dashingState { get; private set; }
 
     public Rigidbody Rigidbody => rb;
+    public Animator Animator => animator;
     public Vector2 LastMoveInput => lastMoveInput;
     public float MoveSpeed => moveSpeed;
     public float RotationSpeed => rotationSpeed;

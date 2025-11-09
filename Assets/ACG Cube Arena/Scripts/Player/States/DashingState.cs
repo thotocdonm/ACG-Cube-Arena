@@ -15,6 +15,8 @@ public class DashingState : PlayerBaseState
     {
         Debug.Log("Enter Dashing State");
 
+        player.Animator.Play("Dashing");
+
         if (player.LastMoveInput.magnitude < 0.1f)
         {
             dashDirection = player.transform.forward;
@@ -36,8 +38,12 @@ public class DashingState : PlayerBaseState
     private void OnDashComplete()
     {
         Debug.Log("Dash Complete");
-        if (player.LastMoveInput.magnitude > 0.1f)
+
+        Vector2 currentInput = player.LastMoveInput;
+
+        if (currentInput.magnitude > 0.1f)
         {
+            player.movingState.setMoveInput(currentInput);
             player.ChangeState(player.movingState);
         }
         else
