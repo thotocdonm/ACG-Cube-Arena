@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         lastMoveInput = context.ReadValue<Vector2>();
-        Debug.Log(lastMoveInput);
         currentState?.HandleMove(lastMoveInput);
     }
 
