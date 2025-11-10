@@ -9,25 +9,25 @@ public class DashingState : PlayerBaseState
     private Vector3 dashDirection;
     private Tween dashTween;
 
-    public DashingState(PlayerController player, Rigidbody rb) : base(player, rb) { }
+    public DashingState(PlayerController owner, StateMachine stateMachine) : base(owner, stateMachine) { }
 
     public override void Enter()
     {
         Debug.Log("Enter Dashing State");
 
-        player.Animator.Play("Dashing");
+        owner.Animator.Play("Dashing");
 
-        if (player.LastMoveInput.magnitude < 0.1f)
+        if (owner.LastMoveInput.magnitude < 0.1f)
         {
-            dashDirection = player.transform.forward;
+            dashDirection = owner.transform.forward;
         }
         else
         {
-            dashDirection = new Vector3(player.LastMoveInput.x, 0, player.LastMoveInput.y);
+            dashDirection = new Vector3(owner.LastMoveInput.x, 0, owner.LastMoveInput.y);
         }
 
-        Vector3 targetPosition = player.transform.position + dashDirection * player.DashSpeed;
-        dashTween = rb.DOMove(targetPosition, player.DashDuration).SetEase(Ease.OutCubic).OnComplete(OnDashComplete);
+        Vector3 targetPosition = owner.transform.position + dashDirection * owner.DashSpeed;
+        dashTween = rb.DOMove(targetPosition, owner.DashDuration).SetEase(Ease.OutCubic).OnComplete(OnDashComplete);
     }
 
     public override void Exit()
@@ -39,16 +39,16 @@ public class DashingState : PlayerBaseState
     {
         Debug.Log("Dash Complete");
 
-        Vector2 currentInput = player.LastMoveInput;
+        Vector2 currentInput = owner.LastMoveInput;
 
         if (currentInput.magnitude > 0.1f)
         {
-            player.movingState.setMoveInput(currentInput);
-            player.ChangeState(player.movingState);
+            owner.movingState.setMoveInput(currentInput);
+            owner.ChangeState(owner.movingState);
         }
         else
         {
-            player.ChangeState(player.idleState);
+            owner.ChangeState(owner.idleState);
         }
     }
 

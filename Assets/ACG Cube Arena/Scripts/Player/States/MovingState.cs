@@ -6,7 +6,7 @@ public class MovingState : PlayerBaseState
 {
     private Vector2 moveInput;
 
-    public MovingState(PlayerController player, Rigidbody rb) : base(player, rb)
+    public MovingState(PlayerController owner, StateMachine stateMachine) : base(owner, stateMachine)
     {
     }
 
@@ -17,20 +17,20 @@ public class MovingState : PlayerBaseState
 
     public override void Enter()
     {
-        player.Animator.Play("Moving");
+        owner.Animator.Play("Moving");
         Debug.Log("Enter Moving State");
     }
 
     public override void FixedUpdate()
     {
         Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
-        Vector3 newVelocity = moveDirection * player.MoveSpeed;
+        Vector3 newVelocity = moveDirection * owner.MoveSpeed;
         rb.velocity = new Vector3(newVelocity.x, rb.velocity.y, newVelocity.z);
 
         if(moveDirection != Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            Quaternion newRotation = Quaternion.RotateTowards(rb.rotation, toRotation, player.RotationSpeed * Time.fixedDeltaTime);
+            Quaternion newRotation = Quaternion.RotateTowards(rb.rotation, toRotation, owner.RotationSpeed * Time.fixedDeltaTime);
             rb.MoveRotation(newRotation);
         }
     }
@@ -39,14 +39,14 @@ public class MovingState : PlayerBaseState
         setMoveInput(input);
         if(input.magnitude < 0.1f)
         {
-            player.ChangeState(player.idleState);
+            owner.ChangeState(owner.idleState);
         }
     }
 
     public override void HandleDash(){
-        if(player.CanDash())
+        if(owner.CanDash())
         {
-            player.ChangeState(player.dashingState);
+            owner.ChangeState(owner.dashingState);
         }
     }   
 

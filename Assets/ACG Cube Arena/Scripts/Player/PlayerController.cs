@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashDrag;
 
     [Header("State")]
-    private PlayerBaseState currentState;
+    private StateMachine stateMachine;
 
     public IdleState idleState { get; private set; }
     public MovingState movingState { get; private set; }
@@ -43,13 +43,13 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        stateMachine = new StateMachine();
 
-        idleState = new IdleState(this, rb);
-        movingState = new MovingState(this, rb);
-        dashingState = new DashingState(this, rb);
+        idleState = new IdleState(this, stateMachine);
+        movingState = new MovingState(this, stateMachine);
+        dashingState = new DashingState(this, stateMachine);
 
-        currentState = idleState;
-        currentState.Enter();
+        stateMachine.Initialize(idleState);
     }
     // Start is called before the first frame update
     void Start()
@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         lastMoveInput = context.ReadValue<Vector2>();
+        var currentState = stateMachine.CurrentState as PlayerBaseState;
         currentState?.HandleMove(lastMoveInput);
     }
 
@@ -67,6 +68,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
+            var currentState = stateMachine.CurrentState as PlayerBaseState;
             currentState?.HandleDash();
         }
         
@@ -77,19 +79,17 @@ public class PlayerController : MonoBehaviour
     {
         //increment the last dash time
         lastDashTime += Time.deltaTime;
-        currentState?.Update();
+        stateMachine?.Update();
     }
 
     void FixedUpdate()
     {
-        currentState?.FixedUpdate();
+        stateMachine?.FixedUpdate();
     }
 
     public void ChangeState(PlayerBaseState newState)
     {
-        currentState?.Exit();
-        currentState = newState;
-        currentState.Enter();
+        stateMachine.ChangeState(newState);
     }
 
     public bool CanDash()
@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
     #if UNITY_EDITOR
     private void OnGUI()
     {
-        GUI.Label(new Rect(10, 10, 200, 20), $"State: {currentState.GetType().Name}");
+        GUI.Label(new Rect(10, 10, 200, 20), $"State: {stateMachine.CurrentState.GetType().Name}");
     }
     #endif
 }

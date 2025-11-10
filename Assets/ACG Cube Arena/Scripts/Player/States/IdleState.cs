@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class IdleState : PlayerBaseState
 {
-    public IdleState(PlayerController player, Rigidbody rb) : base(player, rb)
+    public IdleState(PlayerController owner, StateMachine stateMachine) : base(owner, stateMachine)
     {
     }
 
     public override void Enter()
     {
         Debug.Log("Enter Idle State");
-        player.Animator.Play("Idle");
+        owner.Animator.Play("Idle");
         rb.velocity = new Vector3(0, rb.velocity.y, 0);
     }
 
@@ -19,15 +19,15 @@ public class IdleState : PlayerBaseState
     {
         if(Input.magnitude > 0.1f)
         {
-            player.ChangeState(player.movingState);
+            owner.ChangeState(owner.movingState);
         }
     }
 
     public override void HandleDash()
     {
-        if(player.CanDash())
+        if(owner.CanDash())
         {
-            player.ChangeState(player.dashingState);
+            owner.ChangeState(owner.dashingState);
         }
     }
     

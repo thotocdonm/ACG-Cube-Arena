@@ -2,21 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PlayerBaseState 
+public abstract class PlayerBaseState : State<PlayerController>
 {
-    protected PlayerController player;
-    protected Rigidbody rb;
+    protected readonly Rigidbody rb;
 
-    public PlayerBaseState(PlayerController player, Rigidbody rb)
+    public PlayerBaseState(PlayerController owner, StateMachine stateMachine) : base(owner, stateMachine)
     {
-        this.player = player;
-        this.rb = rb;
-    }
 
-    public virtual void Enter() { }
-    public virtual void Update() { }
-    public virtual void FixedUpdate() { }
-    public virtual void Exit() { }
+       rb = owner.Rigidbody;
+    }
 
     public virtual void HandleMove(Vector2 Input) { }
     public virtual void HandleDash() { }
