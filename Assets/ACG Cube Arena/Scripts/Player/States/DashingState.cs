@@ -15,7 +15,7 @@ public class DashingState : PlayerBaseState
     {
         Debug.Log("Enter Dashing State");
 
-        owner.Animator.Play("Dashing");
+        owner.Animator.SetTrigger("Dash");
 
         if (owner.LastMoveInput.magnitude < 0.1f)
         {
@@ -38,6 +38,7 @@ public class DashingState : PlayerBaseState
     private void OnDashComplete()
     {
         Debug.Log("Dash Complete");
+        owner.Animator.ResetTrigger("Dash");
 
         Vector2 currentInput = owner.LastMoveInput;
 
