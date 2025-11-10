@@ -49,7 +49,7 @@ public class ChargeAttackStrategy : IAttackStrategy
 
         //Charging toward player
         chargeIndicator.enabled = false;
-        Vector3 targetPosition = owner.transform.position + directionToPlayer * stats.AttackRange.GetValue() * 1.5f;
+        Vector3 targetPosition = owner.transform.position + directionToPlayer * chargeSpeed * 1.5f;
         rb.DOMove(targetPosition, chargeDuration).SetEase(Ease.OutCubic).OnComplete(() =>
         {
             Debug.Log("Charged");

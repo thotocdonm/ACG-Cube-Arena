@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Melee Enemy
   m_EditorClassIdentifier: 
   enemyName: Melee Enemy
-  maxHealth: 10
+  maxHealth: 100
   moveSpeed: 5
   attackDamage: 5
   attackRange: 10

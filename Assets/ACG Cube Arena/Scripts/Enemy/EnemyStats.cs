@@ -5,6 +5,9 @@ using UnityEngine;
 public class EnemyStats : MonoBehaviour
 {
 
+    [Header("Elements")]
+    [SerializeField] private HealthBarUI healthBarUI;
+
     [Header("Base Stats")]
     [SerializeField] private EnemyStatsSO stats;
 
@@ -33,6 +36,8 @@ public class EnemyStats : MonoBehaviour
         ProjectilePrefab = stats.projectilePrefab;
 
         CurrentHealth = MaxHealth.GetValue();
+        healthBarUI.SetMaxHealth(MaxHealth.GetValue());
+        healthBarUI.SetHealth(CurrentHealth);
     }
 
     // Start is called before the first frame update
@@ -47,9 +52,16 @@ public class EnemyStats : MonoBehaviour
 
     }
 
+    [NaughtyAttributes.Button]
+    public void TestDmg()
+    {
+        TakeDamage(10);
+    }
+
     public void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
+        healthBarUI.SetHealth(CurrentHealth);
         if (CurrentHealth <= 0)
         {
             Die();
