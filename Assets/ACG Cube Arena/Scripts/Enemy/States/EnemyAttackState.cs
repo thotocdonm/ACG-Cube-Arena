@@ -12,7 +12,7 @@ public class EnemyAttackState : EnemyBaseState
     public override void Enter()
     {
         isAttacking = false;
-        attackCooldownTimer = owner.Stats.attackCooldown;
+        attackCooldownTimer = owner.GetEnemyStats().AttackCooldown.GetValue();
         rb.velocity = Vector3.zero;
         Debug.Log("Enter Enemy Attack State");
     }
@@ -27,13 +27,13 @@ public class EnemyAttackState : EnemyBaseState
         attackCooldownTimer += Time.deltaTime;
         
         float distanceToPlayer = Vector3.Distance(owner.transform.position, owner.PlayerTarget.position);
-        if (distanceToPlayer > owner.Stats.detectionRange)
+        if (distanceToPlayer > owner.GetEnemyStats().DetectionRange.GetValue())
         {
             stateMachine.ChangeState(owner.EnemyChaseState);
             return;
         }
         
-        if(!isAttacking && attackCooldownTimer >= owner.Stats.attackCooldown)
+        if(!isAttacking && attackCooldownTimer >= owner.GetEnemyStats().AttackCooldown.GetValue())
         {
             isAttacking = true;
             owner.AttackStrategy.Execute(() =>

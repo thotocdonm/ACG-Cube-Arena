@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(EnemyStats))]
 public abstract class Enemy : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] protected EnemyStatsSO stats;
+    private EnemyStats EnemyStats;
 
     [Header("Elements")]
     [SerializeField] protected Transform playerTarget;
@@ -21,7 +22,6 @@ public abstract class Enemy : MonoBehaviour
     public IAttackStrategy AttackStrategy { get; protected set; }
 
     public Rigidbody Rigidbody => rb;
-    public EnemyStatsSO Stats => stats;
     public Transform PlayerTarget => playerTarget;
 
     protected virtual void Awake()
@@ -31,12 +31,11 @@ public abstract class Enemy : MonoBehaviour
         EnemyChaseState = new EnemyChaseState(this, stateMachine);
         EnemyAttackState = new EnemyAttackState(this, stateMachine);
         stateMachine.Initialize(EnemyChaseState);
+
+        EnemyStats = GetComponent<EnemyStats>();
         rb.freezeRotation = true;
 
-        if (stats != null)
-        {
-            currentHealth = stats.maxHealth;
-        }
+        
     }
 
     // Start is called before the first frame update
@@ -56,29 +55,21 @@ public abstract class Enemy : MonoBehaviour
         stateMachine.FixedUpdate();
     }
 
-    public void TakeDamage(float damage)
+    public EnemyStats GetEnemyStats()
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0f)
-        {
-            Die();
-        }
+        return EnemyStats;
     }
+    
 
-    public void Die()
-    {
-        Debug.Log($"{stats.enemyName} died");
-        Destroy(gameObject);
-    }
 
 
     // Gizmos giữ nguyên để debug
     protected virtual void OnDrawGizmosSelected()
     {
-        if (stats == null) return;
+        if (EnemyStats == null) return;
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, stats.detectionRange);
+        Gizmos.DrawWireSphere(transform.position, EnemyStats.DetectionRange.GetValue());
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, stats.attackRange);
+        Gizmos.DrawWireSphere(transform.position, EnemyStats.AttackRange.GetValue());
     }
 }

@@ -1036,6 +1036,12 @@ PrefabInstance:
       propertyPath: chargeDuration
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8219354310070430829, guid: e64054cd2002bb248841d2fe04796567,
+        type: 3}
+      propertyPath: stats
+      value: 
+      objectReference: {fileID: 11400000, guid: 68482805e67c4864cbe8c3d9745cc382,
+        type: 2}
     - target: {fileID: 9149486516610363635, guid: e64054cd2002bb248841d2fe04796567,
         type: 3}
       propertyPath: m_LocalPosition.x

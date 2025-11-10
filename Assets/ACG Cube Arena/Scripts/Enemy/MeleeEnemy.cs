@@ -17,7 +17,7 @@ public class MeleeEnemy : Enemy
     protected override void Awake()
     {
         base.Awake();
-        AttackStrategy = new ChargeAttackStrategy(this, rb, playerTarget, stats, chargeIndicator, telegraphDuration, chargeSpeed, chargeDuration, recoveryDuration);
+        AttackStrategy = new ChargeAttackStrategy(this, rb, playerTarget, GetEnemyStats(), chargeIndicator, telegraphDuration, chargeSpeed, chargeDuration, recoveryDuration);
         
     }
 

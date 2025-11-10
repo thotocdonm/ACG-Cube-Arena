@@ -9,7 +9,7 @@ public class ChargeAttackStrategy : IAttackStrategy
     private readonly Enemy owner;
     private readonly Rigidbody rb;
     private readonly Transform playerTarget;
-    private readonly EnemyStatsSO stats;
+    private readonly EnemyStats stats;
     private readonly LineRenderer chargeIndicator;
 
     private readonly float telegraphDuration;
@@ -17,7 +17,7 @@ public class ChargeAttackStrategy : IAttackStrategy
     private readonly float chargeDuration;
     private readonly float recoveryDuration;
 
-    public ChargeAttackStrategy(Enemy owner, Rigidbody rb, Transform playerTarget, EnemyStatsSO stats, LineRenderer chargeIndicator, float telegraphDuration, float chargeSpeed, float chargeDuration, float recoveryDuration)
+    public ChargeAttackStrategy(Enemy owner, Rigidbody rb, Transform playerTarget, EnemyStats stats, LineRenderer chargeIndicator, float telegraphDuration, float chargeSpeed, float chargeDuration, float recoveryDuration)
     {
         this.owner = owner;
         this.rb = rb;
@@ -43,13 +43,13 @@ public class ChargeAttackStrategy : IAttackStrategy
         {
             chargeIndicator.enabled = true;
             chargeIndicator.SetPosition(0, Vector3.zero);
-            chargeIndicator.SetPosition(1, directionToPlayer * stats.attackRange * 1.5f);
+            chargeIndicator.SetPosition(1, directionToPlayer * stats.AttackRange.GetValue() * 1.5f);
         }
         yield return new WaitForSeconds(telegraphDuration);
 
         //Charging toward player
         chargeIndicator.enabled = false;
-        Vector3 targetPosition = owner.transform.position + directionToPlayer * stats.attackRange * 1.5f;
+        Vector3 targetPosition = owner.transform.position + directionToPlayer * stats.AttackRange.GetValue() * 1.5f;
         rb.DOMove(targetPosition, chargeDuration).SetEase(Ease.OutCubic).OnComplete(() =>
         {
             Debug.Log("Charged");
