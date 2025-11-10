@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBaseState : MonoBehaviour
+public class EnemyBaseState : State<Enemy>
 {
-    // Start is called before the first frame update
-    void Start()
+    protected readonly Rigidbody rb;
+    
+
+    public EnemyBaseState(Enemy owner, StateMachine stateMachine) : base(owner, stateMachine)
     {
-        
+       rb = owner.Rigidbody;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
