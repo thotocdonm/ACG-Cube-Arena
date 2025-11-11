@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 
 [RequireComponent(typeof(Rigidbody))]
@@ -97,6 +98,11 @@ public class PlayerController : MonoBehaviour
     public void ResetDashCooldown()
     {
         lastDashTime = 0;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Player collided with " + collision.gameObject.name);
     }
 
     #if UNITY_EDITOR

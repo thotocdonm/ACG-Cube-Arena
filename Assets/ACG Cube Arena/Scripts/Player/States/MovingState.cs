@@ -18,7 +18,6 @@ public class MovingState : PlayerBaseState
     public override void Enter()
     {
         owner.Animator.SetBool("IsMoving", true);
-        Debug.Log("Enter Moving State");
     }
 
     public override void FixedUpdate()

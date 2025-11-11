@@ -14,7 +14,6 @@ public class DashingState : PlayerBaseState
     public override void Enter()
     {
         Debug.Log("Enter Dashing State");
-
         owner.Animator.SetTrigger("Dash");
 
         if (owner.LastMoveInput.magnitude < 0.1f)
@@ -25,10 +24,9 @@ public class DashingState : PlayerBaseState
         {
             dashDirection = new Vector3(owner.LastMoveInput.x, 0, owner.LastMoveInput.y);
         }
-        Debug.Log("Dash Speed: " + owner.DashSpeed);
-        Debug.Log("Dash Duration: " + owner.DashDuration);
         Vector3 targetPosition = owner.transform.position + dashDirection * owner.DashSpeed;
-        dashTween = rb.DOMove(targetPosition, owner.DashDuration).SetEase(Ease.OutCubic).OnComplete(OnDashComplete);
+
+        dashTween = rb.DOMove(targetPosition, owner.DashDuration).SetUpdate(UpdateType.Fixed).SetEase(Ease.OutCubic).OnComplete(OnDashComplete);
     }
 
     public override void Exit()
@@ -38,7 +36,6 @@ public class DashingState : PlayerBaseState
 
     private void OnDashComplete()
     {
-        Debug.Log("Dash Complete");
         owner.Animator.ResetTrigger("Dash");
 
         Vector2 currentInput = owner.LastMoveInput;

@@ -32,7 +32,6 @@ public class ChargeAttackStrategy : IAttackStrategy
 
     public void Execute(Action onComplete)
     {
-        Debug.Log("Current damage: " + stats.AttackDamage.GetValue());
         owner.StartCoroutine(ChargeAttackSequence(onComplete));
     }
 

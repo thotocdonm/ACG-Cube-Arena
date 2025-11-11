@@ -10,7 +10,6 @@ public class IdleState : PlayerBaseState
 
     public override void Enter()
     {
-        Debug.Log("Enter Idle State");
         owner.Animator.SetBool("IsMoving", false);
         rb.velocity = new Vector3(0, rb.velocity.y, 0);
     }
