@@ -33,7 +33,6 @@ public abstract class Enemy : MonoBehaviour
         stateMachine.Initialize(EnemyChaseState);
 
         EnemyStats = GetComponent<EnemyStats>();
-        rb.freezeRotation = true;
 
 
     }
@@ -46,7 +45,7 @@ public abstract class Enemy : MonoBehaviour
     }
     
 
-    protected virtual void OnAttackDamageChanged(int newAttackDamage)
+    protected virtual void OnAttackDamageChanged(float newAttackDamage)
     {
         
     }

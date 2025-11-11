@@ -25,7 +25,8 @@ public class DashingState : PlayerBaseState
         {
             dashDirection = new Vector3(owner.LastMoveInput.x, 0, owner.LastMoveInput.y);
         }
-
+        Debug.Log("Dash Speed: " + owner.DashSpeed);
+        Debug.Log("Dash Duration: " + owner.DashDuration);
         Vector3 targetPosition = owner.transform.position + dashDirection * owner.DashSpeed;
         dashTween = rb.DOMove(targetPosition, owner.DashDuration).SetEase(Ease.OutCubic).OnComplete(OnDashComplete);
     }

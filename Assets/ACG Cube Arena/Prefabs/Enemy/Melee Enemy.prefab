@@ -388,7 +388,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &8062943195285422074
 CapsuleCollider:
@@ -809,10 +809,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5156146322433175133, guid: cc071222c1c715a4eaae24ea28fd46c2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156146322433175133, guid: cc071222c1c715a4eaae24ea28fd46c2,
+        type: 3}
+      propertyPath: m_UseWorldSpace
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6515617093670350345, guid: cc071222c1c715a4eaae24ea28fd46c2,
         type: 3}
       propertyPath: m_Name
       value: Attack Telegraph
+      objectReference: {fileID: 0}
+    - target: {fileID: 6515617093670350345, guid: cc071222c1c715a4eaae24ea28fd46c2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

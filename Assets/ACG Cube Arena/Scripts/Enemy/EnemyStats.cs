@@ -35,7 +35,7 @@ public class EnemyStats : MonoBehaviour
         ProjectileSpeed = new Stat((int)stats.projectileSpeed);
         ProjectilePrefab = stats.projectilePrefab;
 
-        CurrentHealth = MaxHealth.GetValue();
+        CurrentHealth = (int)MaxHealth.GetValue();
         healthBarUI.SetMaxHealth(MaxHealth.GetValue());
         healthBarUI.SetHealth(CurrentHealth);
     }

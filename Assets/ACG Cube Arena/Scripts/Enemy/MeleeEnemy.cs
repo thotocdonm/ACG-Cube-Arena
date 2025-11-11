@@ -21,7 +21,7 @@ public class MeleeEnemy : Enemy
         UpdateAttackStrategy();
     }
 
-    protected override void OnAttackDamageChanged(int newAttackDamage)
+    protected override void OnAttackDamageChanged(float newAttackDamage)
     {
         
     }

@@ -40,6 +40,7 @@ public class EnemyAttackState : EnemyBaseState
             {
                 attackCooldownTimer = 0f;
                 isAttacking = false;
+                stateMachine.ChangeState(owner.EnemyChaseState);
             });
         }
     }

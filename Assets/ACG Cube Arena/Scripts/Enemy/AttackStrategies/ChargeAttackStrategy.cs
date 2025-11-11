@@ -43,8 +43,8 @@ public class ChargeAttackStrategy : IAttackStrategy
         if (chargeIndicator != null)
         {
             chargeIndicator.enabled = true;
-            chargeIndicator.SetPosition(0, Vector3.zero);
-            chargeIndicator.SetPosition(1, directionToPlayer * stats.AttackRange.GetValue() * 1.5f);
+            chargeIndicator.SetPosition(0, owner.transform.position);
+            chargeIndicator.SetPosition(1, owner.transform.position + directionToPlayer * stats.AttackRange.GetValue() * 1.5f);
         }
         yield return new WaitForSeconds(telegraphDuration);
 

@@ -23,7 +23,7 @@ public class EnemyChaseState : EnemyBaseState
         if(directionToPlayer != Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(directionToPlayer, Vector3.up);
-            Quaternion newRotation = Quaternion.RotateTowards(rb.rotation, toRotation, 5f * Time.fixedDeltaTime);
+            Quaternion newRotation = Quaternion.RotateTowards(rb.rotation, toRotation, 500f * Time.fixedDeltaTime);
             rb.MoveRotation(newRotation);
         }
     }

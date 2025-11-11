@@ -25,20 +25,20 @@ public class PlayerStats : MonoBehaviour
 
     private void Awake()
     {
-        MaxHealth = new Stat((int)stats.maxHealth);
-        MoveSpeed = new Stat((int)stats.moveSpeed);
-        AttackDamage = new Stat((int)stats.attackDamage);
-        AttackCooldown = new Stat((int)stats.attackCooldown);
-        DashSpeed = new Stat((int)stats.dashSpeed);
-        DashDuration = new Stat((int)stats.dashDuration);
-        DashCooldown = new Stat((int)stats.dashCooldown);
+        MaxHealth = new Stat(stats.maxHealth);
+        MoveSpeed = new Stat(stats.moveSpeed);
+        AttackDamage = new Stat(stats.attackDamage);
+        AttackCooldown = new Stat(stats.attackCooldown);
+        DashSpeed = new Stat(stats.dashSpeed);
+        DashDuration = new Stat(stats.dashDuration);
+        DashCooldown = new Stat(stats.dashCooldown);
         if(stats.projectilePrefab != null)
         {
-            ProjectileSpeed = new Stat((int)stats.projectileSpeed);
+            ProjectileSpeed = new Stat(stats.projectileSpeed);
             ProjectilePrefab = stats.projectilePrefab;
         }
 
-        CurrentHealth = MaxHealth.GetValue();
+        CurrentHealth = (int)MaxHealth.GetValue();
     }
     // Start is called before the first frame update
     void Start()

@@ -245,6 +245,16 @@ PrefabInstance:
       propertyPath: playerTarget
       value: 
       objectReference: {fileID: 1366328306}
+    - target: {fileID: 7393003886218460074, guid: e64054cd2002bb248841d2fe04796567,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 7393003886218460074, guid: e64054cd2002bb248841d2fe04796567,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9149486516610363635, guid: e64054cd2002bb248841d2fe04796567,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1127,6 +1137,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 34202ad8e080371438676b62d838d219,
         type: 2}
+    - target: {fileID: 2345437172187937601, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4251785501346533833, guid: aaee8c1010294e54dbad30b1e042a160,
         type: 3}
       propertyPath: m_LocalPosition.x

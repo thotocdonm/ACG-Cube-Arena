@@ -8,15 +8,15 @@ using UnityEngine;
 [System.Serializable]
 public class Stat
 {
-    public readonly int baseValue;
+    public readonly float baseValue;
     private readonly List<StatModifier> modifiers;
     public readonly ReadOnlyCollection<StatModifier> Modifiers;
 
-    public event Action<int> OnValueChanged;
+    public event Action<float> OnValueChanged;
 
-    private int _lastValue;
+    private float _lastValue;
 
-    public Stat(int baseValue)
+    public Stat(float baseValue)
     {
         this.baseValue = baseValue;
         modifiers = new List<StatModifier>();
@@ -24,7 +24,7 @@ public class Stat
         _lastValue = GetValue();
     }
 
-    public int GetValue()
+    public float GetValue()
     {
         float finalValue = baseValue;
         float percentSum = 0;
@@ -43,7 +43,7 @@ public class Stat
 
         finalValue *= 1 + percentSum;
 
-        return (int)finalValue;
+        return finalValue;
     }
 
     public void AddModifier(StatModifier modifier)
@@ -60,7 +60,7 @@ public class Stat
     
     private void CheckForChange()
     {
-        int newValue = GetValue();
+        float newValue = GetValue();
         if (newValue != _lastValue)
         {
             _lastValue = newValue;
