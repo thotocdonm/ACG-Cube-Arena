@@ -35,14 +35,28 @@ public abstract class Enemy : MonoBehaviour
         EnemyStats = GetComponent<EnemyStats>();
         rb.freezeRotation = true;
 
-        
+
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-        stateMachine.Initialize(EnemyChaseState);
+        EnemyStats.AttackDamage.OnValueChanged += OnAttackDamageChanged;
+        
     }
+    
+
+    protected virtual void OnAttackDamageChanged(int newAttackDamage)
+    {
+        
+    }
+
+    protected virtual void OnDestroy()
+    {
+        EnemyStats.AttackDamage.OnValueChanged -= OnAttackDamageChanged;
+    }
+
+    
 
     // Update is called once per frame
     void Update()
@@ -60,9 +74,6 @@ public abstract class Enemy : MonoBehaviour
         return EnemyStats;
     }
     
-
-
-
     // Gizmos giữ nguyên để debug
     protected virtual void OnDrawGizmosSelected()
     {

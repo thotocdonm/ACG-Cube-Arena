@@ -12,13 +12,26 @@ public class MeleeEnemy : Enemy
     [SerializeField] private float chargeSpeed;
     [SerializeField] private float chargeDuration;
     [SerializeField] private float recoveryDuration;
+    private EnemyStats enemyStats;
 
 
     protected override void Awake()
     {
         base.Awake();
-        AttackStrategy = new ChargeAttackStrategy(this, rb, playerTarget, GetEnemyStats(), chargeIndicator, telegraphDuration, chargeSpeed, chargeDuration, recoveryDuration);
+        UpdateAttackStrategy();
+    }
+
+    protected override void OnAttackDamageChanged(int newAttackDamage)
+    {
         
     }
+
+    private void UpdateAttackStrategy()
+    {
+        enemyStats = GetEnemyStats();
+        AttackStrategy = new ChargeAttackStrategy(this, rb, playerTarget, enemyStats, chargeIndicator, telegraphDuration, chargeSpeed, chargeDuration, recoveryDuration);
+    }
+
+
 
 }

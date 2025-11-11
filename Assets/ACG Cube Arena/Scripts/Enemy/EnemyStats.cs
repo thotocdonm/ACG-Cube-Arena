@@ -68,6 +68,30 @@ public class EnemyStats : MonoBehaviour
         }
     }
 
+    [NaughtyAttributes.Button]
+    public void TestSlow()
+    {
+        Debug.Log("Applying slow debuff");
+        ApplySlowDebuff(10f, 0.5f);
+    }
+
+    public void ApplySlowDebuff(float duration, float slowPercentage)
+    {
+        string slowSource = "TestSlow";
+        MoveSpeed.AddModifier(new StatModifier(-slowPercentage, StatModifierType.Percentage, slowSource));
+    }
+
+    [NaughtyAttributes.Button]
+    public void TestIncreaseAttackDamage()
+    {
+        IncreaseAttackDamage(10);
+    }
+
+    public void IncreaseAttackDamage(int amount)
+    {
+        AttackDamage.AddModifier(new StatModifier(amount, StatModifierType.Flat, "IncreaseAttackDamage"));
+    }
+
     public void Die()
     {
         Debug.Log("Enemy Defeated");
