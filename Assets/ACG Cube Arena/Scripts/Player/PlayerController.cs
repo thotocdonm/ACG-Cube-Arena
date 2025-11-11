@@ -6,23 +6,19 @@ using DG.Tweening;
 
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PlayerStats))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Elements")]
+    private PlayerStats playerStats;
     private Rigidbody rb;
     [SerializeField] private Animator animator;
 
     [Header("Movement")]
-    [SerializeField] private float moveSpeed;
     [SerializeField] private float rotationSpeed;
     private Vector2 lastMoveInput;
 
-    [Header("Dash")]
     private float lastDashTime = 100;
-    [SerializeField] private float dashCooldown;
-    [SerializeField] private float dashSpeed;
-    [SerializeField] private float dashDuration;
-    [SerializeField] private float dashDrag;
 
     [Header("State")]
     private StateMachine stateMachine;
@@ -34,15 +30,16 @@ public class PlayerController : MonoBehaviour
     public Rigidbody Rigidbody => rb;
     public Animator Animator => animator;
     public Vector2 LastMoveInput => lastMoveInput;
-    public float MoveSpeed => moveSpeed;
+    public float MoveSpeed => playerStats.MoveSpeed.GetValue();
     public float RotationSpeed => rotationSpeed;
-    public float DashSpeed => dashSpeed;
-    public float DashDuration => dashDuration;
+    public float DashSpeed => playerStats.DashSpeed.GetValue();
+    public float DashDuration => playerStats.DashDuration.GetValue();
 
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        playerStats = GetComponent<PlayerStats>();
         stateMachine = new StateMachine();
 
         idleState = new IdleState(this, stateMachine);
@@ -94,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
     public bool CanDash()
     {
-        return lastDashTime >= dashCooldown;
+        return lastDashTime >= playerStats.DashCooldown.GetValue();
     }
 
     public void ResetDashCooldown()
