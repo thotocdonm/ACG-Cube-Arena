@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerController))]
 public class IchigoComboAttack : MonoBehaviour
 {
 
@@ -17,6 +18,13 @@ public class IchigoComboAttack : MonoBehaviour
     [Header("Hitbox")]
     [SerializeField] private BoxCollider hitbox;
 
+    [Header("Elements")]
+    private PlayerController owner;
+
+    [Header("Force")]
+    [SerializeField] private float[] lungeDistance = { 1.5f, 1.2f, 4f };
+    [SerializeField] private float[] lungeDuration = { 0.15f, 0.18f, 0.4f };
+
     private int currentComboIndex;
     private float nextAttackReadyTime;
     private float comboExpireTime;
@@ -24,6 +32,11 @@ public class IchigoComboAttack : MonoBehaviour
     private bool buffered;
 
     public bool IsAttacking => isAttacking;
+
+    private void Awake()
+    {
+        owner = GetComponent<PlayerController>();
+    }
 
     private void Update()
     {
@@ -73,12 +86,37 @@ public class IchigoComboAttack : MonoBehaviour
     public void EnableHitbox()
     {
         hitbox.enabled = true;
+        StartCoroutine(LungeRoutice(currentComboIndex));
         
     }
 
     public void DisableHitbox()
     {
         hitbox.enabled = false;
+    }
+
+    private IEnumerator LungeRoutice(int comboIndex)
+    {
+        float duration = lungeDuration[comboIndex];
+        float distance = lungeDistance[comboIndex];
+        float elapsed = 0;
+
+        Vector3 start = transform.position;
+        Vector3 dir = owner.AimDirection.sqrMagnitude > 0.01f ? owner.AimDirection : transform.forward;
+
+        Vector3 end = start + dir * distance;
+
+        while (elapsed < duration)
+        {
+            yield return new WaitForFixedUpdate();
+            elapsed += Time.fixedDeltaTime;
+
+            float t = elapsed / duration;
+            float easedT = 1f - Mathf.Pow(1f - t, 3f);
+            Vector3 newPosition = Vector3.LerpUnclamped(start, end, easedT);
+            owner.Rigidbody.MovePosition(newPosition);
+            
+        }
     }
 
     public void OnAttackAnimatonEnd()
