@@ -25,15 +25,15 @@ public class EnemyAttackState : EnemyBaseState
         }
 
         attackCooldownTimer += Time.deltaTime;
-        
+
         float distanceToPlayer = Vector3.Distance(owner.transform.position, owner.PlayerTarget.position);
         if (distanceToPlayer > owner.GetEnemyStats().DetectionRange.GetValue())
         {
             stateMachine.ChangeState(owner.EnemyChaseState);
             return;
         }
-        
-        if(!isAttacking && attackCooldownTimer >= owner.GetEnemyStats().AttackCooldown.GetValue())
+
+        if (!isAttacking && attackCooldownTimer >= owner.GetEnemyStats().AttackCooldown.GetValue())
         {
             isAttacking = true;
             owner.AttackStrategy.Execute(() =>
@@ -42,6 +42,14 @@ public class EnemyAttackState : EnemyBaseState
                 isAttacking = false;
                 stateMachine.ChangeState(owner.EnemyChaseState);
             });
+        }
+    }
+    
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<PlayerStats>().TakeDamage((int)owner.GetEnemyStats().AttackDamage.GetValue());
         }
     }
 

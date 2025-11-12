@@ -28,4 +28,9 @@ public class StateMachine
     {
         CurrentState?.FixedUpdate();
     }
+
+    public IState GetCurrentState()
+    {
+        return CurrentState;
+    }
 }

@@ -39,6 +39,8 @@ public class PlayerStats : MonoBehaviour
         }
 
         CurrentHealth = (int)MaxHealth.GetValue();
+        healthBarUI.SetMaxHealth(MaxHealth.GetValue());
+        healthBarUI.SetHealth(MaxHealth.GetValue());
     }
     // Start is called before the first frame update
     void Start()
@@ -62,6 +64,7 @@ public class PlayerStats : MonoBehaviour
     {
         CurrentHealth -= damage;
         Debug.Log("Player took " + damage + " damage. Current health: " + CurrentHealth);
+        healthBarUI.SetHealth(CurrentHealth);
         if (CurrentHealth <= 0)
         {
             Die();

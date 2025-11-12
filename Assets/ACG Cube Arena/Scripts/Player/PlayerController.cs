@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] private Animator animator;
 
+    [Header("Mouse Aim")]
+    [SerializeField] private LayerMask groundLayer;
+    private Vector3 aimDirection;
+
     [Header("Movement")]
     [SerializeField] private float rotationSpeed;
     private Vector2 lastMoveInput;
@@ -35,7 +39,7 @@ public class PlayerController : MonoBehaviour
     public float RotationSpeed => rotationSpeed;
     public float DashSpeed => playerStats.DashSpeed.GetValue();
     public float DashDuration => playerStats.DashDuration.GetValue();
-
+    public Vector3 AimDirection => aimDirection;
 
     void Awake()
     {
@@ -78,6 +82,7 @@ public class PlayerController : MonoBehaviour
         //increment the last dash time
         lastDashTime += Time.deltaTime;
         stateMachine?.Update();
+        UpdateAimDirection();
     }
 
     void FixedUpdate()
@@ -98,6 +103,20 @@ public class PlayerController : MonoBehaviour
     public void ResetDashCooldown()
     {
         lastDashTime = 0;
+    }
+
+    private void UpdateAimDirection()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if(Physics.Raycast(ray, out RaycastHit hit, 1000f, groundLayer, QueryTriggerInteraction.Ignore))
+        {
+            Vector3 direction = (hit.point - transform.position).normalized;
+            direction.y = 0;
+            if(direction.sqrMagnitude > 0.01f)
+            {
+                aimDirection = direction;
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

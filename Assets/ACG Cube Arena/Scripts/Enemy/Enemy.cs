@@ -72,6 +72,14 @@ public abstract class Enemy : MonoBehaviour
     {
         return EnemyStats;
     }
+
+    public void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player") && stateMachine.GetCurrentState() == EnemyAttackState)
+        {
+            other.gameObject.GetComponent<PlayerStats>().TakeDamage((int)EnemyStats.AttackDamage.GetValue());
+        }
+    }
     
     // Gizmos giữ nguyên để debug
     protected virtual void OnDrawGizmosSelected()
