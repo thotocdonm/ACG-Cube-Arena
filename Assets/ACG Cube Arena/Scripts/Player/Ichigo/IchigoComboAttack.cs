@@ -11,7 +11,7 @@ public class IchigoComboAttack : MonoBehaviour
 
     [Header("Timing")]
     [SerializeField] private float attackCooldown = 0.25f;
-    [SerializeField] private float comboWindow = 1f;
+    [SerializeField] private float comboWindow = 1.3f;
     private float timer;
 
     [Header("Hitbox")]
@@ -73,6 +73,7 @@ public class IchigoComboAttack : MonoBehaviour
     public void EnableHitbox()
     {
         hitbox.enabled = true;
+        
     }
 
     public void DisableHitbox()
