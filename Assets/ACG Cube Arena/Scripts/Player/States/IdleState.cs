@@ -16,11 +16,8 @@ public class IdleState : PlayerBaseState
 
     public override void Update()
     {
-        Debug.Log("Idle State Update");
-        Debug.Log("Aim Direction: " + owner.AimDirection);
         if(owner.AimDirection.sqrMagnitude > 0.01f)
         {
-            Debug.Log("Aiming");
             Quaternion toRotation = Quaternion.LookRotation(owner.AimDirection, Vector3.up);
             Quaternion newRotation = Quaternion.RotateTowards(rb.rotation, toRotation, owner.RotationSpeed * Time.deltaTime);
             rb.MoveRotation(newRotation);
@@ -45,7 +42,7 @@ public class IdleState : PlayerBaseState
     
     public override void HandleAttack()
     {
-        
+        owner.ChangeState(owner.ichigoAttackingState);
     }
     
 }

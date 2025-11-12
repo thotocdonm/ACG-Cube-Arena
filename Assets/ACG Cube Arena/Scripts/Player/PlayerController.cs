@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private PlayerStats playerStats;
     private Rigidbody rb;
     [SerializeField] private Animator animator;
+    [SerializeField] private IchigoComboAttack ichigoComboAttack;
 
     [Header("Mouse Aim")]
     [SerializeField] private LayerMask groundLayer;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public IdleState idleState { get; private set; }
     public MovingState movingState { get; private set; }
     public DashingState dashingState { get; private set; }
+    public IchigoAttackingState ichigoAttackingState { get; private set; }
 
     public Rigidbody Rigidbody => rb;
     public Animator Animator => animator;
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
     public float DashSpeed => playerStats.DashSpeed.GetValue();
     public float DashDuration => playerStats.DashDuration.GetValue();
     public Vector3 AimDirection => aimDirection;
+    public IchigoComboAttack IchigoComboAttack => ichigoComboAttack;
 
     void Awake()
     {
@@ -50,6 +53,7 @@ public class PlayerController : MonoBehaviour
         idleState = new IdleState(this, stateMachine);
         movingState = new MovingState(this, stateMachine);
         dashingState = new DashingState(this, stateMachine);
+        ichigoAttackingState = new IchigoAttackingState(this, stateMachine);
 
         stateMachine.Initialize(idleState);
     }
@@ -73,7 +77,17 @@ public class PlayerController : MonoBehaviour
             var currentState = stateMachine.CurrentState as PlayerBaseState;
             currentState?.HandleDash();
         }
-        
+
+    }
+    
+    public void Attack(InputAction.CallbackContext context)
+    {
+        Debug.Log("Attack");
+        if (context.performed)
+        {
+            var currentState = stateMachine.CurrentState as PlayerBaseState;
+            currentState?.HandleAttack();
+        }
     }
 
     // Update is called once per frame

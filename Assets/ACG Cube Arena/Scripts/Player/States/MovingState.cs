@@ -50,7 +50,7 @@ public class MovingState : PlayerBaseState
     }   
 
     public override void HandleAttack(){
-        Debug.Log("Handle Attack in Moving State");
+        owner.ChangeState(owner.ichigoAttackingState);
     }
     
 }

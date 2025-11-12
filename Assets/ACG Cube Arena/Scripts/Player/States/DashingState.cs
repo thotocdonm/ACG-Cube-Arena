@@ -53,4 +53,6 @@ public class DashingState : PlayerBaseState
 
     public override void HandleMove(Vector2 Input) { }
 
+    public override void HandleAttack() { }
+
 }

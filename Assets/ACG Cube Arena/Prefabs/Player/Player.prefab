@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4251785501346533833}
   - component: {fileID: 2345437172187937601}
-  - component: {fileID: 4895491115344781909}
   - component: {fileID: 2785737259873354464}
   - component: {fileID: 421681189443104874}
+  - component: {fileID: 4895491115344781909}
   - component: {fileID: 2284361273120588805}
   m_Layer: 0
   m_Name: Player
@@ -64,20 +64,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 1
---- !u!114 &4895491115344781909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1966383558194542838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57c8b9899fda41340aa66757e689de5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 6504969488404326258}
-  rotationSpeed: 500
 --- !u!114 &2785737259873354464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,6 +122,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 621255c9-ed12-4063-a56b-9799487aeccb
     m_ActionName: Gameplay/Dash[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e0edd976-831b-43e1-9a04-617d5957d0f6
+    m_ActionName: Gameplay/Attack[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -164,6 +154,24 @@ CapsuleCollider:
   m_Height: 2.029045
   m_Direction: 1
   m_Center: {x: 0, y: 0.007812738, z: 0}
+--- !u!114 &4895491115344781909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966383558194542838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c8b9899fda41340aa66757e689de5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 6504969488404326258}
+  ichigoComboAttack: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  rotationSpeed: 500
 --- !u!114 &2284361273120588805
 MonoBehaviour:
   m_ObjectHideFlags: 0
