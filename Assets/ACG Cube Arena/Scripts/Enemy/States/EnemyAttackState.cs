@@ -14,7 +14,7 @@ public class EnemyAttackState : EnemyBaseState
         isAttacking = false;
         attackCooldownTimer = owner.GetEnemyStats().AttackCooldown.GetValue();
         rb.velocity = Vector3.zero;
-        Debug.Log("Enter Enemy Attack State");
+        
     }
 
     public override void Update()
@@ -45,13 +45,7 @@ public class EnemyAttackState : EnemyBaseState
         }
     }
     
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            other.gameObject.GetComponent<PlayerStats>().TakeDamage((int)owner.GetEnemyStats().AttackDamage.GetValue());
-        }
-    }
+
 
   
 }

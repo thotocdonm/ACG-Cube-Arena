@@ -52,7 +52,7 @@ public class ChargeAttackStrategy : IAttackStrategy
         Vector3 targetPosition = owner.transform.position + directionToPlayer * chargeSpeed * 1.5f;
         rb.DOMove(targetPosition, chargeDuration).SetEase(Ease.OutCubic).OnComplete(() =>
         {
-            Debug.Log("Charged");
+           
         });
 
         yield return new WaitForSeconds(recoveryDuration);

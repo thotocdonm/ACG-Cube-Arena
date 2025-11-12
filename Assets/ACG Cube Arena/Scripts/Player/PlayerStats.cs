@@ -60,6 +60,12 @@ public class PlayerStats : MonoBehaviour
         TakeDamage(10);
     }
 
+    [NaughtyAttributes.Button]
+    public void TestIncreaseAttackDamage()
+    {
+        IncreaseAttackDamage(10);
+    }
+
     public void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
@@ -69,6 +75,11 @@ public class PlayerStats : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public void IncreaseAttackDamage(int amount)
+    {
+        AttackDamage.AddModifier(new StatModifier(amount, StatModifierType.Flat, "IncreaseAttackDamage"));
     }
     
     private void Die()

@@ -398,7 +398,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5144958, y: -0.000000035964415, z: 0.000000021578648, w: 0.8574929}
-  m_LocalPosition: {x: -5.4829597, y: 12.175495, z: -10.321029}
+  m_LocalPosition: {x: -5.4829597, y: 12.265, z: -10.321029}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -943,7 +943,7 @@ Transform:
   m_GameObject: {fileID: 1478049936}
   serializedVersion: 2
   m_LocalRotation: {x: 0.51449573, y: -0.000000029354478, z: 0.000000010562088, w: 0.8574929}
-  m_LocalPosition: {x: -5.4829597, y: 12.175495, z: -10.321029}
+  m_LocalPosition: {x: -5.4829597, y: 12.265, z: -10.321029}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1065,6 +1065,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575665411}
   m_CullTransparentMesh: 1
+--- !u!114 &1615187103 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4895491115344781909, guid: aaee8c1010294e54dbad30b1e042a160,
+    type: 3}
+  m_PrefabInstance: {fileID: 3769837183103404681}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c8b9899fda41340aa66757e689de5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1629477536
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,6 +1108,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1703045092 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8830442871740986089, guid: aaee8c1010294e54dbad30b1e042a160,
+    type: 3}
+  m_PrefabInstance: {fileID: 3769837183103404681}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1703045095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703045092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 643d0a9e8bded104d928bd74fd3adda2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 1615187103}
 --- !u!1 &1759162093
 GameObject:
   m_ObjectHideFlags: 3
@@ -1505,6 +1536,11 @@ PrefabInstance:
       propertyPath: healthBarUI
       value: 
       objectReference: {fileID: 2452957213085754217}
+    - target: {fileID: 2345437172187937601, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4251785501346533833, guid: aaee8c1010294e54dbad30b1e042a160,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1513,7 +1549,7 @@ PrefabInstance:
     - target: {fileID: 4251785501346533833, guid: aaee8c1010294e54dbad30b1e042a160,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.8245049
+      value: -2.735
       objectReference: {fileID: 0}
     - target: {fileID: 4251785501346533833, guid: aaee8c1010294e54dbad30b1e042a160,
         type: 3}
@@ -1555,10 +1591,39 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7982362804112642344, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: lungeCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7982362804112642344, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: lungeCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7982362804112642344, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: lungeCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7982362804112642344, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: lungeCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7982362804112642344, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: lungeCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8830442871740986089, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1703045095}
   m_SourcePrefab: {fileID: 100100000, guid: aaee8c1010294e54dbad30b1e042a160, type: 3}
 --- !u!224 &4664700969041229494
 RectTransform:

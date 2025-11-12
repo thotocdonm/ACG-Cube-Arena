@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     public float RotationSpeed => rotationSpeed;
     public float DashSpeed => playerStats.DashSpeed.GetValue();
     public float DashDuration => playerStats.DashDuration.GetValue();
+    public float AttackDamage => playerStats.AttackDamage.GetValue();
     public Vector3 AimDirection => aimDirection;
     public IchigoComboAttack IchigoComboAttack => ichigoComboAttack;
 
