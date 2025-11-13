@@ -88,6 +88,14 @@ public class PlayerController : MonoBehaviour
     public void Attack(InputAction.CallbackContext context)
     {
         Debug.Log("Attack");
+
+
+        if (context.performed)
+        {
+            var currentState = stateMachine.CurrentState as PlayerBaseState;
+            currentState?.HandleAttack();
+        }
+        
         if(context.started)
         {
             isAttackHeld = true;
@@ -95,12 +103,6 @@ public class PlayerController : MonoBehaviour
         else if(context.canceled)
         {
             isAttackHeld = false;
-        }
-
-        if (context.performed)
-        {
-            var currentState = stateMachine.CurrentState as PlayerBaseState;
-            currentState?.HandleAttack();
         }
     }
 

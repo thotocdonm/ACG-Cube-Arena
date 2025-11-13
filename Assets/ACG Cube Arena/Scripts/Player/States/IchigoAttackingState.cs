@@ -5,20 +5,37 @@ using UnityEngine;
 public class IchigoAttackingState : PlayerBaseState
 {
 
-    private bool isExiting;
+    private bool canBuffer;
 
     public IchigoAttackingState(PlayerController owner, StateMachine stateMachine) : base(owner, stateMachine) { }
 
+
     public override void Enter()
     {
-        isExiting = false;
+        base.Enter();
+        canBuffer = false;
+
+        if (owner.IchigoComboAttack.TryStartAttack())
+        {
+            owner.StartCoroutine(AllowBufferAfterDelay(0.1f));
+        }
+        else
+        {
+            owner.ChangeState(owner.idleState);
+        }
+    }
+    
+    private IEnumerator AllowBufferAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        canBuffer = true;
     }
 
 
     public override void HandleAttack()
     {
 
-        if (owner.IchigoComboAttack.IsAttacking)
+        if (owner.IchigoComboAttack.IsAttacking && canBuffer)
         {
             owner.IchigoComboAttack.BufferNextAttack();
         } else
@@ -30,9 +47,8 @@ public class IchigoAttackingState : PlayerBaseState
     public override void Update()
     {
 
-        if (isExiting) return;
 
-        if (owner.IsAttackHeld)
+        if (owner.IsAttackHeld && canBuffer)
         {
             HandleAttack();
         }
@@ -54,11 +70,8 @@ public class IchigoAttackingState : PlayerBaseState
 
     public override void HandleDash()
     {
-        if(isExiting) return;
-
         if (owner.CanDash())
         {
-            isExiting = true;
             owner.IchigoComboAttack.CancelCurrentAttack();
             owner.ResetDashCooldown();
             owner.ChangeState(owner.dashingState);

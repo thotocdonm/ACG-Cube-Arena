@@ -104,7 +104,7 @@ public class IchigoComboAttack : MonoBehaviour
         float elapsed = 0;
 
         Vector3 start = transform.position;
-        Vector3 dir = owner.AimDirection.sqrMagnitude > 0.01f ? owner.AimDirection : transform.forward;
+        Vector3 dir =  transform.forward;
 
         Vector3 end = start + dir * distance;
 
