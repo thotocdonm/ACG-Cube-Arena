@@ -11,6 +11,13 @@ public class EnemyStats : MonoBehaviour
     [Header("Base Stats")]
     [SerializeField] private EnemyStatsSO stats;
 
+    [Header("Hit Feedback")]
+    [SerializeField] private float flashDuration;
+    [SerializeField] private Color flashColor = Color.white;
+    private MeshRenderer[] allRenderers;
+    private Color[] originalColors;
+    private Coroutine flashCoroutine;
+
     public Stat MaxHealth { get; private set; }
     public Stat MoveSpeed { get; private set; }
     public Stat AttackDamage { get; private set; }
@@ -38,6 +45,13 @@ public class EnemyStats : MonoBehaviour
         CurrentHealth = (int)MaxHealth.GetValue();
         healthBarUI.SetMaxHealth(MaxHealth.GetValue());
         healthBarUI.SetHealth(CurrentHealth);
+
+        allRenderers = GetComponentsInChildren<MeshRenderer>();
+        originalColors = new Color[allRenderers.Length];
+        for (int i = 0; i < allRenderers.Length; i++)
+        {
+            originalColors[i] = allRenderers[i].material.color;
+        }
     }
 
     // Start is called before the first frame update
@@ -66,6 +80,27 @@ public class EnemyStats : MonoBehaviour
         {
             Die();
         }
+
+        if (flashCoroutine != null)
+        {
+            StopCoroutine(flashCoroutine);
+        }
+        flashCoroutine = StartCoroutine(FlashCoroutine());
+    }
+
+    private IEnumerator FlashCoroutine()
+    {
+        foreach(MeshRenderer renderer in allRenderers)
+        {
+            renderer.material.color = flashColor;
+        }
+        yield return new WaitForSeconds(flashDuration);
+        
+        for (int i = 0; i < allRenderers.Length; i++)
+        {
+            allRenderers[i].material.color = originalColors[i];
+        }
+        flashCoroutine = null;
     }
 
     [NaughtyAttributes.Button]

@@ -445,6 +445,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarUI: {fileID: 69590495934033300}
   stats: {fileID: 11400000, guid: 68482805e67c4864cbe8c3d9745cc382, type: 2}
+  flashDuration: 0.1
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &8841396661423236965
 GameObject:
   m_ObjectHideFlags: 0

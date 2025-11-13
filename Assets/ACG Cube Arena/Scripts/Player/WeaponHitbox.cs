@@ -19,7 +19,7 @@ public class WeaponHitbox : MonoBehaviour
             Debug.Log("Hit Enemy and deal damage" + owner.AttackDamage);
             other.gameObject.GetComponent<EnemyStats>().TakeDamage((int)owner.AttackDamage);
             
-            //Vfx
+            //Vfx when hitting enemy
             Vector3 contactPoint = other.ClosestPoint(transform.position);
             Quaternion rotation = Quaternion.Euler(0,Random.Range(0,360),0);
             GameObject vfxInstance =Instantiate(hitVFX, contactPoint, rotation);
@@ -27,6 +27,9 @@ public class WeaponHitbox : MonoBehaviour
 
             //Shake camera
             CameraShakeManager.instance.ShakeCamera(1, 0.1f);
+
+            //Hit stop when hitting enemy
+            HitStopManager.instance.DoHitStop(0.05f, 0);
         }
     }
 }

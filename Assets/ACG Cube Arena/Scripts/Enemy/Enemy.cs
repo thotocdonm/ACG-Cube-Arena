@@ -14,6 +14,8 @@ public abstract class Enemy : MonoBehaviour
     protected Rigidbody rb;
     private float currentHealth;
 
+
+
     [Header("States")]
     protected StateMachine stateMachine;
     public EnemyChaseState EnemyChaseState { get; private set; }
