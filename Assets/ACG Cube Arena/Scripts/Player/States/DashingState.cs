@@ -37,12 +37,13 @@ public class DashingState : PlayerBaseState
     private void OnDashComplete()
     {
         owner.Animator.ResetTrigger("Dash");
+        Debug.LogWarning("Dash Complete");
 
         Vector2 currentInput = owner.LastMoveInput;
+        Debug.LogWarning("Current Input: " + currentInput);
 
         if (currentInput.magnitude > 0.1f)
         {
-            owner.movingState.setMoveInput(currentInput);
             owner.ChangeState(owner.movingState);
         }
         else
@@ -53,6 +54,9 @@ public class DashingState : PlayerBaseState
 
     public override void HandleMove(Vector2 Input) { }
 
-    public override void HandleAttack() { }
+    public override void HandleAttack()
+    {
+        
+    }
 
 }

@@ -13,7 +13,6 @@ public class IchigoComboAttack : MonoBehaviour
     [Header("Timing")]
     [SerializeField] private float attackCooldown = 0.25f;
     [SerializeField] private float comboWindow = 1.3f;
-    private float timer;
 
     [Header("Hitbox")]
     [SerializeField] private BoxCollider hitbox;
@@ -40,12 +39,15 @@ public class IchigoComboAttack : MonoBehaviour
 
     private void Update()
     {
-        timer += Time.deltaTime;
+
     }
 
 
     public bool TryStartAttack()
     {
+
+        if(owner.StateMachine.CurrentState is DashingState) return false;
+
         float now = Time.time;
         if (now < nextAttackReadyTime) return false;
 
@@ -138,6 +140,19 @@ public class IchigoComboAttack : MonoBehaviour
             }
 
         }
+    }
+
+    public void CancelCurrentAttack()
+    {
+        Debug.LogWarning("Cancelling Current Attack");
+        isAttacking = false;
+        buffered = false;
+        currentComboIndex = 0;
+        StopAllCoroutines();
+        animator.ResetTrigger("Attack1");
+        animator.ResetTrigger("Attack2");
+        animator.ResetTrigger("Attack3");
+
     }
     
     public bool IsComboExpired()

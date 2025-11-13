@@ -9,8 +9,9 @@ public abstract class PlayerBaseState : State<PlayerController>
     public PlayerBaseState(PlayerController owner, StateMachine stateMachine) : base(owner, stateMachine)
     {
 
-       rb = owner.Rigidbody;
+        rb = owner.Rigidbody;
     }
+
 
     public virtual void HandleMove(Vector2 Input) { }
     public virtual void HandleDash() { }

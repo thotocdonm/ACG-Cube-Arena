@@ -18,7 +18,7 @@ MonoBehaviour:
   attackDamage: 10
   attackCooldown: 1
   dashSpeed: 10
-  dashDuration: 0.5
+  dashDuration: 0.2
   dashCooldown: 1
   projectilePrefab: {fileID: 0}
   projectileSpeed: 0

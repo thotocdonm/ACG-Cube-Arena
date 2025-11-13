@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] private Animator animator;
     [SerializeField] private IchigoComboAttack ichigoComboAttack;
+    private bool isAttackHeld;
+    private bool bufferedAttackFromDash;
 
     [Header("Mouse Aim")]
     [SerializeField] private LayerMask groundLayer;
@@ -35,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public IchigoAttackingState ichigoAttackingState { get; private set; }
 
     public Rigidbody Rigidbody => rb;
+    public StateMachine StateMachine => stateMachine;
     public Animator Animator => animator;
     public Vector2 LastMoveInput => lastMoveInput;
     public float MoveSpeed => playerStats.MoveSpeed.GetValue();
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour
     public float AttackDamage => playerStats.AttackDamage.GetValue();
     public Vector3 AimDirection => aimDirection;
     public IchigoComboAttack IchigoComboAttack => ichigoComboAttack;
+    public bool IsAttackHeld => isAttackHeld;
 
     void Awake()
     {
@@ -84,6 +88,15 @@ public class PlayerController : MonoBehaviour
     public void Attack(InputAction.CallbackContext context)
     {
         Debug.Log("Attack");
+        if(context.started)
+        {
+            isAttackHeld = true;
+        }
+        else if(context.canceled)
+        {
+            isAttackHeld = false;
+        }
+
         if (context.performed)
         {
             var currentState = stateMachine.CurrentState as PlayerBaseState;

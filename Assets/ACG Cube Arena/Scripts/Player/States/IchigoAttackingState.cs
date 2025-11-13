@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class IchigoAttackingState : PlayerBaseState
 {
+
+    private bool isExiting;
+
     public IchigoAttackingState(PlayerController owner, StateMachine stateMachine) : base(owner, stateMachine) { }
 
     public override void Enter()
     {
-        if (!owner.IchigoComboAttack.TryStartAttack())
-        {
-            owner.ChangeState(owner.idleState);
-        }
+        isExiting = false;
     }
+
 
     public override void HandleAttack()
     {
+
         if (owner.IchigoComboAttack.IsAttacking)
         {
             owner.IchigoComboAttack.BufferNextAttack();
@@ -27,19 +29,39 @@ public class IchigoAttackingState : PlayerBaseState
 
     public override void Update()
     {
-        if(!owner.IchigoComboAttack.IsAttacking && owner.IchigoComboAttack.IsComboExpired())
+
+        if (isExiting) return;
+
+        if (owner.IsAttackHeld)
+        {
+            HandleAttack();
+        }
+
+        if (!owner.IchigoComboAttack.IsAttacking && owner.IchigoComboAttack.IsComboExpired())
         {
             Vector2 currentInput = owner.LastMoveInput;
 
             if (currentInput.magnitude > 0.1f)
             {
-                owner.movingState.setMoveInput(currentInput);
                 owner.ChangeState(owner.movingState);
             }
             else
             {
                 owner.ChangeState(owner.idleState);
             }
+        }
+    }
+
+    public override void HandleDash()
+    {
+        if(isExiting) return;
+
+        if (owner.CanDash())
+        {
+            isExiting = true;
+            owner.IchigoComboAttack.CancelCurrentAttack();
+            owner.ResetDashCooldown();
+            owner.ChangeState(owner.dashingState);
         }
     }
 }

@@ -1656,6 +1656,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5890353102719650580, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 12.784904
+      objectReference: {fileID: 0}
+    - target: {fileID: 5890353102719650580, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.000024824685
+      objectReference: {fileID: 0}
+    - target: {fileID: 5890353102719650580, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 5.273002
+      objectReference: {fileID: 0}
+    - target: {fileID: 5890353102719650580, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.6518291
+      objectReference: {fileID: 0}
+    - target: {fileID: 7982362804112642344, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: comboWindow
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7982362804112642344, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: attackCooldown
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 7982362804112642344, guid: aaee8c1010294e54dbad30b1e042a160,
         type: 3}
       propertyPath: lungeCurve.m_Curve.Array.size

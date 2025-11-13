@@ -18,6 +18,12 @@ public class MovingState : PlayerBaseState
     public override void Enter()
     {
         owner.Animator.SetBool("IsMoving", true);
+        HandleMove(owner.LastMoveInput);
+    }
+
+    public override void Exit()
+    {
+        owner.Animator.SetBool("IsMoving", false);
     }
 
     public override void FixedUpdate()
