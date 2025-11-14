@@ -4,8 +4,28 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager instance;
     [Header("Elements")]
     [SerializeField] private AudioSource[] ichigoAudioSources;
+    [SerializeField] private AudioSource enemyHitAudioSource;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        EnemyStats.onEnemyHit += EnemyHitCallback;
+    }
+    private void OnDestroy()
+    {
+        EnemyStats.onEnemyHit -= EnemyHitCallback;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -18,11 +38,22 @@ public class AudioManager : MonoBehaviour
     {
 
     }
-    
+
+    private void EnemyHitCallback(int damage, Vector3 enemyPos, bool isCritical, Vector3 hitPoint)
+    {
+        PlayEnemyHitSound();
+    }
+
     public void PlayIchigoAttackSound(int index)
     {
         AudioSource audioSource = ichigoAudioSources[index];
         audioSource.pitch = Random.Range(0.9f, 1.1f);
         audioSource.Play();
+    }
+    
+    public void PlayEnemyHitSound()
+    {
+        enemyHitAudioSource.pitch = Random.Range(0.9f, 1.1f);
+        enemyHitAudioSource.Play();
     }
 }
