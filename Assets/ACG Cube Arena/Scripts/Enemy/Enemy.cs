@@ -11,8 +11,10 @@ public abstract class Enemy : MonoBehaviour
 
     [Header("Elements")]
     [SerializeField] protected Transform playerTarget;
+    [SerializeField] protected BoxCollider meleeHitbox;
     protected Rigidbody rb;
     private float currentHealth;
+    private float attackCooldownTimer = 0f;
 
 
 
@@ -25,6 +27,7 @@ public abstract class Enemy : MonoBehaviour
 
     public Rigidbody Rigidbody => rb;
     public Transform PlayerTarget => playerTarget;
+    public StateMachine StateMachine => stateMachine;
 
     protected virtual void Awake()
     {
@@ -62,6 +65,10 @@ public abstract class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(attackCooldownTimer > 0)
+        {
+            attackCooldownTimer -= Time.deltaTime;
+        }
         stateMachine.Update();
     }
 
@@ -75,12 +82,23 @@ public abstract class Enemy : MonoBehaviour
         return EnemyStats;
     }
 
-    public void OnCollisionEnter(Collision other)
+    public void EnableHitbox()
     {
-        if (other.gameObject.CompareTag("Player") && stateMachine.GetCurrentState() == EnemyAttackState)
-        {
-            other.gameObject.GetComponent<PlayerStats>().TakeDamage((int)EnemyStats.AttackDamage.GetValue());
-        }
+        meleeHitbox.enabled = true;
+    }
+    public void DisableHitbox()
+    {
+        meleeHitbox.enabled = false;
+    }
+
+    public bool IsAttackReady()
+    {
+        return attackCooldownTimer <= 0;
+    }
+
+    public void SetAttackCooldown(float cooldown)
+    {
+        attackCooldownTimer = cooldown;
     }
     
     // Gizmos giữ nguyên để debug

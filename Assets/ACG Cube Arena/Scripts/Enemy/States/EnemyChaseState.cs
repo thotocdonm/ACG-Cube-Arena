@@ -9,7 +9,7 @@ public class EnemyChaseState : EnemyBaseState
     public override void Update()
     {
         float distanceToPlayer = Vector3.Distance(owner.transform.position, owner.PlayerTarget.position);
-        if (distanceToPlayer <= owner.GetEnemyStats().DetectionRange.GetValue())
+        if (distanceToPlayer <= owner.GetEnemyStats().DetectionRange.GetValue() && owner.IsAttackReady())
         {
             stateMachine.ChangeState(owner.EnemyAttackState);
         }

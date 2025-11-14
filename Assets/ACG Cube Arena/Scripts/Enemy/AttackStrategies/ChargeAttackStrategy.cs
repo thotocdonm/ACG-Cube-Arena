@@ -37,6 +37,7 @@ public class ChargeAttackStrategy : IAttackStrategy
 
     private IEnumerator ChargeAttackSequence(Action onComplete)
     {
+        Animator animator = owner.GetComponent<Animator>();
         // Prepare to attack
         Vector3 directionToPlayer = (playerTarget.position - owner.transform.position).normalized;
         if (chargeIndicator != null)
@@ -45,18 +46,21 @@ public class ChargeAttackStrategy : IAttackStrategy
             chargeIndicator.SetPosition(0, owner.transform.position);
             chargeIndicator.SetPosition(1, owner.transform.position + directionToPlayer * stats.AttackRange.GetValue() * 1.5f);
         }
+        animator.Play("Charging");
         yield return new WaitForSeconds(telegraphDuration);
 
         //Charging toward player
         chargeIndicator.enabled = false;
         Vector3 targetPosition = owner.transform.position + directionToPlayer * chargeSpeed * 1.5f;
+        animator.Play("Attack");
         rb.DOMove(targetPosition, chargeDuration).SetEase(Ease.OutCubic).OnComplete(() =>
         {
-           
+            animator.Play("Idle");
         });
 
         yield return new WaitForSeconds(recoveryDuration);
 
+        
         onComplete?.Invoke();
     }
 }

@@ -2503,6 +2503,11 @@ PrefabInstance:
       propertyPath: healthBarUI
       value: 
       objectReference: {fileID: 2452957213085754217}
+    - target: {fileID: 2345437172187937601, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     - target: {fileID: 4251785501346533833, guid: aaee8c1010294e54dbad30b1e042a160,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2709,10 +2714,15 @@ PrefabInstance:
       propertyPath: playerTarget
       value: 
       objectReference: {fileID: 1366328306}
+    - target: {fileID: 5249900918688250056, guid: e64054cd2002bb248841d2fe04796567,
+        type: 3}
+      propertyPath: recoveryDuration
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9149486516610363635, guid: e64054cd2002bb248841d2fe04796567,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.48296
+      value: -9.286
       objectReference: {fileID: 0}
     - target: {fileID: 9149486516610363635, guid: e64054cd2002bb248841d2fe04796567,
         type: 3}

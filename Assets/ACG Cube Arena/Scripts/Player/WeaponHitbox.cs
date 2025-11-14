@@ -7,9 +7,6 @@ public class WeaponHitbox : MonoBehaviour
     [Header("Elements")]
     [SerializeField] private PlayerController owner;
 
-    [Header("VFX")]
-    [SerializeField] private GameObject hitVFX;
-
 
     private void OnTriggerEnter(Collider other)
     {
