@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,9 @@ public class EnemyStats : MonoBehaviour
 
     [Header("Elements")]
     [SerializeField] private HealthBarUI healthBarUI;
+
+    [Header("Actions")]
+    public static Action<int, Vector3, bool> onEnemyHit;
 
     [Header("Base Stats")]
     [SerializeField] private EnemyStatsSO stats;
@@ -69,13 +73,14 @@ public class EnemyStats : MonoBehaviour
     [NaughtyAttributes.Button]
     public void TestDmg()
     {
-        TakeDamage(10);
+        TakeDamage(10, false);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool isCritical)
     {
         CurrentHealth -= damage;
         healthBarUI.SetHealth(CurrentHealth);
+        onEnemyHit?.Invoke(damage, transform.position, isCritical);
         if (CurrentHealth <= 0)
         {
             Die();

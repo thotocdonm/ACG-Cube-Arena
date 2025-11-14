@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
     public float DashSpeed => playerStats.DashSpeed.GetValue();
     public float DashDuration => playerStats.DashDuration.GetValue();
     public float AttackDamage => playerStats.AttackDamage.GetValue();
+    public float CriticalChance => playerStats.CriticalChance.GetValue();
+    public float CriticalDamage => playerStats.CriticalDamage.GetValue();
     public Vector3 AimDirection => aimDirection;
     public IchigoComboAttack IchigoComboAttack => ichigoComboAttack;
     public bool IsAttackHeld => isAttackHeld;

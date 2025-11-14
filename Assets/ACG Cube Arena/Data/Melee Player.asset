@@ -17,6 +17,8 @@ MonoBehaviour:
   moveSpeed: 5
   attackDamage: 10
   attackCooldown: 1
+  criticalChance: 50
+  criticalDamage: 150
   dashSpeed: 10
   dashDuration: 0.2
   dashCooldown: 1
