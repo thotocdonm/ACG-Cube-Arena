@@ -8,9 +8,7 @@ public class EnemyStats : MonoBehaviour
 
     [Header("Elements")]
     [SerializeField] private HealthBarUI healthBarUI;
-
-    [Header("Actions")]
-    public static Action<int, Vector3, bool> onEnemyHit;
+    
 
     [Header("Base Stats")]
     [SerializeField] private EnemyStatsSO stats;
@@ -18,6 +16,7 @@ public class EnemyStats : MonoBehaviour
     [Header("Hit Feedback")]
     [SerializeField] private float flashDuration;
     [SerializeField] private Color flashColor = Color.white;
+    public static Action<int, Vector3, bool, Vector3> onEnemyHit;
     private MeshRenderer[] allRenderers;
     private Color[] originalColors;
     private Coroutine flashCoroutine;
@@ -73,14 +72,14 @@ public class EnemyStats : MonoBehaviour
     [NaughtyAttributes.Button]
     public void TestDmg()
     {
-        TakeDamage(10, false);
+        TakeDamage(10, false, transform.position);
     }
 
-    public void TakeDamage(int damage, bool isCritical)
+    public void TakeDamage(int damage, bool isCritical, Vector3 hitPoint)
     {
         CurrentHealth -= damage;
         healthBarUI.SetHealth(CurrentHealth);
-        onEnemyHit?.Invoke(damage, transform.position, isCritical);
+        onEnemyHit?.Invoke(damage, transform.position, isCritical, hitPoint);
         if (CurrentHealth <= 0)
         {
             Die();

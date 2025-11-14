@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using DG.Tweening;
 using UnityEngine;
 
 public class CameraShakeManager : MonoBehaviour
@@ -27,6 +28,17 @@ public class CameraShakeManager : MonoBehaviour
         perlinNoise = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         ResetIntensity();
+
+        EnemyStats.onEnemyHit += EnemyHitCallback;
+    }
+    private void OnDestroy()
+    {
+        EnemyStats.onEnemyHit -= EnemyHitCallback;
+    }
+
+    private void EnemyHitCallback(int damage, Vector3 enemyPos, bool isCritical, Vector3 hitPoint)
+    {
+        ShakeCamera(1, 0.1f);
     }
 
     public void ShakeCamera(float intensity, float duration)

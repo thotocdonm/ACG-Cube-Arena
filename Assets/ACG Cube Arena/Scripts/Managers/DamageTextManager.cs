@@ -53,8 +53,9 @@ public class DamageTextManager : MonoBehaviour
         Destroy(damageText.gameObject);
     }
 
-    private void EnemyHitCallback(int damage, Vector3 enemyPos, bool isCritical)
+    private void EnemyHitCallback(int damage, Vector3 enemyPos, bool isCritical, Vector3 hitPoint)
     {
+        Debug.Log("Damage text manager");
         Vector3 spawnPosition = enemyPos + Vector3.up * 3f;
         DamageText damageTextInstance = damageTextPool.Get();
         damageTextInstance.transform.position = spawnPosition;
