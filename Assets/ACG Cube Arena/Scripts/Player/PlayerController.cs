@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] private Animator animator;
     [SerializeField] private IchigoComboAttack ichigoComboAttack;
+    [SerializeField] private IchigoSkillAttack ichigoSkillAttack;
+
     private bool isAttackHeld;
     private bool bufferedAttackFromDash;
 
@@ -35,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public MovingState movingState { get; private set; }
     public DashingState dashingState { get; private set; }
     public IchigoAttackingState ichigoAttackingState { get; private set; }
+    public IchigoChargingState ichigoChargingState { get; private set; }
 
     public Rigidbody Rigidbody => rb;
     public StateMachine StateMachine => stateMachine;
@@ -49,6 +52,7 @@ public class PlayerController : MonoBehaviour
     public float CriticalDamage => playerStats.CriticalDamage.GetValue();
     public Vector3 AimDirection => aimDirection;
     public IchigoComboAttack IchigoComboAttack => ichigoComboAttack;
+    public IchigoSkillAttack IchigoSkillAttack => ichigoSkillAttack;
     public bool IsAttackHeld => isAttackHeld;
 
     void Awake()
@@ -61,6 +65,7 @@ public class PlayerController : MonoBehaviour
         movingState = new MovingState(this, stateMachine);
         dashingState = new DashingState(this, stateMachine);
         ichigoAttackingState = new IchigoAttackingState(this, stateMachine);
+        ichigoChargingState = new IchigoChargingState(this, stateMachine);
 
         stateMachine.Initialize(idleState);
     }
@@ -86,10 +91,10 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    
+
     public void Attack(InputAction.CallbackContext context)
     {
-        
+
 
 
         if (context.performed)
@@ -97,14 +102,41 @@ public class PlayerController : MonoBehaviour
             var currentState = stateMachine.CurrentState as PlayerBaseState;
             currentState?.HandleAttack();
         }
-        
-        if(context.started)
+
+        if (context.started)
         {
             isAttackHeld = true;
         }
-        else if(context.canceled)
+        else if (context.canceled)
         {
             isAttackHeld = false;
+        }
+    }
+    
+    public void Skill(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            if(stateMachine.CurrentState is IdleState || stateMachine.CurrentState is MovingState)
+            {
+                ChangeState(ichigoChargingState);
+            }
+        } 
+        else if (context.canceled)
+        {
+            if(stateMachine.CurrentState is IchigoChargingState)
+            {
+                ichigoSkillAttack.ReleaseSkill();
+
+                if(lastMoveInput.magnitude > 0.1f)
+                {
+                    ChangeState(movingState);
+                }
+                else
+                {
+                    ChangeState(idleState);
+                }
+            }
         }
     }
 
@@ -140,15 +172,30 @@ public class PlayerController : MonoBehaviour
     private void UpdateAimDirection()
     {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        if(Physics.Raycast(ray, out RaycastHit hit, 1000f, groundLayer, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundLayer, QueryTriggerInteraction.Ignore))
         {
             Vector3 direction = (hit.point - transform.position).normalized;
             direction.y = 0;
-            if(direction.sqrMagnitude > 0.01f)
+            if (direction.sqrMagnitude > 0.01f)
             {
                 aimDirection = direction;
             }
         }
+    }
+    
+    public int GetCriticalDamage()
+    {
+        bool isCritical = Random.Range(0f, 100f) < CriticalChance;
+        int damage = 0;
+        if (isCritical)
+        {
+            damage = (int)(AttackDamage * CriticalDamage / 100);
+        }
+        else
+        {
+            damage = (int)AttackDamage;
+        }
+        return damage;
     }
 
     private void OnCollisionEnter(Collision collision)

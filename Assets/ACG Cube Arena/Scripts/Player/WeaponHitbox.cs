@@ -13,16 +13,8 @@ public class WeaponHitbox : MonoBehaviour
         if(other.gameObject.CompareTag("Enemy"))
         {
             //Deal damage
-            bool isCritical = Random.Range(0f, 100f) < owner.CriticalChance;
-            int damage = 0;
-            if (isCritical)
-            {
-                damage = (int)(owner.AttackDamage * owner.CriticalDamage / 100);
-            }
-            else
-            {
-                damage = (int)owner.AttackDamage;
-            }
+            int damage = owner.GetCriticalDamage();
+            bool isCritical = damage > owner.AttackDamage;
 
             Vector3 contactPoint = other.ClosestPoint(transform.position);
             other.gameObject.GetComponent<EnemyStats>().TakeDamage(damage, isCritical, contactPoint);
