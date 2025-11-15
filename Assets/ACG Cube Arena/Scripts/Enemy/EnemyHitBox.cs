@@ -9,7 +9,7 @@ public class EnemyHitBox : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        Debug.LogWarning("Enemy hitbox triggered");
+        
         if(other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerStats>().TakeDamage((int)enemyStats.AttackDamage.GetValue());

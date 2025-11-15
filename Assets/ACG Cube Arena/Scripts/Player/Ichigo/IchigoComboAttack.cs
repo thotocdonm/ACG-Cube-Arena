@@ -80,7 +80,6 @@ public class IchigoComboAttack : MonoBehaviour
 
     private void PlayAttack(int index)
     {
-        Debug.Log("Playing Attack: " + attackTrigger[index]);
         animator.SetTrigger(attackTrigger[index]);
     }
 
@@ -123,7 +122,7 @@ public class IchigoComboAttack : MonoBehaviour
 
     public void OnAttackAnimatonEnd()
     {
-        Debug.Log("Attack Animation End");
+        Debug.Log("Play Attack Animation End");
         isAttacking = false;
 
         if (buffered && Time.time <= comboExpireTime && currentComboIndex < attackTrigger.Length - 1)
@@ -134,10 +133,6 @@ public class IchigoComboAttack : MonoBehaviour
         else
         {
             buffered = false;
-            if (Time.time > comboExpireTime)
-            {
-                currentComboIndex = 0;
-            }
 
         }
     }
@@ -148,11 +143,16 @@ public class IchigoComboAttack : MonoBehaviour
         isAttacking = false;
         buffered = false;
         currentComboIndex = 0;
+        comboExpireTime = 0;
         StopAllCoroutines();
+        
         animator.ResetTrigger("Attack1");
         animator.ResetTrigger("Attack2");
         animator.ResetTrigger("Attack3");
-
+        
+        animator.Play("Idle");
+        
+        DisableHitbox();
     }
     
     public bool IsComboExpired()

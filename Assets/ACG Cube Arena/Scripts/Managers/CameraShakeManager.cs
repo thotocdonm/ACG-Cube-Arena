@@ -43,7 +43,7 @@ public class CameraShakeManager : MonoBehaviour
 
     public void ShakeCamera(float intensity, float duration)
     {
-        Debug.Log("Camera shake");
+        
         perlinNoise.m_AmplitudeGain = intensity;
         StartCoroutine(WaitTime(duration));
     }

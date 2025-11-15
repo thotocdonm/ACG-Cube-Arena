@@ -56,7 +56,7 @@ public class DashingState : PlayerBaseState
 
     public override void HandleAttack()
     {
-        
+        Debug.Log("Handle Attack in Dashing State");
     }
 
 }

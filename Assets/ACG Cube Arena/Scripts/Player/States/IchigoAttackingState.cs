@@ -53,19 +53,23 @@ public class IchigoAttackingState : PlayerBaseState
             HandleAttack();
         }
 
-        if (!owner.IchigoComboAttack.IsAttacking && owner.IchigoComboAttack.IsComboExpired())
+        if (owner.IchigoComboAttack.IsComboExpired())
         {
-            Vector2 currentInput = owner.LastMoveInput;
+            if (!owner.IchigoComboAttack.IsAttacking)
+            {
+                Vector2 currentInput = owner.LastMoveInput;
 
-            if (currentInput.magnitude > 0.1f)
-            {
-                owner.ChangeState(owner.movingState);
-            }
-            else
-            {
-                owner.ChangeState(owner.idleState);
+                if (currentInput.magnitude > 0.1f)
+                {
+                    owner.ChangeState(owner.movingState);
+                }
+                else
+                {
+                    owner.ChangeState(owner.idleState);
+                }
             }
         }
+        
     }
 
     public override void HandleDash()

@@ -25,7 +25,7 @@ public class EnemyHitFeedback : MonoBehaviour
     
     private void EnemyHitCallback(int damage, Vector3 enemyPos, bool isCritical, Vector3 hitPoint)
     {
-        Debug.Log("Enemy hit feedback");
+        
         Quaternion rotation = Quaternion.Euler(0,Random.Range(0,360),0);
         GameObject vfxInstance = Instantiate(hitVFX, hitPoint, rotation);
         Destroy(vfxInstance, 1f);

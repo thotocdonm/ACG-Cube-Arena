@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
     
     public void Attack(InputAction.CallbackContext context)
     {
-        Debug.Log("Attack");
+        
 
 
         if (context.performed)
@@ -153,7 +153,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Player collided with " + collision.gameObject.name);
+        
     }
 
     #if UNITY_EDITOR
