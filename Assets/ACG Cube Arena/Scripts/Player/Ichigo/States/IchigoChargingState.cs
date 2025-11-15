@@ -15,7 +15,7 @@ public class IchigoChargingState : PlayerBaseState
 
     public override void Enter()
     {
-        owner.IchigoSkillAttack.StarCharging();
+        owner.IchigoSkillAttack.StartCharging();
         HandleMove(owner.LastMoveInput);
     }
 

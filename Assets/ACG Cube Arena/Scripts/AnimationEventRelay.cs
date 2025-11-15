@@ -10,4 +10,6 @@ public class AnimationEventRelay : MonoBehaviour
     public void DisableHitbox() => combo.DisableHitbox();
     public void OnAttackAnimationEnd() => combo.OnAttackAnimatonEnd();
     public void PlayIchigoAttackSound(int index) => AudioManager.instance.PlayIchigoAttackSound(index);
+    public void PlayIchigoChargingSound() => AudioManager.instance.PlayIchigoChargingSound();
+    public void PlayIchigoSkillReleaseSound() => AudioManager.instance.PlayIchigoSkillReleaseSound();
 }

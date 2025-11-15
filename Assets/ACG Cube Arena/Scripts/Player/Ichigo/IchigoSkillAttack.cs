@@ -31,10 +31,11 @@ public class IchigoSkillAttack : MonoBehaviour
 
     }
 
-    public void StarCharging()
+    public void StartCharging()
     {
         if (isCharging) return;
         Debug.Log("Start Charging");
+        owner.Animator.SetTrigger("StartCharging");
         isCharging = true;
         chargeStartTime = Time.time;
     }
@@ -51,6 +52,8 @@ public class IchigoSkillAttack : MonoBehaviour
         if (chargeDuration < minChargeTime)
         {
             Debug.Log("Charge Duration is too short");
+            owner.Animator.ResetTrigger("StartCharging");
+            owner.Animator.SetTrigger("SkillCancel");
             return;
         }
 
@@ -60,6 +63,8 @@ public class IchigoSkillAttack : MonoBehaviour
     public void FireSkill(float chargeDuration)
     {
         Debug.Log("Fire Skill");
+        owner.Animator.ResetTrigger("StartCharging");
+        owner.Animator.SetTrigger("SkillRelease");
         float multiplier = Mathf.Lerp(baseMultiplier, maxChargeMultiplier, chargeDuration / maxChargeTime);
 
         GameObject skillInstance = Instantiate(skillPrefab, firePoint.position, firePoint.rotation);
@@ -78,6 +83,8 @@ public class IchigoSkillAttack : MonoBehaviour
     public void CancelSkill()
     {
         if (!isCharging) return;
+        owner.Animator.ResetTrigger("StartCharging");
+        owner.Animator.SetTrigger("SkillCancel");
         isCharging = false;
     }
 

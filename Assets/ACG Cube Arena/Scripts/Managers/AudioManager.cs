@@ -7,6 +7,8 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     [Header("Elements")]
     [SerializeField] private AudioSource[] ichigoAudioSources;
+    [SerializeField] private AudioSource ichigoChargingAudioSource;
+    [SerializeField] private AudioSource ichigoSkillReleaseAudioSource;
     [SerializeField] private AudioSource enemyHitAudioSource;
 
     private void Awake()
@@ -49,6 +51,18 @@ public class AudioManager : MonoBehaviour
         AudioSource audioSource = ichigoAudioSources[index];
         audioSource.pitch = Random.Range(0.9f, 1.1f);
         audioSource.Play();
+    }
+
+    public void PlayIchigoChargingSound()
+    {
+        
+        ichigoChargingAudioSource.Play();
+    }
+
+    public void PlayIchigoSkillReleaseSound()
+    {
+        
+        ichigoSkillReleaseAudioSource.Play();
     }
     
     public void PlayEnemyHitSound()

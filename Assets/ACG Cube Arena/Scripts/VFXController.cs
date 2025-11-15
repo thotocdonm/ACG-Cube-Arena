@@ -7,11 +7,13 @@ public class VFXController : MonoBehaviour
 
     [Header("Elements")]
     [SerializeField] private GameObject slashVFX;
+    [SerializeField] private GameObject skillVFX;
 
     [Header("Anchors")]
     [SerializeField] private GameObject VFX1Anchor;
     [SerializeField] private GameObject VFX2Anchor;
     [SerializeField] private GameObject VFX3Anchor;
+    [SerializeField] private GameObject SkillVFXAnchor;
 
 
     public void SpawnSlashVfx(int index)
@@ -30,9 +32,9 @@ public class VFXController : MonoBehaviour
                 break;
         }
 
-        if(anchorToSpawn != null)
+        if (anchorToSpawn != null)
         {
-            if(index == 3)
+            if (index == 3)
             {
                 GameObject vfxInstance1 = Instantiate(slashVFX, anchorToSpawn.transform);
                 GameObject vfxInstance2 = Instantiate(slashVFX, anchorToSpawn.transform);
@@ -47,6 +49,12 @@ public class VFXController : MonoBehaviour
                 Destroy(vfxInstance, 1f);
             }
         }
+    }
+    
+    public void SpawnSkillVfx()
+    {
+        GameObject vfxInstance = Instantiate(skillVFX, SkillVFXAnchor.transform);
+        Destroy(vfxInstance, 1f);
     }
     
 }
