@@ -29,7 +29,7 @@ public class IchigoSkillProjectile : MonoBehaviour
     {
         if(rb != null)
         {
-            rb.velocity = transform.forward * 20f;
+            rb.velocity = transform.forward * 25f;
         }
     }
 

@@ -24,6 +24,7 @@ public class PlayerStats : MonoBehaviour
     public Stat MoveSpeed { get; private set; }
     public Stat AttackDamage { get; private set; }
     public Stat AttackCooldown { get; private set; }
+    public Stat SkillCooldown { get; private set; }
     public Stat CriticalChance { get; private set; }
     public Stat CriticalDamage { get; private set; }
     public Stat DashSpeed { get; private set; }
@@ -41,6 +42,7 @@ public class PlayerStats : MonoBehaviour
         MoveSpeed = new Stat(stats.moveSpeed);
         AttackDamage = new Stat(stats.attackDamage);
         AttackCooldown = new Stat(stats.attackCooldown);
+        SkillCooldown = new Stat(stats.skillCooldown);
         CriticalChance = new Stat(stats.criticalChance);
         CriticalDamage = new Stat(stats.criticalDamage);
         DashSpeed = new Stat(stats.dashSpeed);

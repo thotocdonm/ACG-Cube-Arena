@@ -18,7 +18,16 @@ public class EnemyChaseState : EnemyBaseState
     public override void FixedUpdate()
     {
         Vector3 directionToPlayer = (owner.PlayerTarget.position - owner.transform.position).normalized;
-        rb.MovePosition(owner.transform.position + directionToPlayer * owner.GetEnemyStats().MoveSpeed.GetValue() * Time.fixedDeltaTime);
+        float distanceToPlayer = Vector3.Distance(owner.transform.position, owner.PlayerTarget.position);
+        if (distanceToPlayer > owner.GetEnemyStats().DetectionRange.GetValue())
+        {
+            rb.MovePosition(owner.transform.position + directionToPlayer * owner.GetEnemyStats().MoveSpeed.GetValue() * Time.fixedDeltaTime);
+        }
+        else
+        {
+            rb.velocity = Vector3.zero;
+        }
+       
 
         if(directionToPlayer != Vector3.zero)
         {

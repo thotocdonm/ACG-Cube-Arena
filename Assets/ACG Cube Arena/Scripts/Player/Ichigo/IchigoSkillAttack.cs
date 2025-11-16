@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,10 +13,17 @@ public class IchigoSkillAttack : MonoBehaviour
     [SerializeField] private float maxChargeTime = 2f;
     [SerializeField] private float baseMultiplier = 1f;
     [SerializeField] private float maxChargeMultiplier = 2f;
+    [SerializeField] private float minScale = 1f;
+    [SerializeField] private float maxScale = 4f;
+
+    [Header("Actions")]
+    public static Action<float> onSkillUsed;
+    
 
     private PlayerController owner;
     private float chargeStartTime;
     private bool isCharging = false;
+    private float skillCooldownTimer;
 
     public bool IsCharging => isCharging;
 
@@ -28,7 +36,10 @@ public class IchigoSkillAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(skillCooldownTimer > 0)
+        {
+            skillCooldownTimer -= Time.deltaTime;
+        }
     }
 
     public void StartCharging()
@@ -62,13 +73,19 @@ public class IchigoSkillAttack : MonoBehaviour
 
     public void FireSkill(float chargeDuration)
     {
-        Debug.Log("Fire Skill");
         owner.Animator.ResetTrigger("StartCharging");
         owner.Animator.SetTrigger("SkillRelease");
+
+        onSkillUsed?.Invoke(owner.SkillCooldown);
+        ResetSkillCooldown();
+
         float multiplier = Mathf.Lerp(baseMultiplier, maxChargeMultiplier, chargeDuration / maxChargeTime);
+        float scale = Mathf.Lerp(minScale, maxScale, chargeDuration / maxChargeTime);
+        Debug.Log("Scale: " + scale);
 
         GameObject skillInstance = Instantiate(skillPrefab, firePoint.position, firePoint.rotation);
-        if(skillInstance.GetComponentInChildren<IchigoSkillProjectile>())
+        skillInstance.transform.localScale = new Vector3(scale, scale, scale);
+        if (skillInstance.GetComponentInChildren<IchigoSkillProjectile>())
         {
             IchigoSkillProjectile projectile = skillInstance.GetComponentInChildren<IchigoSkillProjectile>();
             float damage = owner.GetCriticalDamage();
@@ -77,15 +94,26 @@ public class IchigoSkillAttack : MonoBehaviour
             Debug.Log("Final Damage: " + finalDamage);
             projectile.Initialize((int)finalDamage, isCritical);
         }
+        Destroy(skillInstance, 3f);
 
     }
-    
+
     public void CancelSkill()
     {
         if (!isCharging) return;
         owner.Animator.ResetTrigger("StartCharging");
         owner.Animator.SetTrigger("SkillCancel");
         isCharging = false;
+    }
+    
+    public bool IsSkillReady()
+    {
+        return skillCooldownTimer <= 0;
+    }
+
+    public void ResetSkillCooldown()
+    {
+        skillCooldownTimer = 6f;
     }
 
 

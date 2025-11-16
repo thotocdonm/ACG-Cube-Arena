@@ -19,6 +19,7 @@ MonoBehaviour:
   attackCooldown: 1
   criticalChance: 50
   criticalDamage: 150
+  skillCooldown: 6
   dashSpeed: 10
   dashDuration: 0.2
   dashCooldown: 1

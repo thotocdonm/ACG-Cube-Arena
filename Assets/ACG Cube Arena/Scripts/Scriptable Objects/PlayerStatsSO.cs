@@ -15,6 +15,7 @@ public class PlayerStatsSO : ScriptableObject
     public float attackCooldown;
     public float criticalChance;
     public float criticalDamage;
+    public float skillCooldown;
 
     [Header("Dash Stats")]
     public float dashSpeed;

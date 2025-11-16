@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private IchigoSkillAttack ichigoSkillAttack;
 
     private bool isAttackHeld;
-    private bool bufferedAttackFromDash;
 
     [Header("Mouse Aim")]
     [SerializeField] private LayerMask groundLayer;
@@ -50,6 +49,7 @@ public class PlayerController : MonoBehaviour
     public float AttackDamage => playerStats.AttackDamage.GetValue();
     public float CriticalChance => playerStats.CriticalChance.GetValue();
     public float CriticalDamage => playerStats.CriticalDamage.GetValue();
+    public float SkillCooldown => playerStats.SkillCooldown.GetValue();
     public Vector3 AimDirection => aimDirection;
     public IchigoComboAttack IchigoComboAttack => ichigoComboAttack;
     public IchigoSkillAttack IchigoSkillAttack => ichigoSkillAttack;
@@ -94,9 +94,6 @@ public class PlayerController : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-
-
-
         if (context.performed)
         {
             var currentState = stateMachine.CurrentState as PlayerBaseState;
@@ -115,6 +112,8 @@ public class PlayerController : MonoBehaviour
     
     public void Skill(InputAction.CallbackContext context)
     {
+        if (!ichigoSkillAttack.IsSkillReady()) return;
+        
         if (context.started)
         {
             if(stateMachine.CurrentState is IdleState || stateMachine.CurrentState is MovingState)
@@ -182,7 +181,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    
+
     public int GetCriticalDamage()
     {
         bool isCritical = Random.Range(0f, 100f) < CriticalChance;
@@ -197,6 +196,7 @@ public class PlayerController : MonoBehaviour
         }
         return damage;
     }
+    
 
     private void OnCollisionEnter(Collision collision)
     {
