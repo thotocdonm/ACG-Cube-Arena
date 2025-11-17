@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AOEMageAttackStrategy : IAttackStrategy
+public class BossAoeAttackStrategy : IAttackStrategy
 {
     private readonly Enemy owner;
     private readonly Rigidbody rb;
@@ -17,7 +17,10 @@ public class AOEMageAttackStrategy : IAttackStrategy
     private readonly float chargeDuration;
     private readonly float recoveryDuration;
 
-    public AOEMageAttackStrategy(Enemy owner, Rigidbody rb, Animator animator, Transform playerTarget, EnemyStats stats, ParticleSystem chargingVFX, ParticleSystem sparkVFX, AoeAttackIndicator aoeAttackIndicator, GameObject aoeVFXPrefab, float chargeDuration, float recoveryDuration)
+    private readonly int numberOfAttack = 5;
+    private readonly float attackInterval = 0.3f;
+
+    public BossAoeAttackStrategy(Enemy owner, Rigidbody rb, Animator animator, Transform playerTarget, EnemyStats stats, ParticleSystem chargingVFX, ParticleSystem sparkVFX, AoeAttackIndicator aoeAttackIndicator, GameObject aoeVFXPrefab, float chargeDuration, float recoveryDuration)
     {
         this.owner = owner;
         this.rb = rb;
@@ -34,12 +37,33 @@ public class AOEMageAttackStrategy : IAttackStrategy
 
     public void Execute(Action onComplete)
     {
-        owner.StartCoroutine(AoeAttackSequence(onComplete));
+        owner.StartCoroutine(BossAoeAttackSequence(onComplete));
     }
 
-    private IEnumerator AoeAttackSequence(Action onComplete)
+    private IEnumerator BossAoeAttackSequence(Action onComplete)
     {
-        // Prepare to attack
+        EnableVFX();
+        animator.Play("AoeAttacking");
+
+        for (int i = 0; i < numberOfAttack; i++)
+        {
+            owner.StartCoroutine(SingleAoeRoutine());
+            yield return new WaitForSeconds(attackInterval);
+        }
+
+        yield return new WaitForSeconds(chargeDuration - (numberOfAttack - 1) * attackInterval);
+
+        DisableVFX();
+        animator.Play("Idle");
+
+        yield return new WaitForSeconds(Mathf.Max(0, recoveryDuration));
+
+        onComplete?.Invoke();
+    }
+    
+    private IEnumerator SingleAoeRoutine()
+    {
+        // Prepare
         Vector3 playerPosition = playerTarget.position;
 
         Vector2 randomOffset2D = UnityEngine.Random.insideUnitCircle * 10;
@@ -49,43 +73,31 @@ public class AOEMageAttackStrategy : IAttackStrategy
         targetPosition.y = 0.7f;
 
         // Show Indicator
-        EnableVFX();
-        animator.Play("Attack");
         AoeAttackIndicator aoeAttackIndicatorInstance = GameObject.Instantiate(aoeAttackIndicator, targetPosition, Quaternion.identity);
         aoeAttackIndicator.SetRadius(10f);
         aoeAttackIndicatorInstance.StartExpanding(chargeDuration);
-        GameObject.Destroy(aoeAttackIndicatorInstance.gameObject,chargeDuration + 0.3f);
+        GameObject.Destroy(aoeAttackIndicatorInstance.gameObject, chargeDuration + 0.3f);
         float radius = aoeAttackIndicatorInstance.GetComponentInChildren<MeshRenderer>().bounds.extents.magnitude * 0.6f;
         yield return new WaitForSeconds(chargeDuration);
 
-        // Play Attack VFX
-        DisableVFX();
-        animator.Play("Idle");
-        
+        //Spawn VFX
         GameObject aoeVFXInstance = GameObject.Instantiate(aoeVFXPrefab, targetPosition, Quaternion.identity);
+        GameObject.Destroy(aoeVFXInstance, 2f);
         aoeVFXInstance.transform.localScale = new Vector3(1, 1, 1);
 
         yield return new WaitForSeconds(0.3f);
 
-        // Deal Damage
         AudioManager.instance.PlayMageAttackSound();
         Collider[] colliders = Physics.OverlapSphere(targetPosition, radius);
         foreach (Collider collider in colliders)
         {
             Debug.Log("Collider: " + collider.gameObject.name);
-            if(collider.gameObject.CompareTag("Player"))
+            if (collider.gameObject.CompareTag("Player"))
             {
                 collider.gameObject.GetComponent<PlayerStats>().TakeDamage((int)stats.AttackDamage.GetValue());
             }
         }
-        GameObject.Destroy(aoeVFXInstance, 1.7f);
-
-        Debug.Log("Mage Attack Complete");
-
-        yield return new WaitForSeconds(recoveryDuration);
-
-
-        onComplete?.Invoke();
+        
     }
 
     private void DisableVFX()
