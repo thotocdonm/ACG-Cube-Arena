@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 2271007276720937218}
   - component: {fileID: 2595534779857497101}
   - component: {fileID: 3704388189890204851}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Boss Mage Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}

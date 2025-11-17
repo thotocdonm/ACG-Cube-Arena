@@ -805,7 +805,7 @@ GameObject:
   - component: {fileID: 4028889167616764926}
   - component: {fileID: 4529956696778577223}
   - component: {fileID: 5599762917611006721}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mage Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}

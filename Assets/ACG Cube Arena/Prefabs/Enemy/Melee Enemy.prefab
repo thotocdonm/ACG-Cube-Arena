@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 5249900918688250056}
   - component: {fileID: 8219354310070430829}
   - component: {fileID: 8696007180758844483}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Melee Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -481,7 +481,7 @@ GameObject:
   - component: {fileID: 4416424015112945694}
   - component: {fileID: 3979054919645701417}
   - component: {fileID: 6730452665659466807}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
