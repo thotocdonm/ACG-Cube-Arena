@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class PlayerStats : MonoBehaviour
     private MeshRenderer[] allRenderers;
     private Color[] originalColors;
     private Coroutine flashCoroutine;
+    public static Action onPlayerHitted;
 
     [Header("UI")]
     [SerializeField] private HealthBarUI healthBarUI;
@@ -108,6 +110,7 @@ public class PlayerStats : MonoBehaviour
         }
 
         CurrentHealth -= damage;
+        onPlayerHitted?.Invoke();
         Debug.Log("Player took " + damage + " damage. Current health: " + CurrentHealth);
         healthBarUI.SetHealth(CurrentHealth);
         if (CurrentHealth <= 0)

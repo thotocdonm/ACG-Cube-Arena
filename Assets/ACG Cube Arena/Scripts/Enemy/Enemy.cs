@@ -10,9 +10,10 @@ public abstract class Enemy : MonoBehaviour
     private EnemyStats EnemyStats;
 
     [Header("Elements")]
-    [SerializeField] protected Transform playerTarget;
+    protected Transform playerTarget;
     [SerializeField] protected BoxCollider meleeHitbox;
     protected Rigidbody rb;
+    protected Animator animator;
     private float currentHealth;
     private float attackCooldownTimer = 0f;
 
@@ -32,6 +33,12 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if(playerObject != null)
+        {
+            playerTarget = playerObject.transform;
+        }
+        animator = GetComponent<Animator>();
         stateMachine = new StateMachine();
         EnemyChaseState = new EnemyChaseState(this, stateMachine);
         EnemyAttackState = new EnemyAttackState(this, stateMachine);

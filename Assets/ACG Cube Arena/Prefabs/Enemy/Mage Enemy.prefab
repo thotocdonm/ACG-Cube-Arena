@@ -803,6 +803,7 @@ GameObject:
   - component: {fileID: 8210435568457693883}
   - component: {fileID: 8505295682834168576}
   - component: {fileID: 4028889167616764926}
+  - component: {fileID: 4529956696778577223}
   - component: {fileID: 5599762917611006721}
   m_Layer: 0
   m_Name: Mage Enemy
@@ -810,7 +811,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6261874124068380757
 Transform:
   m_ObjectHideFlags: 0
@@ -894,6 +895,27 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 94da8dcc0845bda48929e0ccee1ff40c, type: 2}
   flashDuration: 0.1
   flashColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &4529956696778577223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353476775956804966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ca1ae6ba538de44839e6d332887e36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleeHitbox: {fileID: 0}
+  chargingVFX: {fileID: 5454340643973939053}
+  sparkVFX: {fileID: 2077918045032137592}
+  aoeAttackIndicator: {fileID: 3112914512275057448, guid: ce7e07c905d7c704e9912b9f885115ae,
+    type: 3}
+  aoeVFXPrefab: {fileID: 4816059639427960527, guid: 768f9eeec3591ea40a7b199807146d2c,
+    type: 3}
+  chargeDuration: 3
+  recoveryDuration: 3
 --- !u!95 &5599762917611006721
 Animator:
   serializedVersion: 5
@@ -1083,11 +1105,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sparks blue
       objectReference: {fileID: 0}
+    - target: {fileID: 3126551418672896044, guid: 01b9de2454d2989458899aab847e1297,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01b9de2454d2989458899aab847e1297, type: 3}
+--- !u!198 &2077918045032137592 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8888750063978849513, guid: 01b9de2454d2989458899aab847e1297,
+    type: 3}
+  m_PrefabInstance: {fileID: 7461638184912512913}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8627242606437525741 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1168419208206323580, guid: 01b9de2454d2989458899aab847e1297,
@@ -1160,13 +1193,19 @@ PrefabInstance:
     - target: {fileID: 1282250326664695703, guid: 203132a6cadcb54458f91ae180adbf11,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 203132a6cadcb54458f91ae180adbf11, type: 3}
+--- !u!198 &5454340643973939053 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4316123033729271060, guid: 203132a6cadcb54458f91ae180adbf11,
+    type: 3}
+  m_PrefabInstance: {fileID: 8094172370263751289}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8492853793199871181 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 398827390095847092, guid: 203132a6cadcb54458f91ae180adbf11,

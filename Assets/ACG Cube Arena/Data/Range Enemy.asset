@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: Range Enemy
   maxHealth: 60
   moveSpeed: 5
-  attackDamage: 5
+  attackDamage: 15
   attackRange: 10
   attackCooldown: 2
   detectionRange: 10
