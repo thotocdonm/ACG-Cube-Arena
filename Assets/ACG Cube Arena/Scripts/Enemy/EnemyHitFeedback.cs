@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class EnemyHitFeedback : MonoBehaviour
@@ -27,7 +28,9 @@ public class EnemyHitFeedback : MonoBehaviour
     {
         
         Quaternion rotation = Quaternion.Euler(0,Random.Range(0,360),0);
-        GameObject vfxInstance = Instantiate(hitVFX, hitPoint, rotation);
-        Destroy(vfxInstance, 1f);
+        GameObject vfxInstance = VFXPoolManager.instance.enemyHittedVFXPool.Get();
+        vfxInstance.transform.position = hitPoint;
+        vfxInstance.transform.rotation = rotation;
+        DOVirtual.DelayedCall(1f, () => VFXPoolManager.instance.enemyHittedVFXPool.Release(vfxInstance));
     }
 }

@@ -14,7 +14,6 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected BoxCollider meleeHitbox;
     protected Rigidbody rb;
     protected Animator animator;
-    private float currentHealth;
     private float attackCooldownTimer = 0f;
 
 

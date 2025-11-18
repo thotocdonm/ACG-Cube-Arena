@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class AOEMageAttackStrategy : IAttackStrategy
@@ -51,10 +52,12 @@ public class AOEMageAttackStrategy : IAttackStrategy
         // Show Indicator
         EnableVFX();
         animator.Play("Attack");
-        AoeAttackIndicator aoeAttackIndicatorInstance = GameObject.Instantiate(aoeAttackIndicator, targetPosition, Quaternion.identity);
+        AoeAttackIndicator aoeAttackIndicatorInstance = VFXPoolManager.instance.enemyAoeIndicatorPool.Get().GetComponent<AoeAttackIndicator>();
+        aoeAttackIndicatorInstance.transform.position = targetPosition;
+        aoeAttackIndicatorInstance.transform.rotation = Quaternion.identity;
         aoeAttackIndicator.SetRadius(10f);
         aoeAttackIndicatorInstance.StartExpanding(chargeDuration);
-        GameObject.Destroy(aoeAttackIndicatorInstance.gameObject,chargeDuration + 0.3f);
+        DOVirtual.DelayedCall(chargeDuration + 0.3f, () => VFXPoolManager.instance.enemyAoeIndicatorPool.Release(aoeAttackIndicatorInstance.gameObject));
         float radius = aoeAttackIndicatorInstance.GetComponentInChildren<MeshRenderer>().bounds.extents.magnitude * 0.6f;
         yield return new WaitForSeconds(chargeDuration);
 
@@ -62,9 +65,11 @@ public class AOEMageAttackStrategy : IAttackStrategy
         DisableVFX();
         animator.Play("Idle");
         
-        GameObject aoeVFXInstance = GameObject.Instantiate(aoeVFXPrefab, targetPosition, Quaternion.identity);
+        GameObject aoeVFXInstance = VFXPoolManager.instance.enemyAoeVFXPool.Get();
+        aoeVFXInstance.transform.position = targetPosition;
+        aoeVFXInstance.transform.rotation = Quaternion.identity;
         aoeVFXInstance.transform.localScale = new Vector3(1, 1, 1);
-        GameObject.Destroy(aoeVFXInstance, 2f);
+        DOVirtual.DelayedCall(2f, () => VFXPoolManager.instance.enemyAoeVFXPool.Release(aoeVFXInstance));
 
         yield return new WaitForSeconds(0.3f);
 

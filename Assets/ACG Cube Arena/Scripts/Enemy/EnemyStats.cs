@@ -8,6 +8,7 @@ public class EnemyStats : MonoBehaviour
 
     [Header("Elements")]
     [SerializeField] private HealthBarUI healthBarUI;
+    [SerializeField] protected Transform dmgTextAnchor;
     
 
     [Header("Base Stats")]
@@ -79,7 +80,7 @@ public class EnemyStats : MonoBehaviour
     {
         CurrentHealth -= damage;
         healthBarUI.SetHealth(CurrentHealth);
-        onEnemyHit?.Invoke(damage, transform.position, isCritical, hitPoint);
+        onEnemyHit?.Invoke(damage, dmgTextAnchor.position, isCritical, hitPoint);
         if (CurrentHealth <= 0)
         {
             Die();

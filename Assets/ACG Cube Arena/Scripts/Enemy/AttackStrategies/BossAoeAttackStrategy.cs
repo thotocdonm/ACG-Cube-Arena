@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class BossAoeAttackStrategy : IAttackStrategy
@@ -73,17 +74,20 @@ public class BossAoeAttackStrategy : IAttackStrategy
         targetPosition.y = 0.7f;
 
         // Show Indicator
-        AoeAttackIndicator aoeAttackIndicatorInstance = GameObject.Instantiate(aoeAttackIndicator, targetPosition, Quaternion.identity);
+        AoeAttackIndicator aoeAttackIndicatorInstance = VFXPoolManager.instance.enemyAoeIndicatorPool.Get().GetComponent<AoeAttackIndicator>();
+        aoeAttackIndicatorInstance.transform.position = targetPosition;
+        aoeAttackIndicatorInstance.transform.rotation = Quaternion.identity;
         aoeAttackIndicator.SetRadius(10f);
         aoeAttackIndicatorInstance.StartExpanding(chargeDuration);
-        GameObject.Destroy(aoeAttackIndicatorInstance.gameObject, chargeDuration + 0.3f);
+        DOVirtual.DelayedCall(chargeDuration + 0.3f, () => VFXPoolManager.instance.enemyAoeIndicatorPool.Release(aoeAttackIndicatorInstance.gameObject));
         float radius = aoeAttackIndicatorInstance.GetComponentInChildren<MeshRenderer>().bounds.extents.magnitude * 0.6f;
         yield return new WaitForSeconds(chargeDuration);
 
         //Spawn VFX
-        GameObject aoeVFXInstance = GameObject.Instantiate(aoeVFXPrefab, targetPosition, Quaternion.identity);
-        GameObject.Destroy(aoeVFXInstance, 2f);
+        GameObject aoeVFXInstance = VFXPoolManager.instance.enemyAoeVFXPool.Get();
+        aoeVFXInstance.transform.position = targetPosition;
         aoeVFXInstance.transform.localScale = new Vector3(1, 1, 1);
+        DOVirtual.DelayedCall(2f, () => VFXPoolManager.instance.enemyAoeVFXPool.Release(aoeVFXInstance));
 
         yield return new WaitForSeconds(0.3f);
 

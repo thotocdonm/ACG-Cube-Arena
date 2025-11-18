@@ -77,7 +77,9 @@ public class BossSpawnAttackStrategy : IAttackStrategy
         targetPosition.y = 0.7f;
 
         // Show Indicator
-        GameObject spawnIndicatorInstance = GameObject.Instantiate(spawnIndicator, targetPosition, Quaternion.identity);
+        GameObject spawnIndicatorInstance = VFXPoolManager.instance.enemySpawnVFXPool.Get();
+        spawnIndicatorInstance.transform.position = targetPosition;
+        spawnIndicatorInstance.transform.rotation = Quaternion.identity;
         spawnIndicatorInstance.transform.localRotation = Quaternion.Euler(90, 0, 0);
         GameObject.Destroy(spawnIndicatorInstance.gameObject, chargeDuration + 0.3f);
         yield return new WaitForSeconds(chargeDuration);

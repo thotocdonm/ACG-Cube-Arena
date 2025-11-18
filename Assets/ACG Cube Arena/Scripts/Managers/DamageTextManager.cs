@@ -55,8 +55,8 @@ public class DamageTextManager : MonoBehaviour
 
     private void EnemyHitCallback(int damage, Vector3 enemyPos, bool isCritical, Vector3 hitPoint)
     {
-        
-        Vector3 spawnPosition = enemyPos + Vector3.up * 3f;
+
+        Vector3 spawnPosition = enemyPos;
         DamageText damageTextInstance = damageTextPool.Get();
         damageTextInstance.transform.position = spawnPosition;
         damageTextInstance.Animate(damage, isCritical);
