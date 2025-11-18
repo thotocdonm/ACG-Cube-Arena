@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Enemy")]
     [SerializeField] private AudioSource enemyHitAudioSource;
+    [SerializeField] private AudioSource enemySpawnAudioSource;
 
     [Header("Mage Enemy")]
     [SerializeField] private AudioSource mageChargeAudioSource;
@@ -96,10 +97,16 @@ public class AudioManager : MonoBehaviour
         mageAttackAudioSource.pitch = Random.Range(0.9f, 1.1f);
         mageAttackAudioSource.Play();
     }
-    
+
     public void PlayPlayerHittedSound()
     {
         playerHittedAudioSource.pitch = Random.Range(0.9f, 1.1f);
         playerHittedAudioSource.Play();
+    }
+    
+    public void PlayEnemySpawnSound()
+    {
+        enemySpawnAudioSource.pitch = Random.Range(0.9f, 1.1f);
+        enemySpawnAudioSource.Play();
     }
 }

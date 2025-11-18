@@ -64,6 +64,7 @@ public class AOEMageAttackStrategy : IAttackStrategy
         
         GameObject aoeVFXInstance = GameObject.Instantiate(aoeVFXPrefab, targetPosition, Quaternion.identity);
         aoeVFXInstance.transform.localScale = new Vector3(1, 1, 1);
+        GameObject.Destroy(aoeVFXInstance, 2f);
 
         yield return new WaitForSeconds(0.3f);
 
@@ -78,7 +79,7 @@ public class AOEMageAttackStrategy : IAttackStrategy
                 collider.gameObject.GetComponent<PlayerStats>().TakeDamage((int)stats.AttackDamage.GetValue());
             }
         }
-        GameObject.Destroy(aoeVFXInstance, 1.7f);
+        
 
         Debug.Log("Mage Attack Complete");
 

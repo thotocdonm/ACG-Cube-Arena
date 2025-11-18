@@ -10,6 +10,8 @@ public class BossMageEnemy : Enemy
     [SerializeField] private ParticleSystem sparkVFX;
     [SerializeField] private AoeAttackIndicator aoeAttackIndicator;
     [SerializeField] private GameObject aoeVFXPrefab;
+    [SerializeField] private GameObject spawnIndicator;
+    [SerializeField] private GameObject[] spawnableEnemies;
     [SerializeField] private float chargeDuration;
     [SerializeField] private float recoveryDuration;
     private EnemyStats enemyStats;
@@ -24,10 +26,37 @@ public class BossMageEnemy : Enemy
         UpdateAttackStrategy();
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        StartCoroutine(BossAttackPatternCoroutine());
+    }
+
     private void UpdateAttackStrategy()
     {
         enemyStats = GetEnemyStats();
-        AttackStrategy = new BossAoeAttackStrategy(this, rb, animator, playerTarget, enemyStats, chargingVFX, sparkVFX, aoeAttackIndicator, aoeVFXPrefab, chargeDuration, recoveryDuration);
+        aoeStrategy = new BossAoeAttackStrategy(this, rb, animator, playerTarget, enemyStats, chargingVFX, sparkVFX, aoeAttackIndicator, aoeVFXPrefab, chargeDuration, recoveryDuration);
+        summonStrategy = new BossSpawnAttackStrategy(this, rb, animator, spawnableEnemies, spawnIndicator, playerTarget, enemyStats, chargingVFX, sparkVFX, aoeAttackIndicator, aoeVFXPrefab, chargeDuration, recoveryDuration);
+    }
+    
+    private IEnumerator BossAttackPatternCoroutine()
+    {
+        int aoeCount = 0;
+        while (true)
+        {
+            if (aoeCount < 5)
+            {
+                AttackStrategy = aoeStrategy;
+                aoeCount++;
+            }
+            else
+            {
+                AttackStrategy = summonStrategy;
+                aoeCount = 0;
+            }
+            
+            yield return new WaitUntil(() => stateMachine.GetCurrentState() != EnemyAttackState);
+        }
     }
     
 

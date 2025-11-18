@@ -464,6 +464,10 @@ MonoBehaviour:
     type: 3}
   aoeVFXPrefab: {fileID: 4816059639427960527, guid: 768f9eeec3591ea40a7b199807146d2c,
     type: 3}
+  spawnIndicator: {fileID: 6793324961696948394, guid: 21523d4db0bad6f4d82a59681a87ed85,
+    type: 3}
+  spawnableEnemies:
+  - {fileID: 3752128456971902506, guid: e64054cd2002bb248841d2fe04796567, type: 3}
   chargeDuration: 3
   recoveryDuration: 3
 --- !u!95 &3704388189890204851
