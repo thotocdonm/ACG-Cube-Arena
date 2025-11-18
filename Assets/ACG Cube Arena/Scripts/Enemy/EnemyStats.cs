@@ -108,12 +108,6 @@ public class EnemyStats : MonoBehaviour
         flashCoroutine = null;
     }
 
-    [NaughtyAttributes.Button]
-    public void TestSlow()
-    {
-        Debug.Log("Applying slow debuff");
-        ApplySlowDebuff(10f, 0.5f);
-    }
 
     public void ApplySlowDebuff(float duration, float slowPercentage)
     {
@@ -121,20 +115,23 @@ public class EnemyStats : MonoBehaviour
         MoveSpeed.AddModifier(new StatModifier(-slowPercentage, StatModifierType.Percentage, slowSource));
     }
 
-    [NaughtyAttributes.Button]
-    public void TestIncreaseAttackDamage()
-    {
-        IncreaseAttackDamage(10);
-    }
 
     public void IncreaseAttackDamage(int amount)
     {
         AttackDamage.AddModifier(new StatModifier(amount, StatModifierType.Flat, "IncreaseAttackDamage"));
     }
 
+    public void ApplyWaveModifier(int waveNumber, float healthMultiplier, float attackMultiplier)
+    {
+        Debug.Log("Applying Wave Modifier: Health Multiplier: " + healthMultiplier * waveNumber + " Attack Multiplier: " + attackMultiplier * waveNumber);
+        MaxHealth.AddModifier(new StatModifier(healthMultiplier * waveNumber, StatModifierType.Percentage, "WaveModifier"));
+        AttackDamage.AddModifier(new StatModifier(attackMultiplier * waveNumber, StatModifierType.Percentage, "WaveModifier"));
+    }
+
     public void Die()
     {
         Debug.Log("Enemy Defeated");
+        WaveManager.instance.OnEnemyDied();
         Destroy(gameObject);
     }
 

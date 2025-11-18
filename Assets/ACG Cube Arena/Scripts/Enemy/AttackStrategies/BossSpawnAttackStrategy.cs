@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class BossSpawnAttackStrategy : IAttackStrategy
@@ -81,7 +82,7 @@ public class BossSpawnAttackStrategy : IAttackStrategy
         spawnIndicatorInstance.transform.position = targetPosition;
         spawnIndicatorInstance.transform.rotation = Quaternion.identity;
         spawnIndicatorInstance.transform.localRotation = Quaternion.Euler(90, 0, 0);
-        GameObject.Destroy(spawnIndicatorInstance.gameObject, chargeDuration + 0.3f);
+        DOVirtual.DelayedCall(chargeDuration + 0.3f, () => VFXPoolManager.instance.enemySpawnVFXPool.Release(spawnIndicatorInstance));
         yield return new WaitForSeconds(chargeDuration);
 
         //Spawn Enemy

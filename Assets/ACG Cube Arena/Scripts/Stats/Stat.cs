@@ -48,6 +48,14 @@ public class Stat
 
     public void AddModifier(StatModifier modifier)
     {
+        for(int i = 0; i < modifiers.Count; i++)
+        {
+            if(modifiers[i].source == modifier.source)
+            {
+                modifiers.RemoveAt(i);
+            }
+        }
+
         modifiers.Add(modifier);
         CheckForChange();
     }
