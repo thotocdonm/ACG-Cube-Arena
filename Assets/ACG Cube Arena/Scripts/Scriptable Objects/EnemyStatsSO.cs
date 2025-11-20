@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Enemy Stats", menuName = "Enemy/Enemy Stats",order = 0)]
+[CreateAssetMenu(fileName = "New Enemy Stats", menuName = "Enemy/Enemy Stats", order = 0)]
 public class EnemyStatsSO : ScriptableObject
 {
     [Header("Base Stats")]
@@ -20,4 +20,9 @@ public class EnemyStatsSO : ScriptableObject
     public GameObject projectilePrefab;
     public float projectileSpeed;
 
+    [Header("Type")]
+    public EnemyType enemyType;
+
 }
+
+public enum EnemyType { Melee, Ranged, Boss }

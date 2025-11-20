@@ -21,3 +21,4 @@ MonoBehaviour:
   detectionRange: 10
   projectilePrefab: {fileID: 0}
   projectileSpeed: 0
+  enemyType: 1

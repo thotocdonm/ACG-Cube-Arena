@@ -18,6 +18,7 @@ public class EnemyStats : MonoBehaviour
     [SerializeField] private float flashDuration;
     [SerializeField] private Color flashColor = Color.white;
     public static Action<int, Vector3, bool, Vector3> onEnemyHit;
+    public static Action<int> onBossHealthChanged;
     private MeshRenderer[] allRenderers;
     private Color[] originalColors;
     private Coroutine flashCoroutine;
@@ -47,8 +48,11 @@ public class EnemyStats : MonoBehaviour
         ProjectilePrefab = stats.projectilePrefab;
 
         CurrentHealth = (int)MaxHealth.GetValue();
-        healthBarUI.SetMaxHealth(MaxHealth.GetValue());
-        healthBarUI.SetHealth(CurrentHealth);
+        if(healthBarUI != null)
+        {
+            healthBarUI.SetMaxHealth(MaxHealth.GetValue());
+            healthBarUI.SetHealth(CurrentHealth);
+        }
 
         allRenderers = GetComponentsInChildren<MeshRenderer>();
         originalColors = new Color[allRenderers.Length];
@@ -79,8 +83,16 @@ public class EnemyStats : MonoBehaviour
     public void TakeDamage(int damage, bool isCritical, Vector3 hitPoint)
     {
         CurrentHealth -= damage;
-        healthBarUI.SetHealth(CurrentHealth);
+        if(healthBarUI != null)
+        {
+            healthBarUI.SetHealth(CurrentHealth);
+        }
+   
         onEnemyHit?.Invoke(damage, dmgTextAnchor.position, isCritical, hitPoint);
+        if(stats.enemyType == EnemyType.Boss)
+        {
+            onBossHealthChanged?.Invoke(CurrentHealth);
+        }
         if (CurrentHealth <= 0)
         {
             Die();
@@ -126,6 +138,7 @@ public class EnemyStats : MonoBehaviour
         Debug.Log("Applying Wave Modifier: Health Multiplier: " + healthMultiplier * waveNumber + " Attack Multiplier: " + attackMultiplier * waveNumber);
         MaxHealth.AddModifier(new StatModifier(healthMultiplier * waveNumber, StatModifierType.Percentage, "WaveModifier"));
         AttackDamage.AddModifier(new StatModifier(attackMultiplier * waveNumber, StatModifierType.Percentage, "WaveModifier"));
+        CurrentHealth = (int)MaxHealth.GetValue();
     }
 
     public void Die()

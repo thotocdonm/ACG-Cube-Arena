@@ -14,6 +14,7 @@ public class AoeAttackIndicator : MonoBehaviour
 
     private IEnumerator ExpandCoroutine(float duration)
     {
+        fillTransform.localScale = Vector3.zero;
         float elapsed = 0;
         Vector3 initialScale = fillTransform.localScale;
         while (elapsed < duration)

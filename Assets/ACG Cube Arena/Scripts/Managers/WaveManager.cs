@@ -17,6 +17,7 @@ public class WaveManager : MonoBehaviour
     [Header("Enemy")]
     [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] private GameObject bossPrefab;
+    [SerializeField] private Transform enemyParent;
 
     [Header("Wave Setting")]
     [SerializeField] private int initialEnemyCount = 5;
@@ -32,6 +33,7 @@ public class WaveManager : MonoBehaviour
 
     [Header("UI & Triggers")]
     [SerializeField] private GameObject startWaveTrigger;
+    [SerializeField] private GameObject bossHealthBarUI;
 
     public int CurrentWave { get; private set; }
     private int currentEnemyCount;
@@ -88,30 +90,23 @@ public class WaveManager : MonoBehaviour
         startWaveTrigger.SetActive(false);
         onWaveStart?.Invoke(CurrentWave);
 
-        if (CurrentWave % 5 == 0)
+        if (CurrentWave % 2 == 0)
         {
             currentEnemyCount = 1;
-            StartCoroutine(SpawnEnemySequence(bossPrefab));
+            StartCoroutine(SpawnEnemySequence(bossPrefab, 5));
         }
         else
         {
             currentEnemyCount = initialEnemyCount + (CurrentWave / wavesPerEnemyCount) * enemyCountIncrease;
             for(int i = 0; i < currentEnemyCount; i++)
             {
-                StartCoroutine(SpawnEnemySequence(enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)]));
+                StartCoroutine(SpawnEnemySequence(enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)],0));
                 yield return new WaitForSeconds(spawnInterval);
             }
         }
     }
 
-    // private void SpawnEnemy(GameObject enemyPrefab)
-    // {
-    //     Vector3 spawnPoint = GetRandomSpawnPoint();
-    //     GameObject enemyInstance = Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
-    //     enemyInstance.GetComponent<EnemyStats>().ApplyWaveModifier(CurrentWave, healthMultiplerIncreasePerWave, damageMultiplerIncreasePerWave);
-    // }
-
-    private IEnumerator SpawnEnemySequence(GameObject enemyPrefab)
+    private IEnumerator SpawnEnemySequence(GameObject enemyPrefab, float indicatorScale)
     {
        Vector3 spawnPoint = GetRandomSpawnPoint();
 
@@ -120,13 +115,27 @@ public class WaveManager : MonoBehaviour
         spawnIndicatorInstance.transform.position = spawnPoint;
         spawnIndicatorInstance.transform.rotation = Quaternion.identity;
         spawnIndicatorInstance.transform.localRotation = Quaternion.Euler(90, 0, 0);
+        if (indicatorScale != 0)
+        {
+            spawnIndicatorInstance.transform.localScale = new Vector3(indicatorScale, indicatorScale, indicatorScale);
+        }
+        else
+        {
+            spawnIndicatorInstance.transform.localScale = Vector3.one;
+        }
         DOVirtual.DelayedCall(2f, () => VFXPoolManager.instance.enemySpawnVFXPool.Release(spawnIndicatorInstance));
         yield return new WaitForSeconds(2f);
 
         //Spawn Enemy
-        GameObject enemyInstance = Instantiate(enemyPrefab, spawnPoint, Quaternion.identity);
+        GameObject enemyInstance = Instantiate(enemyPrefab, spawnPoint, Quaternion.identity, enemyParent);
         enemyInstance.GetComponent<EnemyStats>().ApplyWaveModifier(CurrentWave, healthMultiplerIncreasePerWave, damageMultiplerIncreasePerWave);
         AudioManager.instance.PlayEnemySpawnSound();
+
+        if(enemyPrefab.GetComponent<EnemyStats>().GetBaseStats().enemyType == EnemyType.Boss)
+        {
+            bossHealthBarUI.SetActive(true);
+            bossHealthBarUI.GetComponent<BossHealthBarUI>().Initialize(enemyInstance.GetComponent<EnemyStats>());
+        }
     }
 
     private Vector3 GetRandomSpawnPoint()
@@ -140,17 +149,28 @@ public class WaveManager : MonoBehaviour
         targetPosition.y = 0.7f;
         return targetPosition;
     }
-    
+
     public void OnEnemyDied()
     {
         currentEnemyCount--;
-        if(currentEnemyCount <= 0 && CurrentWaveState == WaveState.WaveInProgress){
+        if (currentEnemyCount <= 0 && CurrentWaveState == WaveState.WaveInProgress)
+        {
             EndWave();
+        }
+    }
+    
+    private void KillAllEnemies()
+    {
+        foreach(Transform enemy in enemyParent)
+        {
+            Destroy(enemy.gameObject);
         }
     }
 
     private void EndWave(){
         CurrentWaveState = WaveState.Preparing;
+        KillAllEnemies();
+        bossHealthBarUI.SetActive(false);
         EnterPreparationPhase();
     }
 }
