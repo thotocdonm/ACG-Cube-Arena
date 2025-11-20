@@ -8,6 +8,7 @@ public class PlayerStats : MonoBehaviour
 
     [Header("Data")]
     [SerializeField] private PlayerStatsSO stats;
+    private Dictionary<StatType, Stat> statsDictionary = new Dictionary<StatType, Stat>();
 
     [Header("Damage Settings")]
     [SerializeField] private float iFrameDuration = 0.5f;
@@ -22,43 +23,37 @@ public class PlayerStats : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private HealthBarUI healthBarUI;
-    public Stat MaxHealth { get; private set; }
-    public Stat MoveSpeed { get; private set; }
-    public Stat AttackDamage { get; private set; }
-    public Stat AttackCooldown { get; private set; }
-    public Stat SkillCooldown { get; private set; }
-    public Stat CriticalChance { get; private set; }
-    public Stat CriticalDamage { get; private set; }
-    public Stat DashSpeed { get; private set; }
-    public Stat DashDuration { get; private set; }
-    public Stat DashCooldown { get; private set; }
-    public Stat ProjectileSpeed { get; private set; }
-    public GameObject ProjectilePrefab { get; private set; }
+
+    public Stat MaxHealth => statsDictionary[StatType.MaxHealth];
+    public Stat MoveSpeed => statsDictionary[StatType.MoveSpeed];
+    public Stat AttackDamage => statsDictionary[StatType.AttackDamage];
+    public Stat AttackCooldown => statsDictionary[StatType.AttackCooldown];
+    public Stat SkillCooldown => statsDictionary[StatType.SkillCooldown];
+    public Stat CriticalChance => statsDictionary[StatType.CriticalChance];
+    public Stat CriticalDamage => statsDictionary[StatType.CriticalDamage];
+    public Stat DashSpeed => statsDictionary[StatType.DashSpeed];
+    public Stat DashDuration => statsDictionary[StatType.DashDuration];
+    public Stat DashCooldown => statsDictionary[StatType.DashCooldown];
 
     public int CurrentHealth { get; private set; }
 
 
     private void Awake()
     {
-        MaxHealth = new Stat(stats.maxHealth);
-        MoveSpeed = new Stat(stats.moveSpeed);
-        AttackDamage = new Stat(stats.attackDamage);
-        AttackCooldown = new Stat(stats.attackCooldown);
-        SkillCooldown = new Stat(stats.skillCooldown);
-        CriticalChance = new Stat(stats.criticalChance);
-        CriticalDamage = new Stat(stats.criticalDamage);
-        DashSpeed = new Stat(stats.dashSpeed);
-        DashDuration = new Stat(stats.dashDuration);
-        DashCooldown = new Stat(stats.dashCooldown);
-        if(stats.projectilePrefab != null)
-        {
-            ProjectileSpeed = new Stat(stats.projectileSpeed);
-            ProjectilePrefab = stats.projectilePrefab;
-        }
+        statsDictionary.Add(StatType.MaxHealth, new Stat(stats.maxHealth));
+        statsDictionary.Add(StatType.MoveSpeed, new Stat(stats.moveSpeed));
+        statsDictionary.Add(StatType.AttackDamage, new Stat(stats.attackDamage));
+        statsDictionary.Add(StatType.AttackCooldown, new Stat(stats.attackCooldown));
+        statsDictionary.Add(StatType.SkillCooldown, new Stat(stats.skillCooldown));
+        statsDictionary.Add(StatType.CriticalChance, new Stat(stats.criticalChance));
+        statsDictionary.Add(StatType.CriticalDamage, new Stat(stats.criticalDamage));
+        statsDictionary.Add(StatType.DashSpeed, new Stat(stats.dashSpeed));
+        statsDictionary.Add(StatType.DashDuration, new Stat(stats.dashDuration));
+        statsDictionary.Add(StatType.DashCooldown, new Stat(stats.dashCooldown));
 
-        CurrentHealth = (int)MaxHealth.GetValue();
-        healthBarUI.SetMaxHealth(MaxHealth.GetValue());
-        healthBarUI.SetHealth(MaxHealth.GetValue());
+        CurrentHealth = (int)statsDictionary[StatType.MaxHealth].GetValue();
+        healthBarUI.SetMaxHealth(statsDictionary[StatType.MaxHealth].GetValue());
+        healthBarUI.SetHealth(statsDictionary[StatType.MaxHealth].GetValue());
         allRenderers = GetComponentsInChildren<MeshRenderer>();
         originalColors = new Color[allRenderers.Length];
         for (int i = 0; i < allRenderers.Length; i++)
@@ -88,6 +83,16 @@ public class PlayerStats : MonoBehaviour
     public void TestIncreaseAttackDamage()
     {
         IncreaseAttackDamage(10);
+    }
+
+    public Stat GetStat(StatType statType)
+    {
+        if (statsDictionary.TryGetValue(statType, out Stat stat))
+        {
+            return stat;
+        }
+        Debug.LogWarning("Stat not found: " + statType);
+        return null;
     }
 
     public void TakeDamage(int damage, bool isBypassIframe = false)

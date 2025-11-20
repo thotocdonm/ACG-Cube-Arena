@@ -4243,8 +4243,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2100507022}
+  - component: {fileID: 2100507023}
   m_Layer: 0
-  m_Name: Game Events Manager
+  m_Name: Inventory Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4265,6 +4266,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1892564234}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2100507023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100507021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb059dc5a89285248b8a1b0bcba0ea9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testItem: {fileID: 11400000, guid: 5b1d0bf3cd4b652468e28af98ca47147, type: 2}
+  testItem2: {fileID: 11400000, guid: faed5998de8a655438ae3f4c5e8e6da1, type: 2}
 --- !u!1 &1953630211006962981
 GameObject:
   m_ObjectHideFlags: 0

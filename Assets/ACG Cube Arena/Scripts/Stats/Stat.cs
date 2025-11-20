@@ -65,6 +65,18 @@ public class Stat
         modifiers.Remove(modifier);
         CheckForChange();
     }
+
+    public void RemoveAllModifiersFromSource(object source)
+    {
+        for(int i = modifiers.Count - 1; i >= 0; i--)
+        {
+            if(modifiers[i].source == source)
+            {
+                modifiers.RemoveAt(i);
+            }
+        }
+        CheckForChange();
+    }
     
     private void CheckForChange()
     {
