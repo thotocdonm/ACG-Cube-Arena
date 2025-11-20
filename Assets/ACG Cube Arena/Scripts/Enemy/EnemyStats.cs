@@ -48,11 +48,7 @@ public class EnemyStats : MonoBehaviour
         ProjectilePrefab = stats.projectilePrefab;
 
         CurrentHealth = (int)MaxHealth.GetValue();
-        if(healthBarUI != null)
-        {
-            healthBarUI.SetMaxHealth(MaxHealth.GetValue());
-            healthBarUI.SetHealth(CurrentHealth);
-        }
+        SetHealthBarUI();
 
         allRenderers = GetComponentsInChildren<MeshRenderer>();
         originalColors = new Color[allRenderers.Length];
@@ -138,6 +134,7 @@ public class EnemyStats : MonoBehaviour
         Debug.Log("Applying Wave Modifier: Health Multiplier: " + healthMultiplier * waveNumber + " Attack Multiplier: " + attackMultiplier * waveNumber);
         MaxHealth.AddModifier(new StatModifier(healthMultiplier * waveNumber, StatModifierType.Percentage, "WaveModifier"));
         AttackDamage.AddModifier(new StatModifier(attackMultiplier * waveNumber, StatModifierType.Percentage, "WaveModifier"));
+        SetHealthBarUI();
         CurrentHealth = (int)MaxHealth.GetValue();
     }
 
@@ -151,6 +148,15 @@ public class EnemyStats : MonoBehaviour
     public EnemyStatsSO GetBaseStats()
     {
         return stats;
+    }
+
+    private void SetHealthBarUI()
+    {
+        if(healthBarUI != null)
+        {
+            healthBarUI.SetMaxHealth(MaxHealth.GetValue());
+            healthBarUI.SetHealth(MaxHealth.GetValue());
+        }
     }
     
 }

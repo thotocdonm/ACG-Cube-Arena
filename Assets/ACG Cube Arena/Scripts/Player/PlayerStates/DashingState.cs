@@ -38,6 +38,7 @@ public class DashingState : PlayerBaseState
     {
         owner.Animator.ResetTrigger("Dash");
         Debug.LogWarning("Dash Complete");
+        owner.ResetDashCooldown();
 
         Vector2 currentInput = owner.LastMoveInput;
         Debug.LogWarning("Current Input: " + currentInput);

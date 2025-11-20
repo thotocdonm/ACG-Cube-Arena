@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
@@ -34,6 +35,7 @@ public class WaveManager : MonoBehaviour
     [Header("UI & Triggers")]
     [SerializeField] private GameObject startWaveTrigger;
     [SerializeField] private GameObject bossHealthBarUI;
+    [SerializeField] private TextMeshProUGUI waveText;
 
     public int CurrentWave { get; private set; }
     private int currentEnemyCount;
@@ -64,14 +66,20 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
-
+        UpdateWaveText();
     }
 
     private void EnterPreparationPhase()
     {
         CurrentWaveState = WaveState.Preparing;
         startWaveTrigger.SetActive(true);
+        UpdateWaveText();
         Debug.Log("Wave Preparation Phase Started, Enter Circle to continue");
+    }
+
+    private void UpdateWaveText()
+    {
+        waveText.text = "Wave " + (CurrentWave + 1).ToString();
     }
 
     public void StartNextWave()
@@ -161,9 +169,10 @@ public class WaveManager : MonoBehaviour
     
     private void KillAllEnemies()
     {
-        foreach(Transform enemy in enemyParent)
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach(GameObject enemy in enemies)
         {
-            Destroy(enemy.gameObject);
+            Destroy(enemy);
         }
     }
 

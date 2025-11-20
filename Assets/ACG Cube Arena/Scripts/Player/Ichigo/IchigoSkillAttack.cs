@@ -15,9 +15,6 @@ public class IchigoSkillAttack : MonoBehaviour
     [SerializeField] private float maxChargeMultiplier = 2f;
     [SerializeField] private float minScale = 1f;
     [SerializeField] private float maxScale = 4f;
-
-    [Header("Actions")]
-    public static Action<float> onSkillUsed;
     
 
     private PlayerController owner;
@@ -76,7 +73,7 @@ public class IchigoSkillAttack : MonoBehaviour
         owner.Animator.ResetTrigger("StartCharging");
         owner.Animator.SetTrigger("SkillRelease");
 
-        onSkillUsed?.Invoke(owner.SkillCooldown);
+        GameEventsManager.TriggerSkillCooldownStart(SkillId.IchigoSkill,owner.SkillCooldown);
         ResetSkillCooldown();
 
         float multiplier = Mathf.Lerp(baseMultiplier, maxChargeMultiplier, chargeDuration / maxChargeTime);

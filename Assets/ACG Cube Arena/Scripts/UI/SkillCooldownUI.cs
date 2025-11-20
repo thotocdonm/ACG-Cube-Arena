@@ -11,14 +11,17 @@ public class SkillCooldownUI : MonoBehaviour
     [SerializeField] private Image cooldownFillImage;
     private Coroutine cooldownCoroutine;
 
+    [Header("Configuration")]
+    [SerializeField] private SkillId skillId;
+
     void Awake()
     {
-        IchigoSkillAttack.onSkillUsed += OnSkillUsedCallback;
+        GameEventsManager.onSkillCooldownStart += OnSkillCooldownStartCallback;
     }
     
     void OnDestroy()
     {
-        IchigoSkillAttack.onSkillUsed -= OnSkillUsedCallback;
+        GameEventsManager.onSkillCooldownStart -= OnSkillCooldownStartCallback;
     }
 
     // Start is called before the first frame update
@@ -42,7 +45,14 @@ public class SkillCooldownUI : MonoBehaviour
         }
         cooldownCoroutine = StartCoroutine(CooldownCoroutine(cooldown));
     }
-    
+
+    private void OnSkillCooldownStartCallback(SkillId skillId, float cooldown)
+    {
+        if (skillId == this.skillId)
+        {
+            OnSkillUsedCallback(cooldown);
+        }
+    }
     IEnumerator CooldownCoroutine(float duration)
     {
         cooldownText.gameObject.SetActive(true);

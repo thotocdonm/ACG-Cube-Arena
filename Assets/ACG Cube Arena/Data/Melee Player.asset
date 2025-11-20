@@ -22,6 +22,6 @@ MonoBehaviour:
   skillCooldown: 6
   dashSpeed: 10
   dashDuration: 0.2
-  dashCooldown: 1
+  dashCooldown: 5
   projectilePrefab: {fileID: 0}
   projectileSpeed: 0

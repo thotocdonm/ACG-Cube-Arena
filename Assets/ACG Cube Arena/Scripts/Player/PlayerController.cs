@@ -166,6 +166,7 @@ public class PlayerController : MonoBehaviour
     public void ResetDashCooldown()
     {
         lastDashTime = 0;
+        GameEventsManager.TriggerSkillCooldownStart(SkillId.PlayerDash,playerStats.DashCooldown.GetValue());
     }
 
     private void UpdateAimDirection()
