@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,16 +6,28 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
 
+    public static InventoryManager instance;
+
     private Dictionary<EquipmentType, ItemDataSO> equippedItems = new Dictionary<EquipmentType, ItemDataSO>();
     private PlayerStats playerStats;
 
     [SerializeField] private ItemDataSO testItem;
     [SerializeField] private ItemDataSO testItem2;
 
+    public static Action<EquipmentType, ItemDataSO> onEquipmentChanged;
+
 
 
     void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -45,6 +58,8 @@ public class InventoryManager : MonoBehaviour
             StatModifier modifier = new StatModifier(itemStatModifier.value, itemStatModifier.type, item);
             playerStats.GetStat(itemStatModifier.statType).AddModifier(modifier);
         }
+
+        onEquipmentChanged?.Invoke(slot, item);
     }
 
     public void UnequipItem(EquipmentType slot)
@@ -58,7 +73,10 @@ public class InventoryManager : MonoBehaviour
         }
 
         equippedItems[slot] = null;
+
+        onEquipmentChanged?.Invoke(slot, null);
     }
+
 
     [NaughtyAttributes.Button]
     public void TestEquipItem()

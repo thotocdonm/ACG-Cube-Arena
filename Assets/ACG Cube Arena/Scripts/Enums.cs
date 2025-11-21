@@ -18,6 +18,15 @@ public enum EquipmentType
     Accessory
 }
 
+public enum EquipmentSlotType
+{
+    Weapon,
+    Armor,
+    Boots,
+    Accessory1,
+    Accessory2,
+}
+
 public enum StatType
 {
     MaxHealth,
@@ -30,4 +39,13 @@ public enum StatType
     DashSpeed,
     DashDuration,
     DashCooldown,
+}
+
+public enum EquipmentRarity
+{
+    Common,
+    Uncommon,
+    Rare,
+    Epic,
+    Legendary,
 }

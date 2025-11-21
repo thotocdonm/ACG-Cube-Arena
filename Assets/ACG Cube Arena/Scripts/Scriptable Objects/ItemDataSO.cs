@@ -9,7 +9,10 @@ public class ItemDataSO : ScriptableObject
     public string itemName;
     public Sprite icon;
     public EquipmentType equipmentType;
+    public EquipmentRarity rarity;
     public int price;
+    [TextArea]
+    public string description;
 
     [Header("Stats")]
     public List<ItemStatModifier> modifiers;

@@ -82,6 +82,7 @@ public class BossSpawnAttackStrategy : IAttackStrategy
         spawnIndicatorInstance.transform.position = targetPosition;
         spawnIndicatorInstance.transform.rotation = Quaternion.identity;
         spawnIndicatorInstance.transform.localRotation = Quaternion.Euler(90, 0, 0);
+        spawnIndicatorInstance.transform.localScale = Vector3.one;
         DOVirtual.DelayedCall(chargeDuration + 0.3f, () => VFXPoolManager.instance.enemySpawnVFXPool.Release(spawnIndicatorInstance));
         yield return new WaitForSeconds(chargeDuration);
 
