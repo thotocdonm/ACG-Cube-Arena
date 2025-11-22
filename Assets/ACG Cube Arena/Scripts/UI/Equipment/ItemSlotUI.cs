@@ -9,6 +9,7 @@ public class ItemSlotUI : MonoBehaviour
     [Header("Elements")]
     [SerializeField] private Image itemImage;
     [SerializeField] private Image borderImage;
+    private ItemDataSO itemData;
 
     // Start is called before the first frame update
     void Start()
@@ -28,11 +29,12 @@ public class ItemSlotUI : MonoBehaviour
         itemImage.gameObject.SetActive(false);
         borderImage.color = Color.white;
     }
-    
+
     public void UpdateSlot(ItemDataSO itemData)
     {
-        if(itemData != null)
+        if (itemData != null)
         {
+            this.itemData = itemData;
             itemImage.sprite = itemData.icon;
             itemImage.gameObject.SetActive(true);
             borderImage.color = RarityColorManager.instance.GetColor(itemData.rarity);
@@ -42,4 +44,12 @@ public class ItemSlotUI : MonoBehaviour
             ClearSlot();
         }
     }
+
+    public void OnSlotClicked()
+    {
+        if (itemData == null) return;
+        GameUIManager.instance.ShowItemDetailPanel();
+        ItemDetailPanelUI.instance.Configure(itemData);
+    }
+    
 }

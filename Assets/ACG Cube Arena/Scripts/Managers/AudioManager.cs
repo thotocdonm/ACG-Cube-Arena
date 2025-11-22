@@ -56,7 +56,7 @@ public class AudioManager : MonoBehaviour
         PlayEnemyHitSound();
     }
 
-    private void PlayerHittedCallback()
+    private void PlayerHittedCallback(int currentHealth,int damage)
     {
         PlayPlayerHittedSound();
     }

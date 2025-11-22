@@ -12,14 +12,26 @@ public class DamageTextManager : MonoBehaviour
     [Header("Pooling")]
     private ObjectPool<DamageText> damageTextPool;
 
+    [Header("Player")]
+    private Transform playerTarget;
+
     void Awake()
     {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if(playerObject != null)
+        {
+            playerTarget = playerObject.transform;
+        }
         EnemyStats.onEnemyHit += EnemyHitCallback;
+        PlayerStats.onPlayerHitted += PlayerHittedCallback;
     }
     private void OnDestroy()
     {
         EnemyStats.onEnemyHit -= EnemyHitCallback;
+        PlayerStats.onPlayerHitted -= PlayerHittedCallback;
     }
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +72,15 @@ public class DamageTextManager : MonoBehaviour
         DamageText damageTextInstance = damageTextPool.Get();
         damageTextInstance.transform.position = spawnPosition;
         damageTextInstance.Animate(damage, isCritical);
+        DOVirtual.DelayedCall(0.4f, () => damageTextPool.Release(damageTextInstance));
+    }
+
+    private void PlayerHittedCallback(int currentHealth, int damage)
+    {
+        Vector3 spawnPosition = playerTarget.position;
+        DamageText damageTextInstance = damageTextPool.Get();
+        damageTextInstance.transform.position = spawnPosition;
+        damageTextInstance.Animate(damage, false, true);
         DOVirtual.DelayedCall(0.4f, () => damageTextPool.Release(damageTextInstance));
     }
 }

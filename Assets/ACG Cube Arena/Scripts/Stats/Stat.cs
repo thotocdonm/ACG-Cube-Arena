@@ -41,7 +41,7 @@ public class Stat
             }
         }
 
-        finalValue *= 1 + percentSum;
+        finalValue *= 1 + percentSum / 100;
 
         return finalValue;
     }
@@ -83,6 +83,7 @@ public class Stat
         float newValue = GetValue();
         if (newValue != _lastValue)
         {
+            Debug.Log("Stat value changed: " + _lastValue + " -> " + newValue);
             _lastValue = newValue;
             OnValueChanged?.Invoke(newValue);
         }

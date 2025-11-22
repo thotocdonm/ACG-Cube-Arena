@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2284361273120588805}
   - component: {fileID: 7982362804112642344}
   - component: {fileID: 3821937965056482382}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 34202ad8e080371438676b62d838d219, type: 2}
   iFrameDuration: 0.5
   flashInterval: 0.1
-  healthBarUI: {fileID: 0}
+  playerHealthBarUI: {fileID: 0}
 --- !u!114 &7982362804112642344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,7 +266,9 @@ MonoBehaviour:
   minChargeTime: 0.5
   maxChargeTime: 2
   baseMultiplier: 1
-  maxChargeMultiplier: 2
+  maxChargeMultiplier: 200
+  minScale: 1
+  maxScale: 3
 --- !u!1 &2349612228338543726
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,9 +352,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slashVFX: {fileID: 7116661197715862612, guid: 1a64075e3e9495147b214838ffd9322a,
     type: 3}
+  skillVFX: {fileID: 6451392233590825080, guid: 34ab16d07c3fa784d86d8647d1964396,
+    type: 3}
   VFX1Anchor: {fileID: 2868048784953633960}
   VFX2Anchor: {fileID: 6105382064089828363}
   VFX3Anchor: {fileID: 7007741087169013852}
+  SkillVFXAnchor: {fileID: 4423574749155010261}
 --- !u!1 &2764025104829526756
 GameObject:
   m_ObjectHideFlags: 0
@@ -20642,7 +20647,7 @@ GameObject:
   - component: {fileID: 2386974382206509212}
   - component: {fileID: 5890353102719650580}
   - component: {fileID: 7206185241456081643}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}

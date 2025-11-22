@@ -12,7 +12,8 @@ public class ItemDescriptionContainer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemName;
     [SerializeField] private TextMeshProUGUI itemDescription;
     [SerializeField] private Image itemBorder;
-    [SerializeField] private Button buyButton;
+    [SerializeField] private TextMeshProUGUI buyButtonText;
+    [SerializeField] private TextMeshProUGUI recycleButtonText;
     private ItemDataSO itemData;
 
     [Header("Test")]
@@ -39,6 +40,14 @@ public class ItemDescriptionContainer : MonoBehaviour
         itemName.color = RarityColorManager.instance.GetColor(itemData.rarity);
         itemBorder.color = RarityColorManager.instance.GetColor(itemData.rarity);
         itemDescription.text = itemData.description;
+        if(buyButtonText != null)
+        {
+            buyButtonText.text = $"Buy (-{itemData.price})";
+        }
+        if(recycleButtonText != null)
+        {
+            recycleButtonText.text = $"Recycle (+{itemData.price / 2})";
+        }
     }
 
     public void BuyItem()
@@ -46,12 +55,9 @@ public class ItemDescriptionContainer : MonoBehaviour
         if(itemData != null)
         {
             InventoryManager.instance.EquipItem(itemData);
+            ShopManager.instance.CloseShop();
         }
     }
-    
-    [NaughtyAttributes.Button]
-    public void TestConfigure()
-    {
-        Configure(testItem);
-    }
+
+
 }

@@ -22,10 +22,14 @@ public class DamageText : MonoBehaviour
 
     }
     
-    public void Animate(int damage, bool isCritical)
+    public void Animate(int damage, bool isCritical, bool isPlayer = false)
     {
         damageText.text = isCritical ? damage.ToString() + " !" : damage.ToString();
         damageText.faceColor = isCritical ? Color.yellow : Color.white;
+        if (isPlayer)
+        {
+            damageText.faceColor = Color.red;
+        }
         damageText.fontSizeMax = isCritical ? 12 : 10;
         damageText.transform.rotation = Quaternion.Euler(70, 0, 0);
 

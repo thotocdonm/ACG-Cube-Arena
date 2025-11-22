@@ -19,10 +19,10 @@ public class PlayerStats : MonoBehaviour
     private MeshRenderer[] allRenderers;
     private Color[] originalColors;
     private Coroutine flashCoroutine;
-    public static Action onPlayerHitted;
+    public static Action<int,int> onPlayerHitted;
 
     [Header("UI")]
-    [SerializeField] private HealthBarUI healthBarUI;
+    [SerializeField] private PlayerHealthBarUI playerHealthBarUI;
 
     public Stat MaxHealth => statsDictionary[StatType.MaxHealth];
     public Stat MoveSpeed => statsDictionary[StatType.MoveSpeed];
@@ -52,14 +52,14 @@ public class PlayerStats : MonoBehaviour
         statsDictionary.Add(StatType.DashCooldown, new Stat(stats.dashCooldown));
 
         CurrentHealth = (int)statsDictionary[StatType.MaxHealth].GetValue();
-        healthBarUI.SetMaxHealth(statsDictionary[StatType.MaxHealth].GetValue());
-        healthBarUI.SetHealth(statsDictionary[StatType.MaxHealth].GetValue());
         allRenderers = GetComponentsInChildren<MeshRenderer>();
         originalColors = new Color[allRenderers.Length];
         for (int i = 0; i < allRenderers.Length; i++)
         {
             originalColors[i] = allRenderers[i].material.color;
         }
+
+        playerHealthBarUI.Initialize(this);
     }
     // Start is called before the first frame update
     void Start()
@@ -115,9 +115,7 @@ public class PlayerStats : MonoBehaviour
         }
 
         CurrentHealth -= damage;
-        onPlayerHitted?.Invoke();
-        Debug.Log("Player took " + damage + " damage. Current health: " + CurrentHealth);
-        healthBarUI.SetHealth(CurrentHealth);
+        onPlayerHitted?.Invoke(CurrentHealth,damage);
         if (CurrentHealth <= 0)
         {
             Die();

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3664a971bb2bb04e96785e7c619163d, type: 3}
   m_Name: Broken Sword
   m_EditorClassIdentifier: 
-  itemName: Broken Sword
+  itemName: Steel Sword
   icon: {fileID: 21300000, guid: 818a430e6e912434285c115c6fd07a3a, type: 3}
   equipmentType: 0
+  rarity: 0
   price: 50
   description: Attack Damage + 20
   modifiers:

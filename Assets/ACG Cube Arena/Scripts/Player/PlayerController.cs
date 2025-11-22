@@ -68,15 +68,31 @@ public class PlayerController : MonoBehaviour
         ichigoChargingState = new IchigoChargingState(this, stateMachine);
 
         stateMachine.Initialize(idleState);
+
+        GameStateManager.onGameStateChanged += OnGameStateChangedCallback;
     }
     // Start is called before the first frame update
     void Start()
     {
-       
+
+    }
+    
+    void OnDestroy()
+    {
+        GameStateManager.onGameStateChanged -= OnGameStateChangedCallback;
+    }
+
+    private void OnGameStateChangedCallback(GameState newGameState)
+    {
+        if(newGameState != GameState.Game)
+        {
+            ChangeState(idleState);
+        }
     }
 
     public void Move(InputAction.CallbackContext context)
     {
+        if(GameStateManager.instance.CurrentGameState != GameState.Game) return;
         lastMoveInput = context.ReadValue<Vector2>();
         var currentState = stateMachine.CurrentState as PlayerBaseState;
         currentState?.HandleMove(lastMoveInput);
@@ -84,6 +100,7 @@ public class PlayerController : MonoBehaviour
 
     public void Dash(InputAction.CallbackContext context)
     {
+        if(GameStateManager.instance.CurrentGameState != GameState.Game) return;
         if (context.performed)
         {
             var currentState = stateMachine.CurrentState as PlayerBaseState;
@@ -94,6 +111,7 @@ public class PlayerController : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
+        if(GameStateManager.instance.CurrentGameState != GameState.Game) return;
         if (context.performed)
         {
             var currentState = stateMachine.CurrentState as PlayerBaseState;
@@ -112,6 +130,7 @@ public class PlayerController : MonoBehaviour
     
     public void Skill(InputAction.CallbackContext context)
     {
+        if(GameStateManager.instance.CurrentGameState != GameState.Game) return;
         if (!ichigoSkillAttack.IsSkillReady()) return;
         
         if (context.started)

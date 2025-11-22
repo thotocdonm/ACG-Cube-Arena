@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 6946305278307573180}
   - component: {fileID: 5389299878189228395}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Recycle Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -519,7 +519,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 861822909226836833}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1566400995500446315}
+        m_TargetAssemblyTypeName: ItemDescriptionContainer, Assembly-CSharp
+        m_MethodName: BuyItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3121577341477592283
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,6 +805,9 @@ MonoBehaviour:
   itemImage: {fileID: 4859037247371054460}
   itemName: {fileID: 6108545031476137015}
   itemDescription: {fileID: 8547321151974812480}
+  itemBorder: {fileID: 6467930776145994301}
+  buyButtonText: {fileID: 8629310611473923434}
+  recycleButtonText: {fileID: 5389299878189228395}
   testItem: {fileID: 11400000, guid: faed5998de8a655438ae3f4c5e8e6da1, type: 2}
 --- !u!1 &5669377850005954336
 GameObject:
@@ -1114,7 +1129,7 @@ GameObject:
   - component: {fileID: 6216196854577627344}
   - component: {fileID: 8629310611473923434}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Buy Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

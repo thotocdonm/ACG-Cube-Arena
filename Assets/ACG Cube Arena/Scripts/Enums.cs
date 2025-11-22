@@ -1,7 +1,11 @@
-public enum PlayerState
+
+public enum GameState
 {
-    Normal,
-    Dashing,
+    MainMenu,
+    Game,
+    Pause,
+    Shopping,
+    GameOver,
 }
 
 public enum SkillId
@@ -16,15 +20,6 @@ public enum EquipmentType
     Armor,
     Boots,
     Accessory
-}
-
-public enum EquipmentSlotType
-{
-    Weapon,
-    Armor,
-    Boots,
-    Accessory1,
-    Accessory2,
 }
 
 public enum StatType
