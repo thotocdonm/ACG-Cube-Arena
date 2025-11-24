@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class InventorySectionUI : MonoBehaviour
@@ -11,7 +12,14 @@ public class InventorySectionUI : MonoBehaviour
     [SerializeField] private ItemSlotUI bootsSlot;
     [SerializeField] private ItemSlotUI accessorySlot1;
 
+    [Header("UI")]
+    [SerializeField] private RectTransform inventorySection;
+    [SerializeField] private float shownXPos = 100;
+    [SerializeField] private float hiddenXPos = -63;
+    [SerializeField] private float slideDuration = 0.3f;
+
     private Dictionary<EquipmentType, ItemSlotUI> equipmentSlots;
+    private bool isShown = false;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +52,13 @@ public class InventorySectionUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+    
+    public void ToggleInventorySection()
+    {
+        isShown = !isShown;
+        float targetX = isShown ? shownXPos : hiddenXPos;
+        inventorySection.DOAnchorPosX(targetX, slideDuration).SetEase(Ease.OutCubic);
     }
 }

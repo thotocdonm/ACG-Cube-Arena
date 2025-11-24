@@ -37,8 +37,8 @@ public class ItemDescriptionContainer : MonoBehaviour
         this.itemData = itemData;
         itemImage.sprite = itemData.icon;
         itemName.text = itemData.itemName;
-        itemName.color = RarityColorManager.instance.GetColor(itemData.rarity);
-        itemBorder.color = RarityColorManager.instance.GetColor(itemData.rarity);
+        itemName.color = ResourcesManager.instance.GetRarityColor(itemData.rarity);
+        itemBorder.color = ResourcesManager.instance.GetRarityColor(itemData.rarity);
         itemDescription.text = itemData.description;
         if(buyButtonText != null)
         {

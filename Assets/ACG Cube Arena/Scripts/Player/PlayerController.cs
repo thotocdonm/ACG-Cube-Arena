@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 using Unity.VisualScripting;
+using UnityEngine.EventSystems;
 
 
 [RequireComponent(typeof(Rigidbody))]
@@ -111,13 +112,10 @@ public class PlayerController : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if(GameStateManager.instance.CurrentGameState != GameState.Game) return;
-        if (context.performed)
+        if (EventSystem.current.IsPointerOverGameObject())
         {
-            var currentState = stateMachine.CurrentState as PlayerBaseState;
-            currentState?.HandleAttack();
+            Debug.LogWarning("Attack button is over UI");
         }
-
         if (context.started)
         {
             isAttackHeld = true;
@@ -126,6 +124,17 @@ public class PlayerController : MonoBehaviour
         {
             isAttackHeld = false;
         }
+
+
+        if (GameStateManager.instance.CurrentGameState != GameState.Game) return;
+        if (context.performed)
+        {
+            if(EventSystem.current.IsPointerOverGameObject()) return;
+            var currentState = stateMachine.CurrentState as PlayerBaseState;
+            currentState?.HandleAttack();
+        }
+
+
     }
     
     public void Skill(InputAction.CallbackContext context)

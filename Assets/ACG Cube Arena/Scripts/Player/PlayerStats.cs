@@ -149,13 +149,12 @@ public class PlayerStats : MonoBehaviour
     {
         AttackDamage.AddModifier(new StatModifier(amount, StatModifierType.Flat, "IncreaseAttackDamage"));
     }
-    
+
     private void Die()
     {
         Debug.Log("Player has died.");
         Destroy(gameObject);
     }
-
 
 
 

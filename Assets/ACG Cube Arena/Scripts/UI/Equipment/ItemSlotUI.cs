@@ -37,7 +37,7 @@ public class ItemSlotUI : MonoBehaviour
             this.itemData = itemData;
             itemImage.sprite = itemData.icon;
             itemImage.gameObject.SetActive(true);
-            borderImage.color = RarityColorManager.instance.GetColor(itemData.rarity);
+            borderImage.color = ResourcesManager.instance.GetRarityColor(itemData.rarity);
         }
         else
         {
