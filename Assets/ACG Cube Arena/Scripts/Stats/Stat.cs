@@ -15,13 +15,17 @@ public class Stat
     public event Action<float> OnValueChanged;
 
     private float _lastValue;
+    private float _minValue;
+    private float _maxValue;
 
-    public Stat(float baseValue)
+    public Stat(float baseValue, float minValue = float.MinValue, float maxValue = float.MaxValue)
     {
         this.baseValue = baseValue;
         modifiers = new List<StatModifier>();
         Modifiers = modifiers.AsReadOnly();
         _lastValue = GetValue();
+        _minValue = minValue;
+        _maxValue = maxValue;
     }
 
     public float GetValue()
@@ -43,6 +47,7 @@ public class Stat
 
         finalValue *= 1 + percentSum / 100;
 
+        finalValue = Mathf.Clamp(finalValue, _minValue, _maxValue);
         return finalValue;
     }
 

@@ -28,12 +28,12 @@ public enum StatType
     MoveSpeed,
     AttackDamage,
     AttackCooldown,
-    SkillCooldown,
+    SkillCooldownReduction,
     CriticalChance,
     CriticalDamage,
     DashSpeed,
     DashDuration,
-    DashCooldown,
+    DashCooldownReduction,
 }
 
 public enum EquipmentRarity

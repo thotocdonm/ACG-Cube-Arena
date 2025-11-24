@@ -34,6 +34,7 @@ public class WaveManager : MonoBehaviour
 
     [Header("UI & Triggers")]
     [SerializeField] private GameObject startWaveTrigger;
+    [SerializeField] private GameObject openShopTrigger;
     [SerializeField] private GameObject bossHealthBarUI;
     [SerializeField] private TextMeshProUGUI waveText;
 
@@ -73,6 +74,7 @@ public class WaveManager : MonoBehaviour
     {
         CurrentWaveState = WaveState.Preparing;
         startWaveTrigger.SetActive(true);
+        openShopTrigger.SetActive(true);
         UpdateWaveText();
         Debug.Log("Wave Preparation Phase Started, Enter Circle to continue");
     }
@@ -96,6 +98,7 @@ public class WaveManager : MonoBehaviour
     {
         CurrentWaveState = WaveState.WaveInProgress;
         startWaveTrigger.SetActive(false);
+        openShopTrigger.SetActive(false);
         onWaveStart?.Invoke(CurrentWave);
 
         if (CurrentWave % 2 == 0)
@@ -180,6 +183,7 @@ public class WaveManager : MonoBehaviour
         CurrentWaveState = WaveState.Preparing;
         KillAllEnemies();
         bossHealthBarUI.SetActive(false);
+        CoinManager.instance.AddCoins(100);
         EnterPreparationPhase();
     }
 }

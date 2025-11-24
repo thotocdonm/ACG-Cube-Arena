@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float rotationSpeed;
+    [SerializeField] private float dashCooldown = 5f;
     private Vector2 lastMoveInput;
 
     private float lastDashTime = 100;
@@ -50,7 +51,8 @@ public class PlayerController : MonoBehaviour
     public float AttackDamage => playerStats.AttackDamage.GetValue();
     public float CriticalChance => playerStats.CriticalChance.GetValue();
     public float CriticalDamage => playerStats.CriticalDamage.GetValue();
-    public float SkillCooldown => playerStats.SkillCooldown.GetValue();
+    public float SkillCooldownReduction => playerStats.SkillCooldownReduction.GetValue();
+    public float DashCooldownReduction => playerStats.DashCooldownReduction.GetValue();
     public Vector3 AimDirection => aimDirection;
     public IchigoComboAttack IchigoComboAttack => ichigoComboAttack;
     public IchigoSkillAttack IchigoSkillAttack => ichigoSkillAttack;
@@ -188,13 +190,20 @@ public class PlayerController : MonoBehaviour
 
     public bool CanDash()
     {
-        return lastDashTime >= playerStats.DashCooldown.GetValue();
+        return lastDashTime >= GetDashCooldown();
     }
 
     public void ResetDashCooldown()
     {
         lastDashTime = 0;
-        GameEventsManager.TriggerSkillCooldownStart(SkillId.PlayerDash,playerStats.DashCooldown.GetValue());
+        GameEventsManager.TriggerSkillCooldownStart(SkillId.PlayerDash, GetDashCooldown());
+    }
+    
+    private float GetDashCooldown()
+    {
+        float cdrValue = DashCooldownReduction;
+        float finalCooldown = dashCooldown * (1 - cdrValue/100);
+        return finalCooldown;
     }
 
     private void UpdateAimDirection()

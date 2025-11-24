@@ -12,15 +12,14 @@ public class PlayerStatsSO : ScriptableObject
 
     [Header("Attack Stats")]
     public float attackDamage;
-    public float attackCooldown;
     public float criticalChance;
     public float criticalDamage;
-    public float skillCooldown;
+    public float skillCooldownReduction;
 
     [Header("Dash Stats")]
     public float dashSpeed;
     public float dashDuration;
-    public float dashCooldown;
+    public float dashCooldownReduction;
 
     [Header("Ranged Specific")]
     public GameObject projectilePrefab;

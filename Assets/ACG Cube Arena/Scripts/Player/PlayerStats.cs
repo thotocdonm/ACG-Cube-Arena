@@ -27,13 +27,12 @@ public class PlayerStats : MonoBehaviour
     public Stat MaxHealth => statsDictionary[StatType.MaxHealth];
     public Stat MoveSpeed => statsDictionary[StatType.MoveSpeed];
     public Stat AttackDamage => statsDictionary[StatType.AttackDamage];
-    public Stat AttackCooldown => statsDictionary[StatType.AttackCooldown];
-    public Stat SkillCooldown => statsDictionary[StatType.SkillCooldown];
+    public Stat SkillCooldownReduction => statsDictionary[StatType.SkillCooldownReduction];
     public Stat CriticalChance => statsDictionary[StatType.CriticalChance];
     public Stat CriticalDamage => statsDictionary[StatType.CriticalDamage];
     public Stat DashSpeed => statsDictionary[StatType.DashSpeed];
     public Stat DashDuration => statsDictionary[StatType.DashDuration];
-    public Stat DashCooldown => statsDictionary[StatType.DashCooldown];
+    public Stat DashCooldownReduction => statsDictionary[StatType.DashCooldownReduction];
 
     public int CurrentHealth { get; private set; }
 
@@ -43,13 +42,12 @@ public class PlayerStats : MonoBehaviour
         statsDictionary.Add(StatType.MaxHealth, new Stat(stats.maxHealth));
         statsDictionary.Add(StatType.MoveSpeed, new Stat(stats.moveSpeed));
         statsDictionary.Add(StatType.AttackDamage, new Stat(stats.attackDamage));
-        statsDictionary.Add(StatType.AttackCooldown, new Stat(stats.attackCooldown));
-        statsDictionary.Add(StatType.SkillCooldown, new Stat(stats.skillCooldown));
-        statsDictionary.Add(StatType.CriticalChance, new Stat(stats.criticalChance));
+        statsDictionary.Add(StatType.SkillCooldownReduction, new Stat(stats.skillCooldownReduction,0,40f));
+        statsDictionary.Add(StatType.CriticalChance, new Stat(stats.criticalChance,0,100));
         statsDictionary.Add(StatType.CriticalDamage, new Stat(stats.criticalDamage));
         statsDictionary.Add(StatType.DashSpeed, new Stat(stats.dashSpeed));
         statsDictionary.Add(StatType.DashDuration, new Stat(stats.dashDuration));
-        statsDictionary.Add(StatType.DashCooldown, new Stat(stats.dashCooldown));
+        statsDictionary.Add(StatType.DashCooldownReduction, new Stat(stats.dashCooldownReduction, 0, 40f));
 
         CurrentHealth = (int)statsDictionary[StatType.MaxHealth].GetValue();
         allRenderers = GetComponentsInChildren<MeshRenderer>();

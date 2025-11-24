@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class ShopManager : MonoBehaviour
@@ -11,6 +11,10 @@ public class ShopManager : MonoBehaviour
 
     [Header("Elements")]
     [SerializeField] private List<ItemDataSO> possibleItems;
+    [SerializeField] private Button rerollButton;
+
+    [Header("Price Settings")]
+    [SerializeField] private int rerollPrice = 30;
 
     private List<ItemDataSO> currentItems = new List<ItemDataSO>();
 
@@ -28,6 +32,14 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (rerollButton != null)
+        {
+            rerollButton.interactable = CoinManager.instance.IsEnoughCoins(rerollPrice);
+        }
+    }
+
     public void GenerateItems()
     {
         currentItems.Clear();
@@ -39,23 +51,18 @@ public class ShopManager : MonoBehaviour
         onItemsGenerated?.Invoke(currentItems);
     }
 
-    public void OpenShop()
-    {
-        GameUIManager.instance.ShowShopPanel();
-        GenerateItems();
-        GameStateManager.instance.ChangeGameState(GameState.Shopping);
-
-    }
-
-    public void CloseShop()
-    {
-        GameUIManager.instance.HideShopPanel();
-        GameStateManager.instance.ChangeGameState(GameState.Game);
-    }
-
     public void RerollShop()
     {
-        GenerateItems();
+        if (CoinManager.instance.IsEnoughCoins(rerollPrice))
+        {
+            CoinManager.instance.RemoveCoins(rerollPrice);
+            GenerateItems();
+        }
+        else
+        {
+            Debug.Log("Not enough coins");
+        }
+        
     }
     
 

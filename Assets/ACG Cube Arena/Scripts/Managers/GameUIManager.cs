@@ -25,11 +25,14 @@ public class GameUIManager : MonoBehaviour
 
     public void ShowShopPanel()
     {
+        GameStateManager.instance.ChangeGameState(GameState.Shopping);
         shopPanel.SetActive(true);
+        ShopManager.instance.GenerateItems();
     }
 
     public void HideShopPanel()
     {
+        GameStateManager.instance.ChangeGameState(GameState.Game);
         shopPanel.SetActive(false);
     }
 

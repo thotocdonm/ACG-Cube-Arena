@@ -43,10 +43,10 @@ public class PlayerStatsSectionUI : MonoBehaviour
             StatType.MaxHealth,
              StatType.MoveSpeed,
               StatType.AttackDamage,
-                StatType.SkillCooldown,
+                StatType.SkillCooldownReduction,
                  StatType.CriticalChance,
                   StatType.CriticalDamage,
-                     StatType.DashCooldown };
+                     StatType.DashCooldownReduction };
 
         foreach (StatType statType in statToDisplay)
         {
@@ -70,7 +70,8 @@ public class PlayerStatsSectionUI : MonoBehaviour
         {
             StatType statType = statToDisplay[i];
             Stat stat = playerStats.GetStat(statType);
-            statContainers[i].Configure(ResourcesManager.instance.GetStatIcon(statType), statType.ToString(), stat.GetValue());
+            bool isPercentage = statType == StatType.SkillCooldownReduction || statType == StatType.DashCooldownReduction;
+            statContainers[i].Configure(ResourcesManager.instance.GetStatIcon(statType), Helper.SplitCamelCase(statType.ToString()), stat.GetValue(), isPercentage);
         }
     }
 

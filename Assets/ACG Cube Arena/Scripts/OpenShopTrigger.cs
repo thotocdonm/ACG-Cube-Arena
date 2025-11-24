@@ -20,7 +20,7 @@ public class OpenShopTrigger : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            ShopManager.instance.OpenShop();
+            GameUIManager.instance.ShowShopPanel();
         }
     }
 }

@@ -12,6 +12,7 @@ public class ItemDescriptionContainer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemName;
     [SerializeField] private TextMeshProUGUI itemDescription;
     [SerializeField] private Image itemBorder;
+    [SerializeField] private Button buyButton;
     [SerializeField] private TextMeshProUGUI buyButtonText;
     [SerializeField] private TextMeshProUGUI recycleButtonText;
     private ItemDataSO itemData;
@@ -29,7 +30,10 @@ public class ItemDescriptionContainer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (buyButton != null)
+        {
+            buyButton.interactable = CoinManager.instance.IsEnoughCoins(itemData.price);
+        }
     }
 
     public void Configure(ItemDataSO itemData)
@@ -52,10 +56,22 @@ public class ItemDescriptionContainer : MonoBehaviour
 
     public void BuyItem()
     {
-        if(itemData != null)
+        if (itemData != null)
         {
+            CoinManager.instance.RemoveCoins(itemData.price);
             InventoryManager.instance.EquipItem(itemData);
-            ShopManager.instance.CloseShop();
+            GameUIManager.instance.HideShopPanel();
+        }
+    }
+    
+    public void RecycleItem()
+    {
+        if (itemData != null)
+        {
+            CoinManager.instance.AddCoins(itemData.price / 2);
+            InventoryManager.instance.UnequipItem(itemData.equipmentType);
+            GameUIManager.instance.HideItemDetailPanel();
+
         }
     }
 

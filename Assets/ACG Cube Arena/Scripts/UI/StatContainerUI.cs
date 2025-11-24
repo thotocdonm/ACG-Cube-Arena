@@ -11,11 +11,11 @@ public class StatContainerUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI statNameText;
     [SerializeField] private TextMeshProUGUI statValueText;
 
-    public void Configure(Sprite statIcon, string statName, float statValue)
+    public void Configure(Sprite statIcon, string statName, float statValue, bool isPercentage = false)
     {
         this.statIcon.sprite = statIcon;
         this.statNameText.text = statName;
-        this.statValueText.text = statValue.ToString();
+        this.statValueText.text = isPercentage ? statValue.ToString("F0") + "%" : statValue.ToString("F1");
 
     }
 }
