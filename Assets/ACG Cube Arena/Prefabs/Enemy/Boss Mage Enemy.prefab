@@ -344,6 +344,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeHitbox: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 55
   chargingVFX: {fileID: 2152610243645960783}
   sparkVFX: {fileID: 8142175948370812011}
   aoeAttackIndicator: {fileID: 3112914512275057448, guid: ce7e07c905d7c704e9912b9f885115ae,

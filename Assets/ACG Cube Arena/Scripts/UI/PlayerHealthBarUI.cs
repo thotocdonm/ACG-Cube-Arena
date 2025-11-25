@@ -21,7 +21,7 @@ public class PlayerHealthBarUI : MonoBehaviour
     void OnDestroy()
     {
         playerStats.MaxHealth.OnValueChanged -= OnMaxHealthChangedCallback;
-        PlayerStats.onPlayerHitted -= OnPlayerHittedCallback;
+        PlayerStats.onHealthChanged -= OnHealthChangedCallback;
         
     }
     private void OnMaxHealthChangedCallback(float newMaxHealth)
@@ -34,7 +34,7 @@ public class PlayerHealthBarUI : MonoBehaviour
     public void Initialize(PlayerStats playerStats)
     {
         this.playerStats = playerStats;
-        PlayerStats.onPlayerHitted += OnPlayerHittedCallback;
+        PlayerStats.onHealthChanged += OnHealthChangedCallback;
         playerStats.MaxHealth.OnValueChanged += OnMaxHealthChangedCallback;
         UpdateHealth((int)playerStats.MaxHealth.GetValue(), (int)playerStats.MaxHealth.GetValue());
     }
@@ -47,7 +47,7 @@ public class PlayerHealthBarUI : MonoBehaviour
         playerHealthText.text = $"{currentHealth} / {maxHealth}";
     }
     
-    private void OnPlayerHittedCallback(int currentHealth, int damage)
+    private void OnHealthChangedCallback(int currentHealth)
     {
         UpdateHealth(currentHealth, (int)playerStats.MaxHealth.GetValue());
     }

@@ -19,7 +19,8 @@ public class PlayerStats : MonoBehaviour
     private MeshRenderer[] allRenderers;
     private Color[] originalColors;
     private Coroutine flashCoroutine;
-    public static Action<int,int> onPlayerHitted;
+    public static Action<int> onPlayerHitted;
+    public static Action<int> onHealthChanged;
 
     [Header("UI")]
     [SerializeField] private PlayerHealthBarUI playerHealthBarUI;
@@ -39,6 +40,7 @@ public class PlayerStats : MonoBehaviour
 
     private void Awake()
     {
+
         statsDictionary.Add(StatType.MaxHealth, new Stat(stats.maxHealth));
         statsDictionary.Add(StatType.MoveSpeed, new Stat(stats.moveSpeed));
         statsDictionary.Add(StatType.AttackDamage, new Stat(stats.attackDamage));
@@ -113,7 +115,8 @@ public class PlayerStats : MonoBehaviour
         }
 
         CurrentHealth -= damage;
-        onPlayerHitted?.Invoke(CurrentHealth,damage);
+        onPlayerHitted?.Invoke(damage);
+        onHealthChanged?.Invoke(CurrentHealth);
         if (CurrentHealth <= 0)
         {
             Die();
@@ -152,6 +155,16 @@ public class PlayerStats : MonoBehaviour
     {
         Debug.Log("Player has died.");
         Destroy(gameObject);
+    }
+
+    public void RestoreHealth(int amount)
+    {
+        CurrentHealth += amount;
+        if(CurrentHealth > MaxHealth.GetValue())
+        {
+            CurrentHealth = (int)MaxHealth.GetValue();
+        }
+        onHealthChanged?.Invoke(CurrentHealth);
     }
 
 

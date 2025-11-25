@@ -40,6 +40,7 @@ public class WaveManager : MonoBehaviour
 
     public int CurrentWave { get; private set; }
     private int currentEnemyCount;
+    private PlayerStats playerStats;
 
     public static Action<int> onWaveStart;
     public static Action onWaveEnd;
@@ -59,10 +60,11 @@ public class WaveManager : MonoBehaviour
         }
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        if(playerObject != null)
+        if (playerObject != null)
         {
             playerTarget = playerObject.transform;
         }
+        playerStats = playerObject.GetComponent<PlayerStats>();
     }
 
     private void Start()
@@ -109,6 +111,7 @@ public class WaveManager : MonoBehaviour
         else
         {
             currentEnemyCount = initialEnemyCount + (CurrentWave / wavesPerEnemyCount) * enemyCountIncrease;
+            currentEnemyCount = Mathf.Min(currentEnemyCount, maxEnemyCount);
             for(int i = 0; i < currentEnemyCount; i++)
             {
                 StartCoroutine(SpawnEnemySequence(enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)],0));
@@ -164,7 +167,7 @@ public class WaveManager : MonoBehaviour
     public void OnEnemyDied()
     {
         currentEnemyCount--;
-        if (currentEnemyCount <= 0 && CurrentWaveState == WaveState.WaveInProgress)
+        if (currentEnemyCount <= 0 && CurrentWaveState == WaveState.WaveInProgress || enemyParent.childCount <= 0)
         {
             EndWave();
         }
@@ -184,6 +187,7 @@ public class WaveManager : MonoBehaviour
         KillAllEnemies();
         bossHealthBarUI.SetActive(false);
         CoinManager.instance.AddCoins(100);
+        playerStats.RestoreHealth((int)(playerStats.MaxHealth.GetValue()/2));
         EnterPreparationPhase();
     }
 }

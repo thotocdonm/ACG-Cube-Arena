@@ -22227,10 +22227,10 @@ MonoBehaviour:
   enemyParent: {fileID: 991260392}
   initialEnemyCount: 5
   maxEnemyCount: 12
-  wavesPerEnemyCount: 5
+  wavesPerEnemyCount: 2
   enemyCountIncrease: 2
-  healthMultiplerIncreasePerWave: 0.1
-  damageMultiplerIncreasePerWave: 0.1
+  healthMultiplerIncreasePerWave: 10
+  damageMultiplerIncreasePerWave: 10
   spawnInterval: 0.5
   spawnRandomOffset: 20
   startWaveTrigger: {fileID: 6791119504136921025}
@@ -56579,6 +56579,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895491115344781909, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: dashCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895491115344781909, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: obstacleLayer.m_Bits
+      value: 55
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

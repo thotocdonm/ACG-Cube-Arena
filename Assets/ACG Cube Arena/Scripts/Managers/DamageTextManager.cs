@@ -75,7 +75,7 @@ public class DamageTextManager : MonoBehaviour
         DOVirtual.DelayedCall(0.4f, () => damageTextPool.Release(damageTextInstance));
     }
 
-    private void PlayerHittedCallback(int currentHealth, int damage)
+    private void PlayerHittedCallback(int damage)
     {
         Vector3 spawnPosition = playerTarget.position;
         DamageText damageTextInstance = damageTextPool.Get();

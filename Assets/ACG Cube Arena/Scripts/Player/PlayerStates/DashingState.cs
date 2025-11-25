@@ -60,6 +60,9 @@ public class DashingState : PlayerBaseState
         Vector3 startPosition = owner.transform.position;
         Vector3 targetPosition = startPosition + direction * distance;
 
+        Debug.DrawRay(startPosition, direction * distance, Color.red, 2f);
+        
+
         CapsuleCollider collider = owner.GetComponent<CapsuleCollider>();
         if (collider == null) return targetPosition;
 
@@ -67,9 +70,10 @@ public class DashingState : PlayerBaseState
         Vector3 p2 = startPosition + collider.center + Vector3.up * (-collider.height * 0.5f + collider.radius);
 
         RaycastHit hit;
-        if(Physics.CapsuleCast(p1, p2, collider.radius, direction, out hit, distance))
+        if(Physics.CapsuleCast(p1, p2, collider.radius, direction, out hit, distance, owner.ObstacleLayer))
         {
-            targetPosition = startPosition + direction * (hit.distance - 0.1f);
+            float safeDistance = Mathf.Max(0f, hit.distance - 0.1f);
+            targetPosition = startPosition + direction * safeDistance;
         }
         return targetPosition;
     }

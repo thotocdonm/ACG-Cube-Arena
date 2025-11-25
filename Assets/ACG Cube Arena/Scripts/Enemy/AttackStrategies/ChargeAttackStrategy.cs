@@ -51,7 +51,7 @@ public class ChargeAttackStrategy : IAttackStrategy
 
         //Charging toward player
         chargeIndicator.enabled = false;
-        Vector3 targetPosition = owner.transform.position + directionToPlayer * chargeSpeed * 1.5f;
+        Vector3 targetPosition = GetSafeTargetPosition(directionToPlayer, stats.AttackRange.GetValue());
         animator.Play("Attack");
         rb.DOMove(targetPosition, chargeDuration).SetEase(Ease.OutCubic).OnComplete(() =>
         {
@@ -60,7 +60,31 @@ public class ChargeAttackStrategy : IAttackStrategy
 
         yield return new WaitForSeconds(recoveryDuration);
 
-        
+
         onComplete?.Invoke();
+    }
+    
+
+    private Vector3 GetSafeTargetPosition(Vector3 direction, float distance)
+    {
+        Vector3 startPosition = owner.transform.position;
+        Vector3 targetPosition = startPosition + direction * distance;
+
+        Debug.DrawRay(startPosition, direction * distance, Color.red, 2f);
+        
+
+        CapsuleCollider collider = owner.GetComponent<CapsuleCollider>();
+        if (collider == null) return targetPosition;
+
+        Vector3 p1 = startPosition + collider.center + Vector3.up * (collider.height * 0.5f - collider.radius);
+        Vector3 p2 = startPosition + collider.center + Vector3.up * (-collider.height * 0.5f + collider.radius);
+
+        RaycastHit hit;
+        if(Physics.CapsuleCast(p1, p2, collider.radius, direction, out hit, distance, owner.ObstacleLayer))
+        {
+            float safeDistance = Mathf.Max(0f, hit.distance - 0.1f);
+            targetPosition = startPosition + direction * safeDistance;
+        }
+        return targetPosition;
     }
 }

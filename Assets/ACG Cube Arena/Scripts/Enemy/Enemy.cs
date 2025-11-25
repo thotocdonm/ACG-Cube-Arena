@@ -12,6 +12,7 @@ public abstract class Enemy : MonoBehaviour
     [Header("Elements")]
     protected Transform playerTarget;
     [SerializeField] protected BoxCollider meleeHitbox;
+    [SerializeField] protected LayerMask obstacleLayer;
     protected Rigidbody rb;
     protected Animator animator;
     private float attackCooldownTimer = 0f;
@@ -28,7 +29,8 @@ public abstract class Enemy : MonoBehaviour
     public Rigidbody Rigidbody => rb;
     public Transform PlayerTarget => playerTarget;
     public StateMachine StateMachine => stateMachine;
-
+    public LayerMask ObstacleLayer => obstacleLayer;
+    
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();

@@ -429,6 +429,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeHitbox: {fileID: 3979054919645701417}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 55
   chargeIndicator: {fileID: 8488860130791776504}
   telegraphDuration: 1
   chargeSpeed: 10

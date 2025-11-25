@@ -26,7 +26,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private float dashCooldown = 5f;
+    [SerializeField] private float dashCooldown = 2f;
+    [SerializeField] private LayerMask obstacleLayer;
     private Vector2 lastMoveInput;
 
     private float lastDashTime = 100;
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour
     public IchigoComboAttack IchigoComboAttack => ichigoComboAttack;
     public IchigoSkillAttack IchigoSkillAttack => ichigoSkillAttack;
     public bool IsAttackHeld => isAttackHeld;
+    public LayerMask ObstacleLayer => obstacleLayer;
 
     void Awake()
     {
@@ -202,7 +204,9 @@ public class PlayerController : MonoBehaviour
     private float GetDashCooldown()
     {
         float cdrValue = DashCooldownReduction;
-        float finalCooldown = dashCooldown * (1 - cdrValue/100);
+        float finalCooldown = dashCooldown * (1 - cdrValue / 100f);
+        Debug.Log("Dash Cooldown: " + finalCooldown);
+        
         return finalCooldown;
     }
 
