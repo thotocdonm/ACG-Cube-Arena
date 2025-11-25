@@ -30,7 +30,7 @@ public class PlayerStats : MonoBehaviour
     public Stat SkillCooldownReduction => statsDictionary[StatType.SkillCooldownReduction];
     public Stat CriticalChance => statsDictionary[StatType.CriticalChance];
     public Stat CriticalDamage => statsDictionary[StatType.CriticalDamage];
-    public Stat DashSpeed => statsDictionary[StatType.DashSpeed];
+    public Stat DashDistance => statsDictionary[StatType.DashDistance];
     public Stat DashDuration => statsDictionary[StatType.DashDuration];
     public Stat DashCooldownReduction => statsDictionary[StatType.DashCooldownReduction];
 
@@ -45,7 +45,7 @@ public class PlayerStats : MonoBehaviour
         statsDictionary.Add(StatType.SkillCooldownReduction, new Stat(stats.skillCooldownReduction,0,40f));
         statsDictionary.Add(StatType.CriticalChance, new Stat(stats.criticalChance,0,100));
         statsDictionary.Add(StatType.CriticalDamage, new Stat(stats.criticalDamage));
-        statsDictionary.Add(StatType.DashSpeed, new Stat(stats.dashSpeed));
+        statsDictionary.Add(StatType.DashDistance, new Stat(stats.dashDistance));
         statsDictionary.Add(StatType.DashDuration, new Stat(stats.dashDuration));
         statsDictionary.Add(StatType.DashCooldownReduction, new Stat(stats.dashCooldownReduction, 0, 40f));
 

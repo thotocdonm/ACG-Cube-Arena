@@ -31,7 +31,7 @@ public enum StatType
     SkillCooldownReduction,
     CriticalChance,
     CriticalDamage,
-    DashSpeed,
+    DashDistance,
     DashDuration,
     DashCooldownReduction,
 }

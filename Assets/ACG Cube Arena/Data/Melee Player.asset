@@ -15,11 +15,11 @@ MonoBehaviour:
   playerName: Ichigo
   maxHealth: 100
   moveSpeed: 5
-  attackDamage: 10
+  attackDamage: 30
   criticalChance: 50
   criticalDamage: 150
   skillCooldownReduction: 20
-  dashSpeed: 10
+  dashDistance: 10
   dashDuration: 0.2
   dashCooldownReduction: 20
   projectilePrefab: {fileID: 0}

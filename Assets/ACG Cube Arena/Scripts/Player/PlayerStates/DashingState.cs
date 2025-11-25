@@ -19,12 +19,14 @@ public class DashingState : PlayerBaseState
         if (owner.LastMoveInput.magnitude < 0.1f)
         {
             dashDirection = owner.transform.forward;
+            dashDirection.y = 0;
+            dashDirection.Normalize();
         }
         else
         {
             dashDirection = new Vector3(owner.LastMoveInput.x, 0, owner.LastMoveInput.y);
         }
-        Vector3 targetPosition = owner.transform.position + dashDirection * owner.DashSpeed;
+        Vector3 targetPosition = GetSafeTargetPosition(dashDirection, owner.DashDistance);
 
         dashTween = rb.DOMove(targetPosition, owner.DashDuration).SetUpdate(UpdateType.Fixed).SetEase(Ease.OutCubic).OnComplete(OnDashComplete);
     }
@@ -51,6 +53,25 @@ public class DashingState : PlayerBaseState
         {
             owner.ChangeState(owner.idleState);
         }
+    }
+
+    private Vector3 GetSafeTargetPosition(Vector3 direction, float distance)
+    {
+        Vector3 startPosition = owner.transform.position;
+        Vector3 targetPosition = startPosition + direction * distance;
+
+        CapsuleCollider collider = owner.GetComponent<CapsuleCollider>();
+        if (collider == null) return targetPosition;
+
+        Vector3 p1 = startPosition + collider.center + Vector3.up * (collider.height * 0.5f - collider.radius);
+        Vector3 p2 = startPosition + collider.center + Vector3.up * (-collider.height * 0.5f + collider.radius);
+
+        RaycastHit hit;
+        if(Physics.CapsuleCast(p1, p2, collider.radius, direction, out hit, distance))
+        {
+            targetPosition = startPosition + direction * (hit.distance - 0.1f);
+        }
+        return targetPosition;
     }
 
     public override void HandleMove(Vector2 Input) { }

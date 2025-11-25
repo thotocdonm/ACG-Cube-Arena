@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 LastMoveInput => lastMoveInput;
     public float MoveSpeed => playerStats.MoveSpeed.GetValue();
     public float RotationSpeed => rotationSpeed;
-    public float DashSpeed => playerStats.DashSpeed.GetValue();
+    public float DashDistance => playerStats.DashDistance.GetValue();
     public float DashDuration => playerStats.DashDuration.GetValue();
     public float AttackDamage => playerStats.AttackDamage.GetValue();
     public float CriticalChance => playerStats.CriticalChance.GetValue();

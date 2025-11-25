@@ -46,13 +46,6 @@ public class IchigoAttackingState : PlayerBaseState
 
     public override void Update()
     {
-
-
-        if (owner.IsAttackHeld && canBuffer)
-        {
-            HandleAttack();
-        }
-
         if (owner.IchigoComboAttack.IsComboExpired())
         {
             if (!owner.IchigoComboAttack.IsAttacking)

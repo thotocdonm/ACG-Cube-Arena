@@ -17,7 +17,7 @@ public class PlayerStatsSO : ScriptableObject
     public float skillCooldownReduction;
 
     [Header("Dash Stats")]
-    public float dashSpeed;
+    public float dashDistance;
     public float dashDuration;
     public float dashCooldownReduction;
 

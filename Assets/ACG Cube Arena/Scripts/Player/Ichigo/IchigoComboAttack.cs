@@ -71,7 +71,7 @@ public class IchigoComboAttack : MonoBehaviour
 
     public void BufferNextAttack()
     {
-        if(Time.time <= comboExpireTime)
+        if(!buffered && Time.time <= comboExpireTime)
         {
             buffered = true;
         }
@@ -124,16 +124,18 @@ public class IchigoComboAttack : MonoBehaviour
     {
         Debug.Log("Play Attack Animation End");
         isAttacking = false;
+        bool shouldContinueCombo = buffered || owner.IsAttackHeld;
+        buffered = false;
 
-        if (buffered && Time.time <= comboExpireTime && currentComboIndex < attackTrigger.Length - 1)
+        if (shouldContinueCombo && Time.time <= comboExpireTime && currentComboIndex < attackTrigger.Length - 1)
         {
             TryStartAttack();
             return;
         }
-        else
+        
+        if(Time.time > comboExpireTime)
         {
-            buffered = false;
-
+            currentComboIndex = 0;
         }
     }
 
