@@ -33,6 +33,18 @@ public class GameStateManager : MonoBehaviour
     {
         if (CurrentGameState == newGameState) return;
         CurrentGameState = newGameState;
+
+
+        switch (newGameState)
+        {
+            case GameState.Pause:
+                Time.timeScale = 0;
+                break;
+            default:
+                Time.timeScale = 1;
+                break;
+        }
+
         onGameStateChanged?.Invoke(CurrentGameState);
     }
 }

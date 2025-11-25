@@ -11,6 +11,9 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] private GameObject shopPanel;
     [SerializeField] private GameObject itemDetailPanel;
 
+    [Header("Pause Panel")]
+    [SerializeField] private GameObject pausePanel;
+
     void Awake()
     {
         if (instance == null)
@@ -41,10 +44,24 @@ public class GameUIManager : MonoBehaviour
         GameStateManager.instance.ChangeGameState(GameState.Shopping);
         itemDetailPanel.SetActive(true);
     }
-    
+
     public void HideItemDetailPanel()
     {
         GameStateManager.instance.ChangeGameState(GameState.Game);
         itemDetailPanel.SetActive(false);
+    }
+    
+    public void TogglePausePanel()
+    {
+        if(GameStateManager.instance.CurrentGameState == GameState.Pause)
+        {
+            GameStateManager.instance.ChangeGameState(GameState.Game);
+            pausePanel.SetActive(false);
+        }
+        else
+        {
+            GameStateManager.instance.ChangeGameState(GameState.Pause);
+            pausePanel.SetActive(true);
+        }
     }
 }
