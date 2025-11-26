@@ -20,6 +20,10 @@ public class GameUIManager : MonoBehaviour
     [Header("Settings Panel")]
     [SerializeField] private GameObject settingsPanel;
 
+    [Header("Main Menu Panels")]
+    [SerializeField] private GameObject mainMenuPanel;
+
+
     void Awake()
     {
         if (instance == null)
@@ -30,6 +34,14 @@ public class GameUIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void StartGame()
+    {
+        mainMenuPanel.SetActive(false);
+        gamePanel.SetActive(true);
+        GameStateManager.instance.ChangeGameState(GameState.Game);
+        CameraTransitionManager.instance.TranstionToGameplay();
     }
 
     public void ShowShopPanel()
