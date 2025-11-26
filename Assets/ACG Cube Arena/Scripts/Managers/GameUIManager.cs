@@ -89,7 +89,7 @@ public class GameUIManager : MonoBehaviour
         {
             GameStateManager.instance.ChangeGameState(GameState.Pause);
         }
-        else
+        else if (panelStack.Count > 0)
         {
             panelStack.Peek().SetActive(false);
         }
