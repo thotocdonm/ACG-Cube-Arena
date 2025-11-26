@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -39,11 +40,23 @@ public class ButtonHoverEffectUI : MonoBehaviour, IPointerEnterHandler, IPointer
         {
             border.SetActive(false);
         }
-        if(button != null)
+        if (button != null)
         {
             button.transform.DOScale(1f, scaleDuration).SetEase(Ease.OutBack).SetUpdate(true);
         }
-        
+
+    }
+
+    void OnDisable()
+    {
+        if (border != null)
+        {
+            border.SetActive(false);
+        }
+        if (button != null)
+        {
+            button.transform.DOScale(1f, scaleDuration).SetEase(Ease.OutBack).SetUpdate(true);
+        }
     }
     
 }

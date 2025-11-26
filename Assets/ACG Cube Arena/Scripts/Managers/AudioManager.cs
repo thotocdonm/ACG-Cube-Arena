@@ -5,6 +5,11 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
+
+
+    [Header("BGMs")]
+    [SerializeField] private AudioSource bgmAudioSource;
+
     [Header("Player")]
     [SerializeField] private AudioSource[] ichigoAudioSources;
     [SerializeField] private AudioSource ichigoChargingAudioSource;
@@ -18,6 +23,11 @@ public class AudioManager : MonoBehaviour
     [Header("Mage Enemy")]
     [SerializeField] private AudioSource mageChargeAudioSource;
     [SerializeField] private AudioSource mageAttackAudioSource;
+
+    [Header("Settings")]
+    [SerializeField] private AudioSource[] allSFXAudioSources;
+    private float bgmVolume = 1f;
+    private float sfxVolume = 1f;
 
     private void Awake()
     {
@@ -49,6 +59,20 @@ public class AudioManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void SetBGMVolume(float volume)
+    {
+        bgmVolume = volume;
+        bgmAudioSource.volume = bgmVolume;
+    }
+    public void SetSFXVolume(float volume)
+    {
+        sfxVolume = volume;
+        foreach (AudioSource audioSource in allSFXAudioSources)
+        {
+            audioSource.volume = sfxVolume;
+        }
     }
 
     private void EnemyHitCallback(int damage, Vector3 enemyPos, bool isCritical, Vector3 hitPoint)

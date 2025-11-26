@@ -26,7 +26,7 @@ public class GameStateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CurrentGameState = GameState.Game;
+        CurrentGameState = GameState.MainMenu;
     }
 
     public void ChangeGameState(GameState newGameState)

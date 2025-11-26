@@ -16,7 +16,7 @@ public class IdleState : PlayerBaseState
 
     public override void Update()
     {
-        if(owner.AimDirection.sqrMagnitude > 0.01f)
+        if(owner.AimDirection.sqrMagnitude > 0.01f && GameStateManager.instance.CurrentGameState == GameState.Game)
         {
             Quaternion toRotation = Quaternion.LookRotation(owner.AimDirection, Vector3.up);
             Quaternion newRotation = Quaternion.RotateTowards(rb.rotation, toRotation, owner.RotationSpeed * Time.deltaTime);
@@ -26,7 +26,7 @@ public class IdleState : PlayerBaseState
 
     public override void HandleMove(Vector2 Input)
     {
-        if(Input.magnitude > 0.1f)
+        if(Input.magnitude > 0.1f && GameStateManager.instance.CurrentGameState == GameState.Game)
         {
             owner.ChangeState(owner.movingState);
         }
@@ -34,7 +34,7 @@ public class IdleState : PlayerBaseState
 
     public override void HandleDash()
     {
-        if(owner.CanDash())
+        if(owner.CanDash() && GameStateManager.instance.CurrentGameState == GameState.Game)
         {
             owner.ChangeState(owner.dashingState);
         }
@@ -42,7 +42,10 @@ public class IdleState : PlayerBaseState
     
     public override void HandleAttack()
     {
-        owner.ChangeState(owner.ichigoAttackingState);
+        if(GameStateManager.instance.CurrentGameState == GameState.Game)
+        {
+            owner.ChangeState(owner.ichigoAttackingState);
+        }
     }
     
 }
