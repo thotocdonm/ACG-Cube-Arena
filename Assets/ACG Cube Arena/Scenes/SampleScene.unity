@@ -13062,6 +13062,7 @@ MonoBehaviour:
   pausePanel: {fileID: 1053180506}
   settingsPanel: {fileID: 1563852535}
   mainMenuPanel: {fileID: 1431478592}
+  fadeImage: {fileID: 1047933646}
 --- !u!1 &1003826396
 GameObject:
   m_ObjectHideFlags: 0
@@ -13472,12 +13473,12 @@ GameObject:
   - component: {fileID: 1047933647}
   - component: {fileID: 1047933646}
   m_Layer: 5
-  m_Name: Background
+  m_Name: Fade Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1047933645
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13510,8 +13511,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.69803923}
-  m_RaycastTarget: 1
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -22713,11 +22714,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1047933645}
   - {fileID: 1431478593}
   - {fileID: 1575665412}
   - {fileID: 1053180507}
   - {fileID: 1563852536}
+  - {fileID: 1047933645}
   m_Father: {fileID: 748144037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -22796,6 +22797,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 383002372}
     m_Modifications:
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 991740376}
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ExitToMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameUIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2092679529514993508, guid: 0171218cdb52d16428487ab786f5f9c7,
         type: 3}
       propertyPath: m_Pivot.x
@@ -59669,6 +59705,16 @@ PrefabInstance:
       propertyPath: playerHealthBarUI
       value: 
       objectReference: {fileID: 369772960}
+    - target: {fileID: 2345437172187937601, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2345437172187937601, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2785737259873354464, guid: aaee8c1010294e54dbad30b1e042a160,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Target

@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -22,6 +25,9 @@ public class GameUIManager : MonoBehaviour
 
     [Header("Main Menu Panels")]
     [SerializeField] private GameObject mainMenuPanel;
+
+    [Header("Fade Panel")]
+    [SerializeField] private Image fadeImage;
 
 
     void Awake()
@@ -117,22 +123,27 @@ public class GameUIManager : MonoBehaviour
             }
         }
     }
-    
+
     public void TogglePauseMenu(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-           if(GameStateManager.instance.CurrentGameState == GameState.Game)
+            if (GameStateManager.instance.CurrentGameState == GameState.Game)
             {
                 ShowPanel(pausePanel);
             }
             else
             {
                 GoBack();
-            } 
+            }
         }
-            
-
-        
+    }
+    
+    public void ExitToMenu()
+    {
+        fadeImage.DOFade(1, 2).SetUpdate(true).SetEase(Ease.InOutSine).OnComplete(() =>
+        {
+            SceneManager.LoadScene(0);
+        });
     }
 }
