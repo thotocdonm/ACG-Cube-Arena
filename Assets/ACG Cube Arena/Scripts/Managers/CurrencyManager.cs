@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinManager : MonoBehaviour
+public class CurrencyManager : MonoBehaviour
 {
-    public static CoinManager instance;
+    public static CurrencyManager instance;
 
     private int currentCoins = 0;
     public static Action<int> onCoinsChanged;
+    private int currentDiamonds = 0;
+    public static Action<int> onDiamondsChanged;
 
 
     void Awake()
@@ -39,9 +41,33 @@ public class CoinManager : MonoBehaviour
         onCoinsChanged?.Invoke(currentCoins);
     }
 
+    public void AddDiamonds(int amount)
+    {
+        currentDiamonds += amount;
+        onDiamondsChanged?.Invoke(currentDiamonds);
+    }
+
+    public void RemoveDiamonds(int amount)
+    {
+        currentDiamonds -= amount;
+        if (currentDiamonds < 0)
+        {
+            currentDiamonds = 0;
+        }
+        onDiamondsChanged?.Invoke(currentDiamonds);
+    }
+
+
+
     public bool IsEnoughCoins(int amount)
     {
         return currentCoins >= amount;
+    }
+
+
+    public bool IsEnoughDiamonds(int amount)
+    {
+        return currentDiamonds >= amount;
     }
 
     [NaughtyAttributes.Button]
@@ -53,5 +79,10 @@ public class CoinManager : MonoBehaviour
     public int GetCurrentCoins()
     {
         return currentCoins;
+    }
+
+    public int GetCurrentDiamonds()
+    {
+        return currentDiamonds;
     }
 }

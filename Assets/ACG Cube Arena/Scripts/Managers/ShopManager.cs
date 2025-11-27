@@ -36,7 +36,7 @@ public class ShopManager : MonoBehaviour
     {
         if (rerollButton != null)
         {
-            rerollButton.interactable = CoinManager.instance.IsEnoughCoins(rerollPrice);
+            rerollButton.interactable = CurrencyManager.instance.IsEnoughCoins(rerollPrice);
         }
     }
 
@@ -53,9 +53,9 @@ public class ShopManager : MonoBehaviour
 
     public void RerollShop()
     {
-        if (CoinManager.instance.IsEnoughCoins(rerollPrice))
+        if (CurrencyManager.instance.IsEnoughCoins(rerollPrice))
         {
-            CoinManager.instance.RemoveCoins(rerollPrice);
+            CurrencyManager.instance.RemoveCoins(rerollPrice);
             GenerateItems();
         }
         else

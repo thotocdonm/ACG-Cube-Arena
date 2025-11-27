@@ -74,7 +74,7 @@ public class InventoryManager : MonoBehaviour
 
         equippedItems[slot] = null;
 
-        CoinManager.instance.AddCoins(oldItem.price / 2);
+        CurrencyManager.instance.AddCoins(oldItem.price / 2);
 
         onEquipmentChanged?.Invoke(slot, null);
     }

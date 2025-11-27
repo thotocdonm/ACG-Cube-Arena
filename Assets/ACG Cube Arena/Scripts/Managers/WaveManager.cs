@@ -186,7 +186,7 @@ public class WaveManager : MonoBehaviour
         CurrentWaveState = WaveState.Preparing;
         KillAllEnemies();
         bossHealthBarUI.SetActive(false);
-        CoinManager.instance.AddCoins(100);
+        CurrencyManager.instance.AddCoins(100);
         playerStats.RestoreHealth((int)(playerStats.MaxHealth.GetValue()/2));
         EnterPreparationPhase();
     }

@@ -32,7 +32,7 @@ public class ItemDescriptionContainer : MonoBehaviour
     {
         if (buyButton != null)
         {
-            buyButton.interactable = CoinManager.instance.IsEnoughCoins(itemData.price);
+            buyButton.interactable = CurrencyManager.instance.IsEnoughCoins(itemData.price);
         }
     }
 
@@ -58,7 +58,7 @@ public class ItemDescriptionContainer : MonoBehaviour
     {
         if (itemData != null)
         {
-            CoinManager.instance.RemoveCoins(itemData.price);
+            CurrencyManager.instance.RemoveCoins(itemData.price);
             InventoryManager.instance.EquipItem(itemData);
             GameUIManager.instance.HideShopPanel();
         }
@@ -68,7 +68,7 @@ public class ItemDescriptionContainer : MonoBehaviour
     {
         if (itemData != null)
         {
-            CoinManager.instance.AddCoins(itemData.price / 2);
+            CurrencyManager.instance.AddCoins(itemData.price / 2);
             InventoryManager.instance.UnequipItem(itemData.equipmentType);
             GameUIManager.instance.HideItemDetailPanel();
 

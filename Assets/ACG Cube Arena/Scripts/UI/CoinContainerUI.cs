@@ -10,13 +10,13 @@ public class CoinContainerUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UpdateCoinText(CoinManager.instance.GetCurrentCoins());
-        CoinManager.onCoinsChanged += OnCoinsChangedCallback;
+        UpdateCoinText(CurrencyManager.instance.GetCurrentCoins());
+        CurrencyManager.onCoinsChanged += OnCoinsChangedCallback;
     }
 
     void OnDestroy()
     {
-        CoinManager.onCoinsChanged -= OnCoinsChangedCallback;
+        CurrencyManager.onCoinsChanged -= OnCoinsChangedCallback;
     }
 
     private void UpdateCoinText(int coins)
