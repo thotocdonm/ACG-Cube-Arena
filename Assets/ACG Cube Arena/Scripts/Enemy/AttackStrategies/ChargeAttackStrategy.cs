@@ -67,7 +67,7 @@ public class ChargeAttackStrategy : IAttackStrategy
 
     private Vector3 GetSafeTargetPosition(Vector3 direction, float distance)
     {
-        Vector3 startPosition = owner.transform.position;
+        Vector3 startPosition = owner.transform.position - direction * 0.1f;
         Vector3 targetPosition = startPosition + direction * distance;
 
         Debug.DrawRay(startPosition, direction * distance, Color.red, 2f);

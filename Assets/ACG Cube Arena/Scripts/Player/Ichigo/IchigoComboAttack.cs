@@ -103,7 +103,7 @@ public class IchigoComboAttack : MonoBehaviour
         float elapsed = 0;
 
         Vector3 start = transform.position;
-        Vector3 dir =  transform.forward;
+        Vector3 dir = transform.forward;
 
         Vector3 end = start + dir * distance;
 
@@ -115,9 +115,30 @@ public class IchigoComboAttack : MonoBehaviour
             float t = elapsed / duration;
             float easedT = 1f - Mathf.Pow(1f - t, 3f);
             Vector3 newPosition = Vector3.LerpUnclamped(start, end, easedT);
+            newPosition = GetSafeLungeTargetPosition(dir, distance, newPosition);
             owner.Rigidbody.MovePosition(newPosition);
-            
+
         }
+    }
+    
+    private Vector3 GetSafeLungeTargetPosition(Vector3 direction, float distance, Vector3 targetPosition)
+    {
+        Vector3 startPosition = owner.transform.position - direction * 0.1f;
+
+
+        CapsuleCollider collider = owner.GetComponent<CapsuleCollider>();
+        if (collider == null) return targetPosition;
+
+        Vector3 p1 = startPosition + collider.center + Vector3.up * (collider.height * 0.5f - collider.radius);
+        Vector3 p2 = startPosition + collider.center + Vector3.up * (-collider.height * 0.5f + collider.radius);
+
+        RaycastHit hit;
+        if (Physics.CapsuleCast(p1, p2, collider.radius, direction, out hit, distance, owner.ObstacleLayer, QueryTriggerInteraction.Ignore))
+        {
+            float safeDistance = Mathf.Max(0f, hit.distance - 0.1f);
+            targetPosition = startPosition + direction * safeDistance;
+        }
+        return targetPosition;
     }
 
     public void OnAttackAnimatonEnd()
