@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 4052239907192575805}
   - component: {fileID: 75342125308767211}
   - component: {fileID: 6689226555796309316}
-  - component: {fileID: 6112711529539171965}
+  - component: {fileID: 7180072595334156278}
   m_Layer: 5
   m_Name: Base Stat Button
   m_TagString: Untagged
@@ -177,7 +177,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3886905605090630353}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6112711529539171965
+--- !u!114 &7180072595334156278
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3886905605090630353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a886d67d8687ee43af39dd0358a4d00, type: 3}
+  m_Script: {fileID: 11500000, guid: d9f28b4e6b965864f8d551eaabbdce99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   background: {fileID: 2302033177226732325}

@@ -26,6 +26,12 @@ public class GameUIManager : MonoBehaviour
     [Header("Main Menu Panels")]
     [SerializeField] private GameObject mainMenuPanel;
 
+    [Header("Game Over Panel")]
+    [SerializeField] private GameObject gameOverPanel;
+
+    [Header("Skill Tree Panel")]
+    [SerializeField] private GameObject skillTreePanel;
+
     [Header("Fade Panel")]
     [SerializeField] private Image fadeImage;
 
@@ -102,6 +108,12 @@ public class GameUIManager : MonoBehaviour
         panelStack.Push(panel);
         Debug.Log("PanelStack: " + panelStack.Count);
         panel.SetActive(true);
+    }
+
+    public void GameOver()
+    {
+        GameStateManager.instance.ChangeGameState(GameState.GameOver);
+        gameOverPanel.SetActive(true);
     }
 
     public void GoBack()

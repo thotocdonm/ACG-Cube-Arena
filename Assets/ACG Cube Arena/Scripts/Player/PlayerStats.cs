@@ -154,6 +154,7 @@ public class PlayerStats : MonoBehaviour
     private void Die()
     {
         Debug.Log("Player has died.");
+        GameUIManager.instance.GameOver();
         Destroy(gameObject);
     }
 

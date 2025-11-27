@@ -8,6 +8,7 @@ public class EnemyChaseState : EnemyBaseState
 
     public override void Update()
     {
+        if(owner.PlayerTarget == null) return;
         float distanceToPlayer = Vector3.Distance(owner.transform.position, owner.PlayerTarget.position);
         if (distanceToPlayer <= owner.GetEnemyStats().DetectionRange.GetValue() && owner.IsAttackReady())
         {
@@ -18,6 +19,7 @@ public class EnemyChaseState : EnemyBaseState
 
     public override void FixedUpdate()
     {
+        if(owner.PlayerTarget == null) return;
         Vector3 directionToPlayer = (owner.PlayerTarget.position - owner.transform.position).normalized;
         directionToPlayer.y = 0;
         float distanceToPlayer = Vector3.Distance(owner.transform.position, owner.PlayerTarget.position);
