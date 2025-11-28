@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
 
-    [Header("BGMs")]
+    [Header("BGMs & SFXs")]
     [SerializeField] private AudioSource bgmAudioSource;
+    [SerializeField] private AudioSource[] allSFXAudioSources;
+    [SerializeField] private Slider bgmVolumeSlider;
+    [SerializeField] private Slider sfxVolumeSlider;
 
     [Header("Player")]
     [SerializeField] private AudioSource[] ichigoAudioSources;
@@ -25,9 +29,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource mageAttackAudioSource;
 
     [Header("Settings")]
-    [SerializeField] private AudioSource[] allSFXAudioSources;
-    private float bgmVolume = 1f;
-    private float sfxVolume = 1f;
+    
+    private float bgmVolume = 0.1f;
+    private float sfxVolume = 0.1f;
 
     private void Awake()
     {
@@ -65,6 +69,8 @@ public class AudioManager : MonoBehaviour
     {
         bgmVolume = volume;
         bgmAudioSource.volume = bgmVolume;
+        bgmVolumeSlider.value = bgmVolume;
+
     }
     public void SetSFXVolume(float volume)
     {
@@ -73,6 +79,16 @@ public class AudioManager : MonoBehaviour
         {
             audioSource.volume = sfxVolume;
         }
+        sfxVolumeSlider.value = sfxVolume;
+    }
+
+    public float GetBGMVolume()
+    {
+        return bgmVolume;
+    }
+    public float GetSFXVolume()
+    {
+        return sfxVolume;
     }
 
     private void EnemyHitCallback(int damage, Vector3 enemyPos, bool isCritical, Vector3 hitPoint)

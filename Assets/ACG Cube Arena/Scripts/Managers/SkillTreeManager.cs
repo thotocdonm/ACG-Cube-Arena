@@ -7,6 +7,9 @@ public class SkillTreeManager : MonoBehaviour
 {
     public static SkillTreeManager instance;
 
+    [Header("Upgradeable Stats")]
+    [SerializeField] private List<StatUpgradeDataSO> upgradeableStats;
+
     private Dictionary<StatType, int> skillLevels = new Dictionary<StatType, int>();
 
     private PlayerStats playerStats;
@@ -37,7 +40,7 @@ public class SkillTreeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitializeSkillLevels();
+
     }
 
 
@@ -87,13 +90,33 @@ public class SkillTreeManager : MonoBehaviour
         
         targetStat.SetBaseValue(newBaseValue);
     }
-    
-    private void InitializeSkillLevels()
+
+    public void InitializeSkillLevels()
     {
         skillLevels.Clear();
         foreach (StatType statType in Enum.GetValues(typeof(StatType)))
         {
             skillLevels.Add(statType, 0);
+        }
+    }
+
+    public Dictionary<StatType, int> GetSkillLevelsDictionary()
+    {
+        return skillLevels;
+    }
+
+    public void LoadSkillLevels(Dictionary<StatType, int> unlockedStats)
+    {
+        skillLevels = unlockedStats;
+        RecaculateAllUpgradeableStats();
+
+    }
+    
+    private void RecaculateAllUpgradeableStats()
+    {
+        foreach (StatUpgradeDataSO statUpgradeData in upgradeableStats)
+        {
+            ApplySkillUpgrade(statUpgradeData);
         }
     }
 }

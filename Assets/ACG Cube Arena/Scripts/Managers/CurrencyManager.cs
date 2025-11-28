@@ -91,4 +91,10 @@ public class CurrencyManager : MonoBehaviour
     {
         return currentDiamonds;
     }
+
+    public void SetDiamonds(int amount)
+    {
+        currentDiamonds = amount;
+        onDiamondsChanged?.Invoke(currentDiamonds);
+    }
 }

@@ -102,6 +102,7 @@ public class StatButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             PrepareAndShowTooltip();
             levelText.text = $"{newLevel} / {statUpgradeData.maxLevel}";
             button.interactable = SkillTreeManager.instance.CanUpgradeSkill(statUpgradeData, out float skillUpgradeCost);
+            SaveLoadManager.instance.SaveGame();
         }
         
     }
