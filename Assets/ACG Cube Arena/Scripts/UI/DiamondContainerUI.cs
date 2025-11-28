@@ -10,18 +10,23 @@ public class DiamondContainerUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UpdateDiamondText(CurrencyManager.instance.GetCurrentCoins());
-        CurrencyManager.onCoinsChanged += OnDiamondsChangedCallback;
+
+    }
+
+    void OnEnable()
+    {
+        UpdateDiamondText(CurrencyManager.instance.GetCurrentDiamonds());
+        CurrencyManager.onDiamondsChanged += OnDiamondsChangedCallback;
     }
 
     void OnDestroy()
     {
-        CurrencyManager.onCoinsChanged -= OnDiamondsChangedCallback;
+        CurrencyManager.onDiamondsChanged -= OnDiamondsChangedCallback;
     }
 
-    private void UpdateDiamondText(int coins)
+    private void UpdateDiamondText(int diamonds)
     {
-        diamondText.text = coins.ToString();
+        diamondText.text = diamonds.ToString();
     }
     
     private void OnDiamondsChangedCallback(int diamonds)

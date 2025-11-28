@@ -12,7 +12,7 @@ public class Stat
     private readonly List<StatModifier> modifiers;
     public readonly ReadOnlyCollection<StatModifier> Modifiers;
 
-    public event Action<float> OnValueChanged;
+    public event Action<float,float> OnValueChanged;
 
     private float _lastValue;
     private float _minValue;
@@ -23,9 +23,11 @@ public class Stat
         this.baseValue = baseValue;
         modifiers = new List<StatModifier>();
         Modifiers = modifiers.AsReadOnly();
-        _lastValue = GetValue();
+        _lastValue = this.baseValue;
         _minValue = minValue;
         _maxValue = maxValue;
+        Debug.Log("Stat created: " + baseValue);
+        Debug.Log("Last Value: " + _lastValue);
     }
 
     public float GetValue()
@@ -86,11 +88,12 @@ public class Stat
     private void CheckForChange()
     {
         float newValue = GetValue();
+        float oldValue = _lastValue;
         if (newValue != _lastValue)
         {
-            Debug.Log("Stat value changed: " + _lastValue + " -> " + newValue);
+            Debug.Log("Stat value changed: " + oldValue + " -> " + newValue);
             _lastValue = newValue;
-            OnValueChanged?.Invoke(newValue);
+            OnValueChanged?.Invoke(oldValue, newValue);
         }
     }
 }

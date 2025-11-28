@@ -53,19 +53,14 @@ public abstract class Enemy : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        EnemyStats.AttackDamage.OnValueChanged += OnAttackDamageChanged;
+        
         
     }
     
 
-    protected virtual void OnAttackDamageChanged(float newAttackDamage)
-    {
-        
-    }
-
     protected virtual void OnDestroy()
     {
-        EnemyStats.AttackDamage.OnValueChanged -= OnAttackDamageChanged;
+        
     }
 
     

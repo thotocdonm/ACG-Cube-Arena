@@ -76,6 +76,12 @@ public class CurrencyManager : MonoBehaviour
         AddCoins(100);
     }
 
+    [NaughtyAttributes.Button]
+    public void Add1000Diamonds()
+    {
+        AddDiamonds(1000);
+    }
+
     public int GetCurrentCoins()
     {
         return currentCoins;

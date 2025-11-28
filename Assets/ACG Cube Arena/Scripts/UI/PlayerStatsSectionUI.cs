@@ -70,7 +70,10 @@ public class PlayerStatsSectionUI : MonoBehaviour
         {
             StatType statType = statToDisplay[i];
             Stat stat = playerStats.GetStat(statType);
-            bool isPercentage = statType == StatType.SkillCooldownReduction || statType == StatType.DashCooldownReduction;
+            bool isPercentage = statType == StatType.SkillCooldownReduction 
+            || statType == StatType.DashCooldownReduction
+            || statType == StatType.CriticalChance
+            || statType == StatType.CriticalDamage;
             statContainers[i].Configure(ResourcesManager.instance.GetStatIcon(statType), Helper.SplitCamelCase(statType.ToString()), stat.GetValue(), isPercentage);
         }
     }
@@ -83,7 +86,7 @@ public class PlayerStatsSectionUI : MonoBehaviour
         playerStatsSection.DOAnchorPosX(targetX, slideDuration).SetEase(Ease.OutCubic);
     }
 
-    private void OnStatValueChangedCallback(float newStatValue)
+    private void OnStatValueChangedCallback(float oldStatValue, float newStatValue)
     {
         InitializeStatContainers();
     }

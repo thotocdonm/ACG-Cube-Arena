@@ -52,6 +52,8 @@ public class PlayerStats : MonoBehaviour
         statsDictionary.Add(StatType.DashCooldownReduction, new Stat(stats.dashCooldownReduction, 0, 40f));
 
         CurrentHealth = (int)statsDictionary[StatType.MaxHealth].GetValue();
+        MaxHealth.OnValueChanged += OnMaxHealthChangedCallback;
+
         allRenderers = GetComponentsInChildren<MeshRenderer>();
         originalColors = new Color[allRenderers.Length];
         for (int i = 0; i < allRenderers.Length; i++)
@@ -161,10 +163,18 @@ public class PlayerStats : MonoBehaviour
     public void RestoreHealth(int amount)
     {
         CurrentHealth += amount;
-        if(CurrentHealth > MaxHealth.GetValue())
+        if (CurrentHealth > MaxHealth.GetValue())
         {
             CurrentHealth = (int)MaxHealth.GetValue();
         }
+        onHealthChanged?.Invoke(CurrentHealth);
+    }
+    
+    private void OnMaxHealthChangedCallback(float oldMaxHealth, float newMaxHealth)
+    {
+        int ratio = Mathf.RoundToInt(CurrentHealth / oldMaxHealth);
+        Debug.Log("Current Health: " + CurrentHealth + " Old Max Health: " + oldMaxHealth + " New Max Health: " + newMaxHealth + " Ratio: " + ratio);
+        CurrentHealth = (int)(ratio * newMaxHealth);
         onHealthChanged?.Invoke(CurrentHealth);
     }
 

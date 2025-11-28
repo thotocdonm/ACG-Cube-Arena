@@ -21,9 +21,9 @@ public class TooltipUIManager : MonoBehaviour
         }
     }
 
-    public void ShowTooltip(string title, string description, int currentLevelValue, int nextLevelValue, StatModifierType modifierType)
+    public void ShowTooltip(string title, string description, int currentLevelValue, int nextLevelValue, int priceValue, StatModifierType modifierType, bool isMaxLevel, bool isPercentage = false)
     {
-        tooltipContainerUI.SetData(title, description, currentLevelValue, nextLevelValue, modifierType);
+        tooltipContainerUI.SetData(title, description, currentLevelValue, nextLevelValue, priceValue, modifierType, isMaxLevel, isPercentage);
         tooltipContainerUI.gameObject.SetActive(true);
     }
 
