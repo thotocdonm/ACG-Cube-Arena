@@ -83,8 +83,9 @@ public class SkillTreeManager : MonoBehaviour
 
         int currentLevel = GetSkillLevel(statUpgradeData.statType);
         float value = statUpgradeData.valuePerLevel * currentLevel;
-        StatModifier modifier = new StatModifier(value, statUpgradeData.modifierType, statUpgradeData);
-        targetStat.AddModifier(modifier);
+        float newBaseValue = targetStat.GetOriginalBaseValue() + value;
+        
+        targetStat.SetBaseValue(newBaseValue);
     }
     
     private void InitializeSkillLevels()

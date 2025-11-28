@@ -8,7 +8,8 @@ using UnityEngine;
 [System.Serializable]
 public class Stat
 {
-    public readonly float baseValue;
+    public float BaseValue { get; private set; }
+    private readonly float originalBaseValue;
     private readonly List<StatModifier> modifiers;
     public readonly ReadOnlyCollection<StatModifier> Modifiers;
 
@@ -20,19 +21,20 @@ public class Stat
 
     public Stat(float baseValue, float minValue = float.MinValue, float maxValue = float.MaxValue)
     {
-        this.baseValue = baseValue;
+        BaseValue = baseValue;
+        originalBaseValue = baseValue;
         modifiers = new List<StatModifier>();
         Modifiers = modifiers.AsReadOnly();
-        _lastValue = this.baseValue;
+        _lastValue = BaseValue;
         _minValue = minValue;
         _maxValue = maxValue;
-        Debug.Log("Stat created: " + baseValue);
+        Debug.Log("Stat created: " + BaseValue);
         Debug.Log("Last Value: " + _lastValue);
     }
 
     public float GetValue()
     {
-        float finalValue = baseValue;
+        float finalValue = BaseValue;
         float percentSum = 0;
 
         foreach (StatModifier mod in modifiers)
@@ -72,6 +74,7 @@ public class Stat
         modifiers.Remove(modifier);
         CheckForChange();
     }
+    
 
     public void RemoveAllModifiersFromSource(object source)
     {
@@ -84,16 +87,26 @@ public class Stat
         }
         CheckForChange();
     }
-    
+
     private void CheckForChange()
     {
         float newValue = GetValue();
         float oldValue = _lastValue;
         if (newValue != _lastValue)
         {
-            Debug.Log("Stat value changed: " + oldValue + " -> " + newValue);
             _lastValue = newValue;
             OnValueChanged?.Invoke(oldValue, newValue);
         }
+    }
+
+    public void SetBaseValue(float newBaseValue)
+    {
+        BaseValue = newBaseValue;
+        CheckForChange();
+    }
+    
+    public float GetOriginalBaseValue()
+    {
+        return originalBaseValue;
     }
 }

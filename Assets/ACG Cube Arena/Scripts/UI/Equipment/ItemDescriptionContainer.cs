@@ -68,7 +68,8 @@ public class ItemDescriptionContainer : MonoBehaviour
     {
         if (itemData != null)
         {
-            CurrencyManager.instance.AddCoins(itemData.price / 2);
+            float recyclePrice = itemData.price / 2;
+            CurrencyManager.instance.AddCoins((int)recyclePrice);
             InventoryManager.instance.UnequipItem(itemData.equipmentType);
             GameUIManager.instance.HideItemDetailPanel();
 

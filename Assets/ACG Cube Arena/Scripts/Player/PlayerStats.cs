@@ -173,7 +173,6 @@ public class PlayerStats : MonoBehaviour
     private void OnMaxHealthChangedCallback(float oldMaxHealth, float newMaxHealth)
     {
         int ratio = Mathf.RoundToInt(CurrentHealth / oldMaxHealth);
-        Debug.Log("Current Health: " + CurrentHealth + " Old Max Health: " + oldMaxHealth + " New Max Health: " + newMaxHealth + " Ratio: " + ratio);
         CurrentHealth = (int)(ratio * newMaxHealth);
         onHealthChanged?.Invoke(CurrentHealth);
     }
