@@ -127,7 +127,6 @@ public class PlayerStats : MonoBehaviour
 
     private IEnumerator IFrameFlashCoroutine()
     {
-        Debug.LogWarning("Starting iFrame flash coroutine");
         bool isWhite = false;
         while (Time.time < lastHitTime + iFrameDuration)
         {
@@ -155,8 +154,7 @@ public class PlayerStats : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Player has died.");
-        GameUIManager.instance.GameOver();
+        WaveManager.instance.GameOver();
         Destroy(gameObject);
     }
 

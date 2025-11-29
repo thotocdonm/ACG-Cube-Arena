@@ -25,4 +25,4 @@ public class EnemyStatsSO : ScriptableObject
 
 }
 
-public enum EnemyType { Melee, Ranged, Boss }
+public enum EnemyType { Melee, Ranged, Boss, WaveMinion }

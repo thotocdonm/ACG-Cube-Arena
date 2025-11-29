@@ -53,21 +53,26 @@ public class SkillTreeManager : MonoBehaviour
         return 0;
     }
 
-    public bool CanUpgradeSkill(StatUpgradeDataSO statUpgradeData, out float skillUpgradeCost)
+    public bool CanUpgradeSkill(StatUpgradeDataSO statUpgradeData)
     {
-        float cost = statUpgradeData.baseCost + GetSkillLevel(statUpgradeData.statType) * statUpgradeData.costIncreasePerLevel;
+        float cost = GetSkillUpgradeCost(statUpgradeData);
         bool isEnoughDiamonds = CurrencyManager.instance.IsEnoughDiamonds((int)cost);
 
-        skillUpgradeCost = cost;
         return isEnoughDiamonds && GetSkillLevel(statUpgradeData.statType) < statUpgradeData.maxLevel;
+    }
+
+    public float GetSkillUpgradeCost(StatUpgradeDataSO statUpgradeData)
+    {
+        return statUpgradeData.baseCost + GetSkillLevel(statUpgradeData.statType) * statUpgradeData.costIncreasePerLevel;
     }
 
 
     public void UpgradeSkill(StatUpgradeDataSO statUpgradeData)
     {
-        if (!CanUpgradeSkill(statUpgradeData, out float skillUpgradeCost)) return;
+        if (!CanUpgradeSkill(statUpgradeData)) return;
 
-        CurrencyManager.instance.RemoveDiamonds((int)skillUpgradeCost);
+        float cost = GetSkillUpgradeCost(statUpgradeData);
+        CurrencyManager.instance.RemoveDiamonds((int)cost);
 
         int currentLevel = GetSkillLevel(statUpgradeData.statType);
         skillLevels[statUpgradeData.statType] = currentLevel + 1;

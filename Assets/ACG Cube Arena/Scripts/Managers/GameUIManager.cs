@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -28,6 +29,11 @@ public class GameUIManager : MonoBehaviour
 
     [Header("Game Over Panel")]
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private TextMeshProUGUI gameOverDiamondsEarnedText;
+
+    [Header("Game Complete Panel")]
+    [SerializeField] private GameObject gameCompletePanel;
+    [SerializeField] private TextMeshProUGUI gameCompleteDiamondsEarnedText;
 
     [Header("Skill Tree Panel")]
     [SerializeField] private GameObject skillTreePanel;
@@ -106,14 +112,23 @@ public class GameUIManager : MonoBehaviour
             panelStack.Peek().SetActive(false);
         }
         panelStack.Push(panel);
-        Debug.Log("PanelStack: " + panelStack.Count);
         panel.SetActive(true);
     }
 
-    public void GameOver()
+    public void GameOver(int diamondsEarned)
     {
         GameStateManager.instance.ChangeGameState(GameState.GameOver);
         gameOverPanel.SetActive(true);
+        gameOverDiamondsEarnedText.text = "Earned : " + diamondsEarned.ToString();
+        CurrencyManager.instance.AddDiamonds(diamondsEarned);
+    }
+
+    public void GameComplete(int diamondsEarned)
+    {
+        GameStateManager.instance.ChangeGameState(GameState.GameComplete);
+        gameCompletePanel.SetActive(true);
+        gameCompleteDiamondsEarnedText.text = "Earned : " + diamondsEarned.ToString();
+        CurrencyManager.instance.AddDiamonds(diamondsEarned);
     }
 
     public void GoBack()

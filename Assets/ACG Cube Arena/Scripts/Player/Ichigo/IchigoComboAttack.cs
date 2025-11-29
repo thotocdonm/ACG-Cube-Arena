@@ -143,7 +143,6 @@ public class IchigoComboAttack : MonoBehaviour
 
     public void OnAttackAnimatonEnd()
     {
-        Debug.Log("Play Attack Animation End");
         isAttacking = false;
         bool shouldContinueCombo = buffered || owner.IsAttackHeld;
         buffered = false;
@@ -162,7 +161,6 @@ public class IchigoComboAttack : MonoBehaviour
 
     public void CancelCurrentAttack()
     {
-        Debug.LogWarning("Cancelling Current Attack");
         isAttacking = false;
         buffered = false;
         currentComboIndex = 0;

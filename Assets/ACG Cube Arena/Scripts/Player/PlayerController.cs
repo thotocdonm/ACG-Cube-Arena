@@ -205,7 +205,6 @@ public class PlayerController : MonoBehaviour
     {
         float cdrValue = DashCooldownReduction;
         float finalCooldown = dashCooldown * (1 - cdrValue / 100f);
-        Debug.Log("Dash Cooldown: " + finalCooldown);
         
         return finalCooldown;
     }

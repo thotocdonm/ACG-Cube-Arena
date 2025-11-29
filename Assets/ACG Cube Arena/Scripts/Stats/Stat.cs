@@ -28,8 +28,6 @@ public class Stat
         _lastValue = BaseValue;
         _minValue = minValue;
         _maxValue = maxValue;
-        Debug.Log("Stat created: " + BaseValue);
-        Debug.Log("Last Value: " + _lastValue);
     }
 
     public float GetValue()

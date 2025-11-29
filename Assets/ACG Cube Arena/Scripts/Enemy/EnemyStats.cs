@@ -22,6 +22,7 @@ public class EnemyStats : MonoBehaviour
     private MeshRenderer[] allRenderers;
     private Color[] originalColors;
     private Coroutine flashCoroutine;
+    private EnemyType enemyType;
 
     public Stat MaxHealth { get; private set; }
     public Stat MoveSpeed { get; private set; }
@@ -49,6 +50,9 @@ public class EnemyStats : MonoBehaviour
 
         CurrentHealth = (int)MaxHealth.GetValue();
         SetHealthBarUI();
+
+        enemyType = stats.enemyType;
+        Debug.Log("Enemy Type: " + enemyType);
 
         allRenderers = GetComponentsInChildren<MeshRenderer>();
         originalColors = new Color[allRenderers.Length];
@@ -131,7 +135,6 @@ public class EnemyStats : MonoBehaviour
 
     public void ApplyWaveModifier(int waveNumber, float healthMultiplier, float attackMultiplier)
     {
-        Debug.Log("Applying Wave Modifier: Health Multiplier: " + healthMultiplier * waveNumber + " Attack Multiplier: " + attackMultiplier * waveNumber);
         MaxHealth.AddModifier(new StatModifier(healthMultiplier * waveNumber, StatModifierType.Percentage, "WaveModifier"));
         AttackDamage.AddModifier(new StatModifier(attackMultiplier * waveNumber, StatModifierType.Percentage, "WaveModifier"));
         SetHealthBarUI();
@@ -140,14 +143,21 @@ public class EnemyStats : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("Enemy Defeated");
-        WaveManager.instance.OnEnemyDied();
+        if(enemyType != EnemyType.WaveMinion)
+        {
+            WaveManager.instance.OnEnemyDied();
+        }
         Destroy(gameObject);
     }
 
     public EnemyStatsSO GetBaseStats()
     {
         return stats;
+    }
+
+    public void SetEnemyType(EnemyType enemyType)
+    {
+        this.enemyType = enemyType;
     }
 
     private void SetHealthBarUI()

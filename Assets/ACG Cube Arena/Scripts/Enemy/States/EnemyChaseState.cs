@@ -12,7 +12,6 @@ public class EnemyChaseState : EnemyBaseState
         float distanceToPlayer = Vector3.Distance(owner.transform.position, owner.PlayerTarget.position);
         if (distanceToPlayer <= owner.GetEnemyStats().DetectionRange.GetValue() && owner.IsAttackReady())
         {
-            Debug.Log("Enter Attack State" + owner.name);
             stateMachine.ChangeState(owner.EnemyAttackState);
         }
     }

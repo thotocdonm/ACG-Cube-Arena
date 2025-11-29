@@ -34,7 +34,7 @@ public class StatButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void Update()
     {
-        button.interactable = SkillTreeManager.instance.CanUpgradeSkill(statUpgradeData, out float skillUpgradeCost);
+        button.interactable = SkillTreeManager.instance.CanUpgradeSkill(statUpgradeData);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -74,13 +74,14 @@ public class StatButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private void PrepareAndShowTooltip()
     {
-        float currentSkillUpgradeCost = SkillTreeManager.instance.CanUpgradeSkill(statUpgradeData, out float skillUpgradeCost) ? skillUpgradeCost : 0;
         string title = statUpgradeData.statTooltip.title;
         string description = statUpgradeData.statTooltip.description;
         StatModifierType modifierType = statUpgradeData.modifierType;
         int currentLevelValue = Mathf.RoundToInt(SkillTreeManager.instance.GetSkillLevel(statUpgradeData.statType) * statUpgradeData.valuePerLevel);
         bool isMaxLevel = SkillTreeManager.instance.GetSkillLevel(statUpgradeData.statType) == statUpgradeData.maxLevel;
         int nextLevelValue = Mathf.RoundToInt((SkillTreeManager.instance.GetSkillLevel(statUpgradeData.statType) + 1) * statUpgradeData.valuePerLevel);
+
+        float currentSkillUpgradeCost = isMaxLevel ? 0 : SkillTreeManager.instance.GetSkillUpgradeCost(statUpgradeData);
 
         bool isPercentage = statUpgradeData.statType == StatType.SkillCooldownReduction ||
         statUpgradeData.statType == StatType.DashCooldownReduction ||
@@ -101,7 +102,7 @@ public class StatButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         {
             PrepareAndShowTooltip();
             levelText.text = $"{newLevel} / {statUpgradeData.maxLevel}";
-            button.interactable = SkillTreeManager.instance.CanUpgradeSkill(statUpgradeData, out float skillUpgradeCost);
+            button.interactable = SkillTreeManager.instance.CanUpgradeSkill(statUpgradeData);
             SaveLoadManager.instance.SaveGame();
         }
         

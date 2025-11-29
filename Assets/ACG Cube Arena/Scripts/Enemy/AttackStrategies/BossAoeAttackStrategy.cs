@@ -95,7 +95,6 @@ public class BossAoeAttackStrategy : IAttackStrategy
         Collider[] colliders = Physics.OverlapSphere(targetPosition, radius);
         foreach (Collider collider in colliders)
         {
-            Debug.Log("Collider: " + collider.gameObject.name);
             if (collider.gameObject.CompareTag("Player"))
             {
                 collider.gameObject.GetComponent<PlayerStats>().TakeDamage((int)stats.AttackDamage.GetValue());

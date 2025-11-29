@@ -55,8 +55,6 @@ public class SaveLoadManager : MonoBehaviour
 
             SaveData saveData = JsonUtility.FromJson<SaveData>(json);
 
-            Debug.Log("Loaded save data: " + saveData.diamonds + " diamonds" + " " + saveData.bgmVolume + " bgm volume" + " " + saveData.sfxVolume + " sfx volume");
-
             CurrencyManager.instance.SetDiamonds(saveData.diamonds);
             AudioManager.instance.SetBGMVolume(saveData.bgmVolume);
             AudioManager.instance.SetSFXVolume(saveData.sfxVolume);

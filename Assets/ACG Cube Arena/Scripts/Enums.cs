@@ -6,6 +6,7 @@ public enum GameState
     Pause,
     Shopping,
     GameOver,
+    GameComplete,
 }
 
 public enum SkillId

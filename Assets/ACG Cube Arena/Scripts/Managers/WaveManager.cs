@@ -5,6 +5,13 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
+
+public enum WaveType
+{
+    Normal,
+    Boss,
+    FinalBoss,
+}
 public class WaveManager : MonoBehaviour
 {
     public static WaveManager instance;
@@ -14,6 +21,7 @@ public class WaveManager : MonoBehaviour
 
     [Header("Elements")]
     private Transform playerTarget;
+    [SerializeField] private GameObject bossSpawnAnchor;
 
     [Header("Enemy")]
     [SerializeField] private GameObject[] enemyPrefabs;
@@ -25,8 +33,14 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private int maxEnemyCount = 12;
     [SerializeField] private int wavesPerEnemyCount = 5;
     [SerializeField] private int enemyCountIncrease = 2;
+    [SerializeField] private int finalWave = 20;
     [SerializeField] private float healthMultiplerIncreasePerWave = 0.1f;
     [SerializeField] private float damageMultiplerIncreasePerWave = 0.05f;
+    [SerializeField] private int diamondsEarnedPerWave = 50;
+    [SerializeField] private int diamondsEarnedPerBossWave = 100;
+    [SerializeField] private int diamondsEarnedPerFinalBossWave = 200;
+    private WaveType currentWaveType;
+    private int totalDiamondsEarned = 0;
 
     [Header("Spawning")]
     [SerializeField] private float spawnInterval = 0.5f;
@@ -78,7 +92,6 @@ public class WaveManager : MonoBehaviour
         startWaveTrigger.SetActive(true);
         openShopTrigger.SetActive(true);
         UpdateWaveText();
-        Debug.Log("Wave Preparation Phase Started, Enter Circle to continue");
     }
 
     private void UpdateWaveText()
@@ -103,30 +116,37 @@ public class WaveManager : MonoBehaviour
         openShopTrigger.SetActive(false);
         onWaveStart?.Invoke(CurrentWave);
 
-        if (CurrentWave % 2 == 0)
+        if (CurrentWave % 1 == 0)
         {
             currentEnemyCount = 1;
+            currentWaveType = WaveType.Boss;
             StartCoroutine(SpawnEnemySequence(bossPrefab, 5));
         }
         else
         {
             currentEnemyCount = initialEnemyCount + (CurrentWave / wavesPerEnemyCount) * enemyCountIncrease;
             currentEnemyCount = Mathf.Min(currentEnemyCount, maxEnemyCount);
-            for(int i = 0; i < currentEnemyCount; i++)
+            currentWaveType = WaveType.Normal;
+            for (int i = 0; i < currentEnemyCount; i++)
             {
-                StartCoroutine(SpawnEnemySequence(enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)],0));
+                StartCoroutine(SpawnEnemySequence(enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Length)], 0));
                 yield return new WaitForSeconds(spawnInterval);
             }
         }
+
+        yield return new WaitUntil(() => currentEnemyCount <= 0);
+
+        EndWave();
     }
 
     private IEnumerator SpawnEnemySequence(GameObject enemyPrefab, float indicatorScale)
     {
-       Vector3 spawnPoint = GetRandomSpawnPoint();
+        Vector3 spawnPoint = GetRandomSpawnPoint();
+        bool isBoss = enemyPrefab.GetComponent<EnemyStats>().GetBaseStats().enemyType == EnemyType.Boss;
 
         // Show Indicator
         GameObject spawnIndicatorInstance = VFXPoolManager.instance.enemySpawnVFXPool.Get();
-        spawnIndicatorInstance.transform.position = spawnPoint;
+        spawnIndicatorInstance.transform.position = isBoss ? bossSpawnAnchor.transform.position : spawnPoint;
         spawnIndicatorInstance.transform.rotation = Quaternion.identity;
         spawnIndicatorInstance.transform.localRotation = Quaternion.Euler(90, 0, 0);
         if (indicatorScale != 0)
@@ -141,15 +161,22 @@ public class WaveManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         //Spawn Enemy
-        GameObject enemyInstance = Instantiate(enemyPrefab, spawnPoint, Quaternion.identity, enemyParent);
-        enemyInstance.GetComponent<EnemyStats>().ApplyWaveModifier(CurrentWave, healthMultiplerIncreasePerWave, damageMultiplerIncreasePerWave);
-        AudioManager.instance.PlayEnemySpawnSound();
-
-        if(enemyPrefab.GetComponent<EnemyStats>().GetBaseStats().enemyType == EnemyType.Boss)
+        if (!isBoss)
         {
+            GameObject enemyInstance = Instantiate(enemyPrefab, spawnPoint, Quaternion.identity, enemyParent);
+            enemyInstance.GetComponent<EnemyStats>().ApplyWaveModifier(CurrentWave, healthMultiplerIncreasePerWave, damageMultiplerIncreasePerWave);
+            AudioManager.instance.PlayEnemySpawnSound();
+        }
+        else if (isBoss)
+        {
+            GameObject enemyInstance = Instantiate(enemyPrefab, bossSpawnAnchor.transform.position + new Vector3(0, 2f, 0), Quaternion.identity, enemyParent);
+            enemyInstance.GetComponent<EnemyStats>().ApplyWaveModifier(CurrentWave, healthMultiplerIncreasePerWave, damageMultiplerIncreasePerWave);
+            AudioManager.instance.PlayEnemySpawnSound();
+            // Initialize Boss Health Bar
             bossHealthBarUI.SetActive(true);
             bossHealthBarUI.GetComponent<BossHealthBarUI>().Initialize(enemyInstance.GetComponent<EnemyStats>());
         }
+
     }
 
     private Vector3 GetRandomSpawnPoint()
@@ -166,28 +193,59 @@ public class WaveManager : MonoBehaviour
 
     public void OnEnemyDied()
     {
-        currentEnemyCount--;
-        if (currentEnemyCount <= 0 && CurrentWaveState == WaveState.WaveInProgress || enemyParent.childCount <= 0)
+        if (currentEnemyCount > 0)
         {
-            EndWave();
+            currentEnemyCount--;
         }
     }
-    
+
     private void KillAllEnemies()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach(GameObject enemy in enemies)
+        foreach (GameObject enemy in enemies)
         {
             Destroy(enemy);
         }
     }
 
-    private void EndWave(){
+    private void EndWave()
+    {
+        CalculateDiamondsEarned();
+        if (CurrentWave == finalWave)
+        {
+            GameUIManager.instance.GameComplete(totalDiamondsEarned);
+        }
+
         CurrentWaveState = WaveState.Preparing;
         KillAllEnemies();
         bossHealthBarUI.SetActive(false);
         CurrencyManager.instance.AddCoins(100);
-        playerStats.RestoreHealth((int)(playerStats.MaxHealth.GetValue()/2));
+        playerStats.RestoreHealth((int)(playerStats.MaxHealth.GetValue() / 2));
         EnterPreparationPhase();
+    }
+
+    private int GetDiamondsEarnedPerWave()
+    {
+        switch (currentWaveType)
+        {
+            case WaveType.Normal:
+                return diamondsEarnedPerWave;
+            case WaveType.Boss:
+                return diamondsEarnedPerBossWave;
+            case WaveType.FinalBoss:
+                return diamondsEarnedPerFinalBossWave;
+            default:
+                return 0;
+        }
+    }
+
+    private void CalculateDiamondsEarned()
+    {
+        totalDiamondsEarned += GetDiamondsEarnedPerWave();
+    }
+
+    public void GameOver()
+    {
+        GameUIManager.instance.GameOver(totalDiamondsEarned);
     }
 }

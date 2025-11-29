@@ -26,7 +26,6 @@ public class PlayerHealthBarUI : MonoBehaviour
     }
     private void OnMaxHealthChangedCallback(float oldMaxHealth, float newMaxHealth)
     {
-        Debug.Log("Max health changed: " + newMaxHealth);
         UpdateHealth((int)playerStats.CurrentHealth, (int)newMaxHealth);
     }
 

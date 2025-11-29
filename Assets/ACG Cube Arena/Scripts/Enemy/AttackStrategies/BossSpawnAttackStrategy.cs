@@ -88,6 +88,7 @@ public class BossSpawnAttackStrategy : IAttackStrategy
 
         //Spawn Enemy
         GameObject enemyInstance = GameObject.Instantiate(spawnableEnemies[UnityEngine.Random.Range(0, spawnableEnemies.Length)], targetPosition, Quaternion.identity);
+        enemyInstance.GetComponent<EnemyStats>().SetEnemyType(EnemyType.WaveMinion);
 
         AudioManager.instance.PlayEnemySpawnSound();
         

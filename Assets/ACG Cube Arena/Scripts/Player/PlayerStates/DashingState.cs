@@ -13,7 +13,6 @@ public class DashingState : PlayerBaseState
 
     public override void Enter()
     {
-        Debug.Log("Enter Dashing State");
         owner.Animator.SetTrigger("Dash");
 
         if (owner.LastMoveInput.magnitude < 0.1f)
@@ -39,11 +38,9 @@ public class DashingState : PlayerBaseState
     private void OnDashComplete()
     {
         owner.Animator.ResetTrigger("Dash");
-        Debug.LogWarning("Dash Complete");
         owner.ResetDashCooldown();
 
         Vector2 currentInput = owner.LastMoveInput;
-        Debug.LogWarning("Current Input: " + currentInput);
 
         if (currentInput.magnitude > 0.1f)
         {
@@ -72,7 +69,6 @@ public class DashingState : PlayerBaseState
         RaycastHit hit;
         if (Physics.CapsuleCast(p1, p2, collider.radius, direction, out hit, distance, owner.ObstacleLayer, QueryTriggerInteraction.Ignore))
         {
-            Debug.LogWarning("Hit Obstacle: " + hit.collider.name);
             float safeDistance = Mathf.Max(0f, hit.distance - 0.1f);
             targetPosition = startPosition + direction * safeDistance;
         }
@@ -84,7 +80,7 @@ public class DashingState : PlayerBaseState
 
     public override void HandleAttack()
     {
-        Debug.Log("Handle Attack in Dashing State");
+        
     }
 
 }

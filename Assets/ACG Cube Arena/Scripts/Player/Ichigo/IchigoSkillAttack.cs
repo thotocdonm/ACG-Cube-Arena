@@ -43,7 +43,6 @@ public class IchigoSkillAttack : MonoBehaviour
     public void StartCharging()
     {
         if (isCharging) return;
-        Debug.Log("Start Charging");
         owner.Animator.SetTrigger("StartCharging");
         isCharging = true;
         chargeStartTime = Time.time;
@@ -52,15 +51,12 @@ public class IchigoSkillAttack : MonoBehaviour
     public void ReleaseSkill()
     {
         if (!isCharging) return;
-        Debug.Log("Release Skill");
 
         isCharging = false;
         float chargeDuration = Time.time - chargeStartTime;
-        Debug.Log("Charge Duration: " + chargeDuration);
 
         if (chargeDuration < minChargeTime)
         {
-            Debug.Log("Charge Duration is too short");
             owner.Animator.ResetTrigger("StartCharging");
             owner.Animator.SetTrigger("SkillCancel");
             return;
@@ -82,7 +78,6 @@ public class IchigoSkillAttack : MonoBehaviour
 
         float multiplier = Mathf.Lerp(baseMultiplier, maxChargeMultiplier, chargeDuration / maxChargeTime);
         float scale = Mathf.Lerp(minScale, maxScale, chargeDuration / maxChargeTime);
-        Debug.Log("Scale: " + scale);
 
         GameObject skillInstance = Instantiate(skillPrefab, firePoint.position, firePoint.rotation);
         skillInstance.transform.localScale = new Vector3(scale, scale, scale);
@@ -92,7 +87,6 @@ public class IchigoSkillAttack : MonoBehaviour
             float damage = owner.GetCriticalDamage();
             bool isCritical = damage > owner.AttackDamage;
             float finalDamage = damage * multiplier;
-            Debug.Log("Final Damage: " + finalDamage);
             projectile.Initialize((int)finalDamage, isCritical);
         }
         Destroy(skillInstance, 3f);
