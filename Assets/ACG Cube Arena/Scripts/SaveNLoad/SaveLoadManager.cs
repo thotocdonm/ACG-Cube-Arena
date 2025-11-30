@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +9,10 @@ public class SaveLoadManager : MonoBehaviour
     public static SaveLoadManager instance;
 
     private string saveFilePath;
+
+    public static Action<SaveData> onDataLoaded;
+
+    private SaveData loadedData;
 
     void Awake()
     {
@@ -22,6 +27,7 @@ public class SaveLoadManager : MonoBehaviour
         saveFilePath = Path.Combine(Application.persistentDataPath, "saveData.json");
 
         CurrencyManager.onDiamondsChanged += OnDiamondsChangedCallback;
+        LoadGame();
     }
     void OnDestroy()
     {
@@ -53,25 +59,27 @@ public class SaveLoadManager : MonoBehaviour
         {
             string json = File.ReadAllText(saveFilePath);
 
-            SaveData saveData = JsonUtility.FromJson<SaveData>(json);
+            loadedData = JsonUtility.FromJson<SaveData>(json);
 
-            CurrencyManager.instance.SetDiamonds(saveData.diamonds);
-            AudioManager.instance.SetBGMVolume(saveData.bgmVolume);
-            AudioManager.instance.SetSFXVolume(saveData.sfxVolume);
+            // CurrencyManager.instance.SetDiamonds(saveData.diamonds);
+            // AudioManager.instance.SetBGMVolume(saveData.bgmVolume);
+            // AudioManager.instance.SetSFXVolume(saveData.sfxVolume);
 
-            Dictionary<StatType, int> unlockedSkills = new Dictionary<StatType, int>();
-            for (int i = 0; i < saveData.unlockedStats.Count; i++)
-            {
-                unlockedSkills.Add(saveData.unlockedStats[i], saveData.unlockedSkillLevel[i]);
-            }
-            SkillTreeManager.instance.LoadSkillLevels(unlockedSkills);
+            // Dictionary<StatType, int> unlockedSkills = new Dictionary<StatType, int>();
+            // for (int i = 0; i < saveData.unlockedStats.Count; i++)
+            // {
+            //     unlockedSkills.Add(saveData.unlockedStats[i], saveData.unlockedSkillLevel[i]);
+            // }
+            // SkillTreeManager.instance.LoadSkillLevels(unlockedSkills);
         }
         else
         {
             Debug.Log("No save data found");
-            SkillTreeManager.instance.InitializeSkillLevels();
+            loadedData = new SaveData();
+            // SkillTreeManager.instance.InitializeSkillLevels();
 
         }
+        onDataLoaded?.Invoke(loadedData);
     }
 
     private void OnDiamondsChangedCallback(int diamonds)

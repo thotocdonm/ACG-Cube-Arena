@@ -100,6 +100,7 @@ public class StatButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (statType == statUpgradeData.statType)
         {
+            AudioManager.instance.PlayStatUpgradeSound();
             PrepareAndShowTooltip();
             levelText.text = $"{newLevel} / {statUpgradeData.maxLevel}";
             button.interactable = SkillTreeManager.instance.CanUpgradeSkill(statUpgradeData);

@@ -44,6 +44,7 @@ public class BossMageEnemy : Enemy
         int aoeCount = 0;
         while (true)
         {
+            Debug.Log("aoeCount: " + aoeCount);
             if (aoeCount < 2)
             {
                 AttackStrategy = aoeStrategy;
@@ -56,8 +57,10 @@ public class BossMageEnemy : Enemy
             }
 
             yield return new WaitUntil(() => IsAttackReady());
-            
+
             yield return new WaitUntil(() => stateMachine.GetCurrentState() != EnemyAttackState);
+            
+            yield return new WaitForSeconds(0.5f);
         }
     }
     

@@ -37,12 +37,25 @@ public class SkillTreeManager : MonoBehaviour
             Debug.LogError("Player not found");
         }
     }
-    // Start is called before the first frame update
-    void Start()
+
+    void OnEnable()
     {
-
+        SaveLoadManager.onDataLoaded += OnDataLoadedCallback;
     }
-
+    void OnDisable()
+    {
+        SaveLoadManager.onDataLoaded -= OnDataLoadedCallback;
+    }
+    
+    private void OnDataLoadedCallback(SaveData data)
+    {
+        Dictionary<StatType, int> unlockedStats = new Dictionary<StatType, int>();
+        for (int i = 0; i < data.unlockedStats.Count; i++)
+        {
+            unlockedStats.Add(data.unlockedStats[i], data.unlockedSkillLevel[i]);
+        }
+        LoadSkillLevels(unlockedStats);
+    }
 
     public int GetSkillLevel(StatType statType)
     {

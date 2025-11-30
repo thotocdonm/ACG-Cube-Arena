@@ -32,6 +32,7 @@ public class ButtonHoverEffectUI : MonoBehaviour, IPointerEnterHandler, IPointer
         {
             button.transform.DOScale(1.1f, scaleDuration).SetEase(Ease.OutBack).SetUpdate(true);
         }
+        AudioManager.instance.PlayButtonHoverSound();
     }
 
     public void OnPointerExit(PointerEventData eventData)

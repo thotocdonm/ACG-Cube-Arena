@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     {
         // Cursor.lockState = CursorLockMode.Confined;
         Application.targetFrameRate = 120;
-        SaveLoadManager.instance.LoadGame();
     }
 
     // Update is called once per frame

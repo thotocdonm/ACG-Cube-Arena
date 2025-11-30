@@ -24,6 +24,19 @@ public class CurrencyManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    void OnEnable()
+    {
+        SaveLoadManager.onDataLoaded += OnDataLoadedCallback;
+    }
+    void OnDisable()
+    {
+        SaveLoadManager.onDataLoaded -= OnDataLoadedCallback;
+    }
+
+    private void OnDataLoadedCallback(SaveData data)
+    {
+        SetDiamonds(data.diamonds, false);
+    }
 
     public void AddCoins(int amount)
     {
@@ -92,9 +105,13 @@ public class CurrencyManager : MonoBehaviour
         return currentDiamonds;
     }
 
-    public void SetDiamonds(int amount)
+    public void SetDiamonds(int amount, bool shouldSave = true)
     {
         currentDiamonds = amount;
-        onDiamondsChanged?.Invoke(currentDiamonds);
+        if (shouldSave)
+        {
+            onDiamondsChanged?.Invoke(currentDiamonds);
+        }
+        
     }
 }

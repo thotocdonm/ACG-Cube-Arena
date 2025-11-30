@@ -28,6 +28,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource mageChargeAudioSource;
     [SerializeField] private AudioSource mageAttackAudioSource;
 
+    [Header("UI")]
+    [SerializeField] private AudioSource buttonHoverAudioSource;
+    [SerializeField] private AudioSource statUpgradeAudioSource;
+
     [Header("Settings")]
     
     private float bgmVolume = 0.1f;
@@ -47,22 +51,26 @@ public class AudioManager : MonoBehaviour
         EnemyStats.onEnemyHit += EnemyHitCallback;
         PlayerStats.onPlayerHitted += PlayerHittedCallback;
     }
+
+    void OnEnable()
+    {
+        SaveLoadManager.onDataLoaded += OnDataLoadedCallback;
+    }
+
+    void OnDisable()
+    {
+        SaveLoadManager.onDataLoaded -= OnDataLoadedCallback;
+    }
     private void OnDestroy()
     {
         EnemyStats.onEnemyHit -= EnemyHitCallback;
         PlayerStats.onPlayerHitted -= PlayerHittedCallback;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnDataLoadedCallback(SaveData data)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        SetBGMVolume(data.bgmVolume);
+        SetSFXVolume(data.sfxVolume);
     }
 
     public void SetBGMVolume(float volume)
@@ -80,6 +88,11 @@ public class AudioManager : MonoBehaviour
             audioSource.volume = sfxVolume;
         }
         sfxVolumeSlider.value = sfxVolume;
+    }
+
+    public void SaveVolumeSettings()
+    {
+        SaveLoadManager.instance.SaveGame();
     }
 
     public float GetBGMVolume()
@@ -143,10 +156,20 @@ public class AudioManager : MonoBehaviour
         playerHittedAudioSource.pitch = Random.Range(0.9f, 1.1f);
         playerHittedAudioSource.Play();
     }
-    
+
     public void PlayEnemySpawnSound()
     {
         enemySpawnAudioSource.pitch = Random.Range(0.9f, 1.1f);
         enemySpawnAudioSource.Play();
+    }
+
+    public void PlayButtonHoverSound()
+    {
+        buttonHoverAudioSource.Play();
+    }
+    
+    public void PlayStatUpgradeSound()
+    {
+        statUpgradeAudioSource.Play();
     }
 }
