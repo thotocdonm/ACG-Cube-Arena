@@ -180,6 +180,7 @@ public class WaveManager : MonoBehaviour
         }
         else if (isBoss)
         {
+            Debug.Log("Spawning Boss");
             GameObject enemyInstance = Instantiate(enemyPrefab, bossSpawnAnchor.transform.position + Vector3.up * 3f, Quaternion.identity, enemyParent);
             if (Physics.Raycast(enemyInstance.transform.position, Vector3.down, out var hit, 10f))
             {
