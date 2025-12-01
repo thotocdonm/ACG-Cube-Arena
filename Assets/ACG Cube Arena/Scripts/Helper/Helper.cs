@@ -17,6 +17,29 @@ public static class Helper
         return System.Text.RegularExpressions.Regex
             .Replace(input, "([a-z])([A-Z])", "$1 $2");
     }
+
+    public static Bounds CalculateBoundsFromColliders(Transform parent)
+    {
+        Bounds totalBounds = new Bounds();
+        bool initialized = false;
+
+        BoxCollider[] colliders = parent.GetComponentsInChildren<BoxCollider>();
+
+        foreach (var col in colliders)
+        {
+            if (!initialized)
+            {
+                totalBounds = col.bounds;
+                initialized = true;
+            }
+            else
+            {
+                totalBounds.Encapsulate(col.bounds);
+            }
+        }
+
+        return totalBounds;
+    }
 }
 
 public static class LayerMaskExtensions

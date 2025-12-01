@@ -26,6 +26,7 @@ public class WaveManager : MonoBehaviour
     [Header("Enemy")]
     [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] private GameObject bossPrefab;
+    [SerializeField] private GameObject finalBossPrefab;
     [SerializeField] private Transform enemyParent;
 
     [Header("Wave Setting")]
@@ -116,7 +117,13 @@ public class WaveManager : MonoBehaviour
         openShopTrigger.SetActive(false);
         onWaveStart?.Invoke(CurrentWave);
 
-        if (CurrentWave % 1 == 0)
+        if (CurrentWave == finalWave)
+        {
+            currentEnemyCount = 1;
+            currentWaveType = WaveType.FinalBoss;
+            StartCoroutine(SpawnEnemySequence(finalBossPrefab, 3));
+        }
+        else if (CurrentWave % 1 == 0)
         {
             currentEnemyCount = 1;
             currentWaveType = WaveType.Boss;
@@ -163,13 +170,21 @@ public class WaveManager : MonoBehaviour
         //Spawn Enemy
         if (!isBoss)
         {
-            GameObject enemyInstance = Instantiate(enemyPrefab, spawnPoint, Quaternion.identity, enemyParent);
+            GameObject enemyInstance = Instantiate(enemyPrefab, spawnPoint + Vector3.up * 3f, Quaternion.identity, enemyParent);
+            if (Physics.Raycast(enemyInstance.transform.position, Vector3.down, out var hit, 10f))
+            {
+                enemyInstance.transform.position = hit.point;
+            }
             enemyInstance.GetComponent<EnemyStats>().ApplyWaveModifier(CurrentWave, healthMultiplerIncreasePerWave, damageMultiplerIncreasePerWave);
             AudioManager.instance.PlayEnemySpawnSound();
         }
         else if (isBoss)
         {
-            GameObject enemyInstance = Instantiate(enemyPrefab, bossSpawnAnchor.transform.position + new Vector3(0, 2f, 0), Quaternion.identity, enemyParent);
+            GameObject enemyInstance = Instantiate(enemyPrefab, bossSpawnAnchor.transform.position + Vector3.up * 3f, Quaternion.identity, enemyParent);
+            if (Physics.Raycast(enemyInstance.transform.position, Vector3.down, out var hit, 10f))
+            {
+                enemyInstance.transform.position = hit.point;
+            }
             enemyInstance.GetComponent<EnemyStats>().ApplyWaveModifier(CurrentWave, healthMultiplerIncreasePerWave, damageMultiplerIncreasePerWave);
             AudioManager.instance.PlayEnemySpawnSound();
             // Initialize Boss Health Bar
