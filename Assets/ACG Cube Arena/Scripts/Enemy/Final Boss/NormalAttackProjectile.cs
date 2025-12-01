@@ -24,7 +24,8 @@ public class NormalAttackProjectile : MonoBehaviour
 
     }
 
-    private void OnEnable()
+
+    public void Fire()
     {
         if (rb != null)
         {

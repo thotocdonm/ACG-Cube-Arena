@@ -5464,6 +5464,8 @@ MonoBehaviour:
   recoveryDuration: 2
   chargingVFXPrefab: {fileID: 5539071807207100160}
   normalAttackProjectileSpawnPoint: {fileID: 1764337088748303337}
+  normalAttackProjectilePrefab: {fileID: 8034875912185444415, guid: de0f6d14c63b3a54e896ae42587f4639,
+    type: 3}
   crimsonAttackCooldown: 60
 --- !u!1001 &3969887793504172248
 PrefabInstance:

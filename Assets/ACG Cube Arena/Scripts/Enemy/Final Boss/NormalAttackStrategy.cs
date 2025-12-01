@@ -23,6 +23,7 @@ public class NormalAttackStrategy : IAttackStrategy
         this.stats = stats;
         this.chargingVFXPrefab = chargingVFXPrefab;
         this.normalAttackProjectileSpawnPoint = normalAttackProjectileSpawnPoint;
+
     }
 
     public void Execute(Action onComplete)
@@ -50,7 +51,9 @@ public class NormalAttackStrategy : IAttackStrategy
             GameObject normalAttackProjectileInstance = VFXPoolManager.instance.normalAttackProjectilePool.Get();
             normalAttackProjectileInstance.transform.position = normalAttackProjectileSpawnPoint.position;
             normalAttackProjectileInstance.transform.rotation = targetRotation;
-            normalAttackProjectileInstance.GetComponent<NormalAttackProjectile>().Initialize((int)stats.AttackDamage.GetValue());
+            NormalAttackProjectile normalAttackProjectile = normalAttackProjectileInstance.GetComponent<NormalAttackProjectile>();
+            normalAttackProjectile.Initialize((int)stats.AttackDamage.GetValue());
+            normalAttackProjectile.Fire();
             DOVirtual.DelayedCall(2f, () => VFXPoolManager.instance.normalAttackProjectilePool.Release(normalAttackProjectileInstance));
             yield return new WaitForSeconds(0.5f);
         }

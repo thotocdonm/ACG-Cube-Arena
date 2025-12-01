@@ -170,10 +170,12 @@ public class WaveManager : MonoBehaviour
         //Spawn Enemy
         if (!isBoss)
         {
-            GameObject enemyInstance = Instantiate(enemyPrefab, spawnPoint + Vector3.up * 3f, Quaternion.identity, enemyParent);
-            if (Physics.Raycast(enemyInstance.transform.position, Vector3.down, out var hit, 10f))
+            GameObject enemyInstance = Instantiate(enemyPrefab, spawnPoint + Vector3.up * 10f, Quaternion.identity, enemyParent);
+            Collider collider = enemyInstance.GetComponent<Collider>();
+            float halfHeight = collider.bounds.extents.y;
+            if (Physics.Raycast(enemyInstance.transform.position, Vector3.down, out var hit, 20f))
             {
-                enemyInstance.transform.position = hit.point;
+                enemyInstance.transform.position = hit.point + Vector3.up * halfHeight;
             }
             enemyInstance.GetComponent<EnemyStats>().ApplyWaveModifier(CurrentWave, healthMultiplerIncreasePerWave, damageMultiplerIncreasePerWave);
             AudioManager.instance.PlayEnemySpawnSound();
@@ -181,10 +183,12 @@ public class WaveManager : MonoBehaviour
         else if (isBoss)
         {
             Debug.Log("Spawning Boss");
-            GameObject enemyInstance = Instantiate(enemyPrefab, bossSpawnAnchor.transform.position + Vector3.up * 3f, Quaternion.identity, enemyParent);
-            if (Physics.Raycast(enemyInstance.transform.position, Vector3.down, out var hit, 10f))
+            GameObject enemyInstance = Instantiate(enemyPrefab, bossSpawnAnchor.transform.position + Vector3.up * 10f, Quaternion.identity, enemyParent);
+            Collider collider = enemyInstance.GetComponent<Collider>();
+            float halfHeight = collider.bounds.extents.y;
+            if (Physics.Raycast(enemyInstance.transform.position, Vector3.down, out var hit, 20f))
             {
-                enemyInstance.transform.position = hit.point;
+                enemyInstance.transform.position = hit.point + Vector3.up * halfHeight;
             }
             enemyInstance.GetComponent<EnemyStats>().ApplyWaveModifier(CurrentWave, healthMultiplerIncreasePerWave, damageMultiplerIncreasePerWave);
             AudioManager.instance.PlayEnemySpawnSound();
