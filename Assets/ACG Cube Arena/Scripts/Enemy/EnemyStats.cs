@@ -17,10 +17,12 @@ public class EnemyStats : MonoBehaviour
     [Header("Hit Feedback")]
     [SerializeField] private float flashDuration;
     [SerializeField] private Color flashColor = Color.white;
+    [SerializeField,ColorUsage(true, true)] private Color flashColorHDR;
     public static Action<int, Vector3, bool, Vector3> onEnemyHit;
     public static Action<int> onBossHealthChanged;
     private MeshRenderer[] allRenderers;
     private Color[] originalColors;
+    private Color[] originalEmissionColors;
     private Coroutine flashCoroutine;
     private EnemyType enemyType;
 
@@ -56,9 +58,14 @@ public class EnemyStats : MonoBehaviour
 
         allRenderers = GetComponentsInChildren<MeshRenderer>();
         originalColors = new Color[allRenderers.Length];
+        originalEmissionColors = new Color[allRenderers.Length];
         for (int i = 0; i < allRenderers.Length; i++)
         {
             originalColors[i] = allRenderers[i].material.color;
+            if(allRenderers[i].material.HasProperty("_EmissionColor"))
+            {
+                originalEmissionColors[i] = allRenderers[i].material.GetColor("_EmissionColor");
+            }
         }
     }
 
@@ -110,12 +117,20 @@ public class EnemyStats : MonoBehaviour
         foreach(MeshRenderer renderer in allRenderers)
         {
             renderer.material.color = flashColor;
+            if(renderer.material.HasProperty("_EmissionColor"))
+            {
+                renderer.material.SetColor("_EmissionColor", flashColorHDR);
+            }
         }
         yield return new WaitForSeconds(flashDuration);
         
         for (int i = 0; i < allRenderers.Length; i++)
         {
             allRenderers[i].material.color = originalColors[i];
+            if(allRenderers[i].material.HasProperty("_EmissionColor"))
+            {
+                allRenderers[i].material.SetColor("_EmissionColor", originalEmissionColors[i]);
+            }
         }
         flashCoroutine = null;
     }

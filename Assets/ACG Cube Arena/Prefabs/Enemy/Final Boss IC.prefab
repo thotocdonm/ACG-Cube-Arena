@@ -5444,6 +5444,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 9eb672ac82cfbaa4fb35a68866c2b826, type: 2}
   flashDuration: 0.3
   flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashColorHDR: {r: 4, g: 4, b: 4, a: 0}
 --- !u!114 &1262702407484372392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5464,8 +5465,6 @@ MonoBehaviour:
   recoveryDuration: 2
   chargingVFXPrefab: {fileID: 5539071807207100160}
   normalAttackProjectileSpawnPoint: {fileID: 1764337088748303337}
-  normalAttackProjectilePrefab: {fileID: 8034875912185444415, guid: de0f6d14c63b3a54e896ae42587f4639,
-    type: 3}
   crimsonAttackCooldown: 60
 --- !u!1001 &3969887793504172248
 PrefabInstance:
