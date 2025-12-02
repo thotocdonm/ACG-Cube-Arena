@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class EnemyStats : MonoBehaviour
@@ -24,6 +25,7 @@ public class EnemyStats : MonoBehaviour
     private Color[] originalColors;
     private Color[] originalEmissionColors;
     private Coroutine flashCoroutine;
+    private Coroutine transitionColorCoroutine;
     private EnemyType enemyType;
 
     public Stat MaxHealth { get; private set; }
@@ -114,25 +116,56 @@ public class EnemyStats : MonoBehaviour
 
     private IEnumerator FlashCoroutine()
     {
-        foreach(MeshRenderer renderer in allRenderers)
+        foreach (MeshRenderer renderer in allRenderers)
         {
             renderer.material.color = flashColor;
-            if(renderer.material.HasProperty("_EmissionColor"))
+            if (renderer.material.HasProperty("_EmissionColor"))
             {
                 renderer.material.SetColor("_EmissionColor", flashColorHDR);
             }
         }
         yield return new WaitForSeconds(flashDuration);
-        
+
         for (int i = 0; i < allRenderers.Length; i++)
         {
             allRenderers[i].material.color = originalColors[i];
-            if(allRenderers[i].material.HasProperty("_EmissionColor"))
+            if (allRenderers[i].material.HasProperty("_EmissionColor"))
             {
                 allRenderers[i].material.SetColor("_EmissionColor", originalEmissionColors[i]);
             }
         }
         flashCoroutine = null;
+    }
+
+    private IEnumerator TransitionToColorCoroutine(Color targetColor, Color targetHDRColor, float transitionDuration, float stayDuration)
+    {
+        foreach (MeshRenderer renderer in allRenderers)
+        {
+            renderer.material.DOColor(targetColor, transitionDuration);
+            if (renderer.material.HasProperty("_EmissionColor"))
+            {
+                renderer.material.DOColor(targetHDRColor, "_EmissionColor", transitionDuration);
+            }
+        }
+        yield return new WaitForSeconds(stayDuration);
+
+        for (int i = 0; i < allRenderers.Length; i++)
+        {
+            allRenderers[i].material.DOColor(originalColors[i], transitionDuration);
+            if (allRenderers[i].material.HasProperty("_EmissionColor"))
+            {
+                allRenderers[i].material.DOColor(originalEmissionColors[i], "_EmissionColor", transitionDuration);
+            }
+        }
+    }
+    
+    public void TransitionToColor(Color targetColor, Color targetHDRColor, float transitionDuration, float stayDuration)
+    {
+        if(transitionColorCoroutine != null)
+        {
+            StopCoroutine(transitionColorCoroutine);
+        }
+        transitionColorCoroutine = StartCoroutine(TransitionToColorCoroutine(targetColor, targetHDRColor, transitionDuration, stayDuration));
     }
 
 

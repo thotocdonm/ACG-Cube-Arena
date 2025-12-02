@@ -6,10 +6,58 @@ public class AoeAttackIndicator : MonoBehaviour
 {
     [SerializeField] private Transform fillTransform;
 
+    [Header("Tracking")]
+    [SerializeField] private float followSmoothing = 20f;
+    [SerializeField] private float yHeight = 0.7f;
+
+    private Transform playerTarget;
+    private float trackingEndTime;
+    private bool isTracking;
+    private Coroutine expandCoroutine;
+
+    void Awake()
+    {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            playerTarget = playerObject.transform;
+        }
+    }
+
+    private void Update()
+    {
+        if (!isTracking) return;
+
+        if (Time.time < trackingEndTime && playerTarget != null)
+        {
+            Vector3 targetPosition = playerTarget.position;
+            targetPosition.y = yHeight;
+            float k = 1f - Mathf.Exp(-followSmoothing * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, k);
+        }
+        else
+        {
+            isTracking = false;
+        }
+    }
+    
+    public void StartTrackingThenLock(float trackDuration, float totalDuration)
+    {
+        trackingEndTime = Time.time + trackDuration;
+        isTracking = true;
+        if(expandCoroutine != null){
+            StopCoroutine(expandCoroutine);
+        }
+        expandCoroutine = StartCoroutine(ExpandCoroutine(totalDuration));
+    }
 
     public void StartExpanding(float duration)
     {
-        StartCoroutine(ExpandCoroutine(duration));
+        if (expandCoroutine != null)
+        {
+            StopCoroutine(expandCoroutine);
+        }
+        expandCoroutine = StartCoroutine(ExpandCoroutine(duration));
     }
 
     private IEnumerator ExpandCoroutine(float duration)
@@ -32,5 +80,6 @@ public class AoeAttackIndicator : MonoBehaviour
     {
         gameObject.transform.localScale = new Vector3(radius, radius, radius);
     }
+    
 
 }

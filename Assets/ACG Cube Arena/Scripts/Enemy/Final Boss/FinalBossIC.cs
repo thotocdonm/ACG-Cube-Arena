@@ -14,10 +14,21 @@ public class FinalBossIC : Enemy
     [Header("Attack Strategies")]
     private IAttackStrategy normalAttackStrategy;
     private IAttackStrategy crimsonAttackStrategy;
-    private IAttackStrategy summonStrategy;
+    private IAttackStrategy lightAttackStrategy;
 
     [Header("Attack Cooldowns")]
     [SerializeField] private float crimsonAttackCooldown;
+    [SerializeField] private float lightAttackCooldown;
+
+    [Header("Attack Strategies Color")]
+    [SerializeField] private Color normalAttackStrategyColor;
+    [SerializeField, ColorUsage(true, true)] private Color normalAttackStrategyHDRColor;
+
+    [SerializeField] private Color crimsonAttackStrategyColor;
+    [SerializeField, ColorUsage(true, true)] private Color crimsonAttackStrategyHDRColor;
+
+    [SerializeField] private Color lightAttackStrategyColor;
+    [SerializeField, ColorUsage(true, true)] private Color lightAttackStrategyHDRColor;
 
     private List<IAttackStrategy> attackStrategies = new List<IAttackStrategy>();
     private List<float> attackStrategyCooldowns = new List<float>();
@@ -41,12 +52,15 @@ public class FinalBossIC : Enemy
         enemyStats = GetEnemyStats();
         normalAttackStrategy = new NormalAttackStrategy(this, rb, animator, playerTarget, enemyStats, chargingVFXPrefab, normalAttackProjectileSpawnPoint);
         crimsonAttackStrategy = new CrimsonAttackStrategy(this, rb, animator, playerTarget, enemyStats);
+        lightAttackStrategy = new LightAttackStrategy(this, rb, animator, playerTarget, enemyStats);
 
 
         attackStrategies.Add(crimsonAttackStrategy);
+        attackStrategies.Add(lightAttackStrategy);
 
         attackStrategyCooldowns.Clear();
         attackStrategyCooldowns.Add(crimsonAttackCooldown);
+        attackStrategyCooldowns.Add(lightAttackCooldown);
 
         for (int i = 0; i < attackStrategies.Count; i++)
         {
@@ -56,7 +70,7 @@ public class FinalBossIC : Enemy
 
     }
 
-    
+
     private IEnumerator AttackPatternCoroutine()
     {
         while (true)
@@ -64,20 +78,31 @@ public class FinalBossIC : Enemy
             IAttackStrategy nextAttackStrategy = ChooseNextAttackStrategy();
             Debug.Log("Next Attack Strategy: " + nextAttackStrategy.GetType().Name);
             AttackStrategy = nextAttackStrategy;
+            if (nextAttackStrategy != normalAttackStrategy)
+            {
+                animator.Play("Rotation");
+                Color color = GetColorForAttackStrategy(nextAttackStrategy);
+                Color hdrColor = GetHDRColorForAttackStrategy(nextAttackStrategy);
+                enemyStats.TransitionToColor(color, hdrColor, 2f, 3f);
+            }
+
+
+            yield return new WaitForSeconds(3f);
+            animator.Play("Idle");
 
             yield return new WaitUntil(() => IsAttackReady());
-            stateMachine.ChangeState(EnemyAttackState);
+
             yield return new WaitUntil(() => stateMachine.GetCurrentState() != EnemyAttackState);
 
             if (nextAttackStrategy != normalAttackStrategy)
             {
                 attackLastUsedTimeDict[nextAttackStrategy] = Time.time;
             }
-            
-            yield return new WaitForSeconds(2f);
+
+            yield return new WaitForSeconds(0.5f);
         }
     }
-    
+
     private IAttackStrategy ChooseNextAttackStrategy()
     {
         List<IAttackStrategy> availableStrategies = new List<IAttackStrategy>();
@@ -101,5 +126,43 @@ public class FinalBossIC : Enemy
         }
     }
 
-    
+    private Color GetColorForAttackStrategy(IAttackStrategy attackStrategy)
+    {
+        if (attackStrategy == crimsonAttackStrategy)
+        {
+            return crimsonAttackStrategyColor;
+        }
+        else if (attackStrategy == lightAttackStrategy)
+        {
+            return lightAttackStrategyColor;
+        }
+        else
+        {
+            return normalAttackStrategyColor;
+        }
+
+    }
+
+    private Color GetHDRColorForAttackStrategy(IAttackStrategy attackStrategy)
+    {
+        if (attackStrategy == crimsonAttackStrategy)
+        {
+            return crimsonAttackStrategyHDRColor;
+        }
+        else if (attackStrategy == lightAttackStrategy)
+        {
+            return lightAttackStrategyHDRColor;
+        }
+        else
+        {
+            return normalAttackStrategyHDRColor;
+        }
+    }
+
+        #if UNITY_EDITOR
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(500, 10, 200, 20), $"State: {stateMachine.CurrentState.GetType().Name}");
+    }
+    #endif
 }

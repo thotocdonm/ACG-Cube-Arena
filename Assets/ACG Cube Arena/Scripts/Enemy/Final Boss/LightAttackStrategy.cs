@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrimsonAttackStrategy : IAttackStrategy
+public class LightAttackStrategy : IAttackStrategy
 {
     private readonly Enemy owner;
     private readonly Rigidbody rb;
@@ -11,7 +11,7 @@ public class CrimsonAttackStrategy : IAttackStrategy
     private readonly Transform playerTarget;
     private readonly EnemyStats stats;
 
-    public CrimsonAttackStrategy(Enemy owner, Rigidbody rb, Animator animator, Transform playerTarget, EnemyStats stats)
+    public LightAttackStrategy(Enemy owner, Rigidbody rb, Animator animator, Transform playerTarget, EnemyStats stats)
     {
         this.owner = owner;
         this.rb = rb;
@@ -22,14 +22,13 @@ public class CrimsonAttackStrategy : IAttackStrategy
 
     public void Execute(Action onComplete)
     {
-        owner.StartCoroutine(CrimsonAttackRoutine(onComplete));
+        owner.StartCoroutine(LightAttackRoutine(onComplete));
     }
 
-    private IEnumerator CrimsonAttackRoutine(Action onComplete)
+    private IEnumerator LightAttackRoutine(Action onComplete)
     {
         yield return new WaitForSeconds(3f);
-        CrimsonAttackManager.instance.StartCrimsonAttackPattern(60f, stats);
+        LightAttackManager.instance.StartLightAttackPattern(60f, stats);
         onComplete?.Invoke();
     }
-
 }

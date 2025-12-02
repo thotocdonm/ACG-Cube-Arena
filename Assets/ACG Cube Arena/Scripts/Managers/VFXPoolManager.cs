@@ -16,6 +16,7 @@ public class VFXPoolManager : MonoBehaviour
     [Header("Final Boss VFXs")]
     [SerializeField] private GameObject crimsonAoeVFX;
     [SerializeField] private GameObject normalAttackProjectile;
+    [SerializeField] private GameObject lightAoeVFX;
 
     [Header("Player VFXs")]
     [SerializeField] private GameObject playerSlashVFX;
@@ -27,7 +28,7 @@ public class VFXPoolManager : MonoBehaviour
     public ObjectPool<GameObject> enemySpawnVFXPool;
     public ObjectPool<GameObject> crimsonAoeVFXPool;
     public ObjectPool<GameObject> normalAttackProjectilePool;
-
+    public ObjectPool<GameObject> lightAoeVFXPool;
     void Awake()
     {
         if (instance == null)
@@ -46,7 +47,7 @@ public class VFXPoolManager : MonoBehaviour
         enemySpawnVFXPool = new ObjectPool<GameObject>(() => Instantiate(enemySpawnVFX), ActionOnGet, ActionOnRelease, ActionOnDestroy);
         crimsonAoeVFXPool = new ObjectPool<GameObject>(() => Instantiate(crimsonAoeVFX), ActionOnGet, ActionOnRelease, ActionOnDestroy);
         normalAttackProjectilePool = new ObjectPool<GameObject>(() => Instantiate(normalAttackProjectile), ActionOnGet, ActionOnRelease, ActionOnDestroy);
-
+        lightAoeVFXPool = new ObjectPool<GameObject>(() => Instantiate(lightAoeVFX), ActionOnGet, ActionOnRelease, ActionOnDestroy);
     }
     // Start is called before the first frame update
     void Start()
