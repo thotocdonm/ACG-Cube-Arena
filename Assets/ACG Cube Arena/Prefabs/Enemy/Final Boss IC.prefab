@@ -5442,7 +5442,7 @@ MonoBehaviour:
   healthBarUI: {fileID: 0}
   dmgTextAnchor: {fileID: 1631908256630348576}
   stats: {fileID: 11400000, guid: 9eb672ac82cfbaa4fb35a68866c2b826, type: 2}
-  flashDuration: 0.3
+  flashDuration: 0.1
   flashColor: {r: 1, g: 1, b: 1, a: 1}
   flashColorHDR: {r: 4, g: 4, b: 4, a: 0}
 --- !u!114 &1262702407484372392
@@ -5466,6 +5466,16 @@ MonoBehaviour:
   chargingVFXPrefab: {fileID: 5539071807207100160}
   normalAttackProjectileSpawnPoint: {fileID: 1764337088748303337}
   crimsonAttackCooldown: 60
+  lightAttackCooldown: 60
+  thunderAttackCooldown: 60
+  normalAttackStrategyColor: {r: 0.7490196, g: 0.5568628, b: 0.7137255, a: 1}
+  normalAttackStrategyHDRColor: {r: 2.9960785, g: 2.2142708, b: 2.841166, a: 1}
+  crimsonAttackStrategyColor: {r: 1, g: 0.3443396, b: 0.3443396, a: 1}
+  crimsonAttackStrategyHDRColor: {r: 2, g: 0.6886792, b: 0.6886792, a: 1}
+  lightAttackStrategyColor: {r: 1, g: 0.97287095, b: 0.4575472, a: 1}
+  lightAttackStrategyHDRColor: {r: 4, g: 3.8914838, b: 1.8301888, a: 1}
+  thunderAttackStrategyColor: {r: 0.5172558, g: 0, b: 1, a: 1}
+  thunderAttackStrategyHDRColor: {r: 4.1380463, g: 0, b: 8, a: 1}
 --- !u!1001 &3969887793504172248
 PrefabInstance:
   m_ObjectHideFlags: 0

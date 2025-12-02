@@ -15,10 +15,12 @@ public class FinalBossIC : Enemy
     private IAttackStrategy normalAttackStrategy;
     private IAttackStrategy crimsonAttackStrategy;
     private IAttackStrategy lightAttackStrategy;
+    private IAttackStrategy thunderAttackStrategy;
 
     [Header("Attack Cooldowns")]
     [SerializeField] private float crimsonAttackCooldown;
     [SerializeField] private float lightAttackCooldown;
+    [SerializeField] private float thunderAttackCooldown;
 
     [Header("Attack Strategies Color")]
     [SerializeField] private Color normalAttackStrategyColor;
@@ -29,6 +31,9 @@ public class FinalBossIC : Enemy
 
     [SerializeField] private Color lightAttackStrategyColor;
     [SerializeField, ColorUsage(true, true)] private Color lightAttackStrategyHDRColor;
+
+    [SerializeField] private Color thunderAttackStrategyColor;
+    [SerializeField, ColorUsage(true, true)] private Color thunderAttackStrategyHDRColor;
 
     private List<IAttackStrategy> attackStrategies = new List<IAttackStrategy>();
     private List<float> attackStrategyCooldowns = new List<float>();
@@ -53,14 +58,17 @@ public class FinalBossIC : Enemy
         normalAttackStrategy = new NormalAttackStrategy(this, rb, animator, playerTarget, enemyStats, chargingVFXPrefab, normalAttackProjectileSpawnPoint);
         crimsonAttackStrategy = new CrimsonAttackStrategy(this, rb, animator, playerTarget, enemyStats);
         lightAttackStrategy = new LightAttackStrategy(this, rb, animator, playerTarget, enemyStats);
+        thunderAttackStrategy = new ThunderAttackStrategy(this, rb, animator, playerTarget, enemyStats);
 
 
         attackStrategies.Add(crimsonAttackStrategy);
         attackStrategies.Add(lightAttackStrategy);
+        attackStrategies.Add(thunderAttackStrategy);
 
         attackStrategyCooldowns.Clear();
         attackStrategyCooldowns.Add(crimsonAttackCooldown);
         attackStrategyCooldowns.Add(lightAttackCooldown);
+        attackStrategyCooldowns.Add(thunderAttackCooldown);
 
         for (int i = 0; i < attackStrategies.Count; i++)
         {
@@ -136,6 +144,10 @@ public class FinalBossIC : Enemy
         {
             return lightAttackStrategyColor;
         }
+        else if (attackStrategy == thunderAttackStrategy)
+        {
+            return thunderAttackStrategyColor;
+        }
         else
         {
             return normalAttackStrategyColor;
@@ -152,6 +164,10 @@ public class FinalBossIC : Enemy
         else if (attackStrategy == lightAttackStrategy)
         {
             return lightAttackStrategyHDRColor;
+        }
+        else if (attackStrategy == thunderAttackStrategy)
+        {
+            return thunderAttackStrategyHDRColor;
         }
         else
         {

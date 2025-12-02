@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 3018861470652404210}
   - component: {fileID: 5446903588267603944}
   - component: {fileID: 6966035473402073020}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: wall_Torch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8173284602236106328
 Transform:
@@ -114,6 +114,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8173284602236106328}
     m_Modifications:
+    - target: {fileID: 724311088695461498, guid: f0db09d3220db2a46af4258440d478bc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 927865493289473614, guid: f0db09d3220db2a46af4258440d478bc,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -184,10 +189,60 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2017010437839463580, guid: f0db09d3220db2a46af4258440d478bc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 2722655235816831502, guid: f0db09d3220db2a46af4258440d478bc,
         type: 3}
       propertyPath: m_Name
       value: Torch
+      objectReference: {fileID: 0}
+    - target: {fileID: 2722655235816831502, guid: f0db09d3220db2a46af4258440d478bc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5554277672696911427, guid: f0db09d3220db2a46af4258440d478bc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6151330314884253397, guid: f0db09d3220db2a46af4258440d478bc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432952891266249783, guid: f0db09d3220db2a46af4258440d478bc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7346236164620827684, guid: f0db09d3220db2a46af4258440d478bc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7426398091994571312, guid: f0db09d3220db2a46af4258440d478bc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767078764063732466, guid: f0db09d3220db2a46af4258440d478bc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8101302503714848111, guid: f0db09d3220db2a46af4258440d478bc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510083542736463233, guid: f0db09d3220db2a46af4258440d478bc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5389025196974675534, guid: f0db09d3220db2a46af4258440d478bc, type: 3}

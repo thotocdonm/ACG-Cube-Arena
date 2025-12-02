@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LightAttackManager : MonoBehaviour
 {
- public static LightAttackManager instance;
+    public static LightAttackManager instance;
 
 
 
@@ -70,8 +70,6 @@ public class LightAttackManager : MonoBehaviour
         aoeVFXInstance.transform.position = targetPosition;
         aoeVFXInstance.transform.localScale = new Vector3(1, 1, 1);
         DOVirtual.DelayedCall(1f, () => VFXPoolManager.instance.lightAoeVFXPool.Release(aoeVFXInstance));
-
-        yield return new WaitForSeconds(0.3f);
 
         // AudioManager.instance.PlayMageAttackSound();
 
