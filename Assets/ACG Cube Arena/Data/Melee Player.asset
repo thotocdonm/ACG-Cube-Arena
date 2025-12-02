@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Melee Player
   m_EditorClassIdentifier: 
   playerName: Ichigo
-  maxHealth: 100
+  maxHealth: 1e+9
   moveSpeed: 5
   attackDamage: 30
   criticalChance: 50

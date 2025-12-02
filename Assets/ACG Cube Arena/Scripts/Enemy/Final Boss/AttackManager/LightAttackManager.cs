@@ -69,7 +69,7 @@ public class LightAttackManager : MonoBehaviour
         GameObject aoeVFXInstance = VFXPoolManager.instance.lightAoeVFXPool.Get();
         aoeVFXInstance.transform.position = targetPosition;
         aoeVFXInstance.transform.localScale = new Vector3(1, 1, 1);
-        DOVirtual.DelayedCall(1f, () => VFXPoolManager.instance.lightAoeVFXPool.Release(aoeVFXInstance));
+        DOVirtual.DelayedCall(0.7f, () => VFXPoolManager.instance.lightAoeVFXPool.Release(aoeVFXInstance));
 
         // AudioManager.instance.PlayMageAttackSound();
 

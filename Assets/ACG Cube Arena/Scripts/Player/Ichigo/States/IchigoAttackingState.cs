@@ -62,7 +62,14 @@ public class IchigoAttackingState : PlayerBaseState
                 }
             }
         }
-        
+
+    }
+    
+    public override void FixedUpdate()
+    {
+        Vector3 baseVelocity = new Vector3(0, 0, 0);
+        Vector3 final = baseVelocity + owner.ExternalVelocity * 3f;
+        rb.velocity = new Vector3(final.x, rb.velocity.y, final.z);
     }
 
     public override void HandleDash()

@@ -1712,6 +1712,37 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 58663479}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &59492124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 59492125}
+  m_Layer: 0
+  m_Name: Arena Center
+  m_TagString: ArenaCenter
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &59492125
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59492124}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.71, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 973619896}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &59715525
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2386,6 +2417,7 @@ Transform:
   - {fileID: 377422750}
   - {fileID: 262716105}
   - {fileID: 1125976755}
+  - {fileID: 725303663}
   m_Father: {fileID: 1892564234}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &105817073
@@ -11914,6 +11946,52 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 717811196}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &725303662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 725303663}
+  - component: {fileID: 725303664}
+  m_Layer: 0
+  m_Name: Wind Attack Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &725303663
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725303662}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 101893089}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &725303664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725303662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ec10c523456c247968b0c11c29a385, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  windStrengthMax: 0.3
+  windStrengthMin: 0.7
 --- !u!1 &727898026
 GameObject:
   m_ObjectHideFlags: 0
@@ -16212,6 +16290,7 @@ Transform:
   - {fileID: 1390588550}
   - {fileID: 2033085304}
   - {fileID: 991260392}
+  - {fileID: 59492125}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &985676633
@@ -27129,173 +27208,38 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
         type: 3}
-      propertyPath: lightAttackCooldown
-      value: 60
+      propertyPath: windAttackCooldown
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
         type: 3}
-      propertyPath: thunderAttackCooldown
-      value: 60
+      propertyPath: windAttackStrategyColor.b
+      value: 0.5754717
       objectReference: {fileID: 0}
     - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
         type: 3}
-      propertyPath: lightAttackStrategyColor.a
-      value: 1
+      propertyPath: windAttackStrategyColor.g
+      value: 0.5754717
       objectReference: {fileID: 0}
     - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
         type: 3}
-      propertyPath: lightAttackStrategyColor.b
-      value: 0.4575472
+      propertyPath: windAttackStrategyColor.r
+      value: 0.5754717
       objectReference: {fileID: 0}
     - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
         type: 3}
-      propertyPath: lightAttackStrategyColor.g
-      value: 0.97287095
+      propertyPath: windAttackStrategyHDRColor.b
+      value: 0.28773585
       objectReference: {fileID: 0}
     - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
         type: 3}
-      propertyPath: lightAttackStrategyColor.r
-      value: 1
+      propertyPath: windAttackStrategyHDRColor.g
+      value: 0.28773585
       objectReference: {fileID: 0}
     - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
         type: 3}
-      propertyPath: normalAttackStrategyColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: normalAttackStrategyColor.b
-      value: 0.7137255
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: normalAttackStrategyColor.g
-      value: 0.5568628
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: normalAttackStrategyColor.r
-      value: 0.7490196
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: crimsonAttackStrategyColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: crimsonAttackStrategyColor.b
-      value: 0.3443396
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: crimsonAttackStrategyColor.g
-      value: 0.3443396
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: crimsonAttackStrategyColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: thunderAttackStrategyColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: thunderAttackStrategyColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: thunderAttackStrategyColor.r
-      value: 0.5172558
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: lightAttackStrategyHDRColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: lightAttackStrategyHDRColor.b
-      value: 1.8301888
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: lightAttackStrategyHDRColor.g
-      value: 3.8914838
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: lightAttackStrategyHDRColor.r
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: normalAttackStrategyHDRColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: normalAttackStrategyHDRColor.b
-      value: 2.841166
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: normalAttackStrategyHDRColor.g
-      value: 2.2142708
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: normalAttackStrategyHDRColor.r
-      value: 2.9960785
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: crimsonAttackStrategyHDRColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: crimsonAttackStrategyHDRColor.b
-      value: 0.6886792
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: crimsonAttackStrategyHDRColor.g
-      value: 0.6886792
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: crimsonAttackStrategyHDRColor.r
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: thunderAttackStrategyHDRColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: thunderAttackStrategyHDRColor.b
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: thunderAttackStrategyHDRColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: thunderAttackStrategyHDRColor.r
-      value: 4.1380463
-      objectReference: {fileID: 0}
-    - target: {fileID: 2957814136284800680, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: flashDuration
-      value: 0.1
+      propertyPath: windAttackStrategyHDRColor.r
+      value: 0.28773585
       objectReference: {fileID: 0}
     - target: {fileID: 8365965501250123522, guid: 3c8c970b267c6bc478372f9644f59714,
         type: 3}
@@ -27351,11 +27295,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Final Boss IC
-      objectReference: {fileID: 0}
-    - target: {fileID: 8562988350213724176, guid: 3c8c970b267c6bc478372f9644f59714,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -68454,6 +68393,11 @@ PrefabInstance:
     - target: {fileID: 4251785501346533833, guid: aaee8c1010294e54dbad30b1e042a160,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4251785501346533833, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

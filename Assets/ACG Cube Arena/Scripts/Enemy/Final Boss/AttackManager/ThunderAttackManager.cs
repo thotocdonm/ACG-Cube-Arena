@@ -23,21 +23,21 @@ public class ThunderAttackManager : MonoBehaviour
 
     public void StartThunderAttackPattern(float duration, EnemyStats stats, Transform spawnPoint)
     {
-        StartCoroutine(ThunderAttackPatternRoutine(duration, stats, spawnPoint));
+        ThunderAttackPatternRoutine(duration, stats, spawnPoint);
     }
 
 
-    private IEnumerator ThunderAttackPatternRoutine(float duration, EnemyStats stats, Transform spawnPoint)
+    private void ThunderAttackPatternRoutine(float duration, EnemyStats stats, Transform spawnPoint)
     {
         for (int i = 0; i < 3; i++)
         {
             Quaternion randomYRot = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
-            StartCoroutine(SingleThunderAttackRoutine(stats, randomYRot, duration, spawnPoint));
+            SingleThunderAttackRoutine(stats, randomYRot, duration, spawnPoint);
         }
-        yield return null;
+
     }
 
-    private IEnumerator SingleThunderAttackRoutine(EnemyStats stats, Quaternion rotation, float duration, Transform spawnPoint)
+    private void SingleThunderAttackRoutine(EnemyStats stats, Quaternion rotation, float duration, Transform spawnPoint)
     {
 
         //Spawn VFX
@@ -49,8 +49,6 @@ public class ThunderAttackManager : MonoBehaviour
         thunderAttackProjectile.Initialize((int)stats.AttackDamage.GetValue());
         thunderAttackProjectile.Fire();
         DOVirtual.DelayedCall(duration, () => VFXPoolManager.instance.thunderAttackProjectilePool.Release(thunderAttackProjectileInstance));
-
-        yield return null;
 
     }
 

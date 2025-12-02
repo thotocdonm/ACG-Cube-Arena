@@ -8,7 +8,9 @@ public class ThunderAttackProjectile : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] private LayerMask wallMask;
-
+    
+    
+    private GameObject arenaCenter;
     private int damage;
     private Rigidbody rb;
     private Vector3 lastPos;
@@ -18,6 +20,8 @@ public class ThunderAttackProjectile : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+
+        arenaCenter = GameObject.FindGameObjectWithTag("ArenaCenter");
     }
 
     private void Start()
@@ -62,15 +66,25 @@ public class ThunderAttackProjectile : MonoBehaviour
 
         if(((1 << other.gameObject.layer) & wallMask) != 0)
         {
-            Debug.Log("Reflecting");
+            
             Vector3 dir = rb.velocity.sqrMagnitude > 0.01f ? rb.velocity.normalized : transform.forward;
             float distance = Vector3.Distance(lastPos, transform.position) + 3f;
             if (Physics.Raycast(lastPos, dir, out RaycastHit hit, distance, wallMask, QueryTriggerInteraction.Ignore))
             {
-                Debug.Log("Hit: " + hit.normal);
+                Vector3 arenaCenterPosition = arenaCenter.transform.position;
+                Vector3 directionToArenaCenter = (arenaCenterPosition - hit.point).normalized;
                 //Calculate new direction
                 Vector3 newDirection = Vector3.Reflect(dir, hit.normal);
                 newDirection.y = 0f;
+
+                float dot = Vector3.Dot(newDirection, directionToArenaCenter);
+
+                if(dot <= 0f)
+                {
+                    newDirection = Vector3.Reflect(newDirection, directionToArenaCenter);
+                    newDirection.y = 0f;
+                    newDirection = newDirection.normalized;
+                }
 
                 transform.rotation = Quaternion.LookRotation(newDirection, Vector3.up);
 

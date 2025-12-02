@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 198975287283512996}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 1.2545505, y: 0.125, z: 0}
+  m_LocalPosition: {x: -0.6000004, y: 0.125, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9824,6 +9824,7 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 2048
+  arenaCenter: {fileID: 0}
 --- !u!1 &1534655873627930063
 GameObject:
   m_ObjectHideFlags: 0

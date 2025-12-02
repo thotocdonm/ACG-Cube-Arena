@@ -16,12 +16,19 @@ public class IdleState : PlayerBaseState
 
     public override void Update()
     {
-        if(owner.AimDirection.sqrMagnitude > 0.01f && GameStateManager.instance.CurrentGameState == GameState.Game)
+        if (owner.AimDirection.sqrMagnitude > 0.01f && GameStateManager.instance.CurrentGameState == GameState.Game)
         {
             Quaternion toRotation = Quaternion.LookRotation(owner.AimDirection, Vector3.up);
             Quaternion newRotation = Quaternion.RotateTowards(rb.rotation, toRotation, owner.RotationSpeed * Time.deltaTime);
             rb.MoveRotation(newRotation);
         }
+    }
+    
+    public override void FixedUpdate()
+    {
+        Vector3 baseVelocity = new Vector3(0, 0, 0);
+        Vector3 final = baseVelocity + owner.ExternalVelocity * 3f;
+        rb.velocity = new Vector3(final.x, rb.velocity.y, final.z);
     }
 
     public override void HandleMove(Vector2 Input)

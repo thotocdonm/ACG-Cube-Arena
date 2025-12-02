@@ -30,7 +30,8 @@ public class MovingState : PlayerBaseState
     {
         Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
         Vector3 newVelocity = moveDirection * owner.MoveSpeed;
-        rb.velocity = new Vector3(newVelocity.x, rb.velocity.y, newVelocity.z);
+        Vector3 final = newVelocity + owner.ExternalVelocity * 3f;
+        rb.velocity = new Vector3(final.x, rb.velocity.y, final.z);
 
         if(moveDirection != Vector3.zero)
         {

@@ -30,6 +30,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask obstacleLayer;
     private Vector2 lastMoveInput;
 
+    [Header("External Force")]
+    [SerializeField] private float externalDrag = 8f;
+    public Vector3 ExternalVelocity { get; private set; }
+
     private float lastDashTime = 100;
 
     [Header("State")]
@@ -183,6 +187,13 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         stateMachine?.FixedUpdate();
+
+        if(ExternalVelocity.sqrMagnitude > 0.0001f)
+        {
+            Vector3 playerVelocity = rb.velocity;
+            Vector3 windVelocity = ExternalVelocity;
+            rb.velocity = playerVelocity + windVelocity;
+        }
     }
 
     public void ChangeState(PlayerBaseState newState)
@@ -236,6 +247,17 @@ public class PlayerController : MonoBehaviour
             damage = (int)AttackDamage;
         }
         return damage;
+    }
+
+    public void AddExternalVelocity(Vector3 velocity)
+    {
+        velocity.y = 0f;
+        ExternalVelocity = velocity;
+    }
+
+    public void ResetExternalVelocity()
+    {
+        ExternalVelocity = Vector3.zero;
     }
     
 
