@@ -13,6 +13,7 @@ public class CrimsonAttackManager : MonoBehaviour
     [Header("Elements")]
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private float chargeDuration;
+    [SerializeField] private FinalBossPatternIconSO iconSO;
 
 
     void Awake()
@@ -31,6 +32,7 @@ public class CrimsonAttackManager : MonoBehaviour
 
     public void StartCrimsonAttackPattern(float duration, EnemyStats stats)
     {
+        GameEventsManager.TriggerFinalBossPatternStarted(iconSO, duration);
         StartCoroutine(CrimsonAttackPatternRoutine(duration, stats));
     }
 

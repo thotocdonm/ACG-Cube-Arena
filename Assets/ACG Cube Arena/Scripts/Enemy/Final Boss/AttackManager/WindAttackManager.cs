@@ -11,6 +11,7 @@ public class WindAttackManager : MonoBehaviour
     [Header("Elements")]
     [SerializeField] private float windStrengthMax;
     [SerializeField] private float windStrengthMin;
+    [SerializeField] private FinalBossPatternIconSO iconSO;
 
     private Transform playerTarget;
     private PlayerController playerController;
@@ -38,6 +39,7 @@ public class WindAttackManager : MonoBehaviour
 
     public void StartWindAttackPattern(float duration, EnemyStats stats)
     {
+        GameEventsManager.TriggerFinalBossPatternStarted(iconSO, duration);
         StartCoroutine(WindAttackPatternRoutine(duration, stats));
     }
 

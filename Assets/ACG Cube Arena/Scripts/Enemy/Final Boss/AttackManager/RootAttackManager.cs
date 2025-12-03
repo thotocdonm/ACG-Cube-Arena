@@ -11,6 +11,7 @@ public class RootAttackManager : MonoBehaviour
     [SerializeField] private float rootWindowDuration = 10f;
     [SerializeField] private float damageInterval = 0.1f;
     [SerializeField] private float rootDamageMultiplier = 0.25f;
+    [SerializeField] private FinalBossPatternIconSO iconSO;
 
 
     private Transform playerTarget;
@@ -60,6 +61,7 @@ public class RootAttackManager : MonoBehaviour
         rootWindowActive = true;
         rootWindowEndTime = Time.time + rootWindowDuration;
         this.stats = stats;
+        GameEventsManager.TriggerFinalBossPatternStarted(iconSO, rootWindowDuration);
         StartCoroutine(RootWindowRoutine());
     }
 

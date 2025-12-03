@@ -11,6 +11,7 @@ public class LightAttackManager : MonoBehaviour
 
     [Header("Elements")]
     [SerializeField] private float chargeDuration;
+    [SerializeField] private FinalBossPatternIconSO iconSO;
 
     private Transform playerTarget;
 
@@ -35,6 +36,7 @@ public class LightAttackManager : MonoBehaviour
 
     public void StartLightAttackPattern(float duration, EnemyStats stats)
     {
+        GameEventsManager.TriggerFinalBossPatternStarted(iconSO, duration);
         StartCoroutine(LightAttackPatternRoutine(duration, stats));
     }
 

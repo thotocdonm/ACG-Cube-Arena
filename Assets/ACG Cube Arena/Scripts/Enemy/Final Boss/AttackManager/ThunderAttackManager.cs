@@ -7,6 +7,9 @@ public class ThunderAttackManager : MonoBehaviour
 {
     public static ThunderAttackManager instance;
 
+    [Header("Elements")]
+    [SerializeField] private FinalBossPatternIconSO iconSO;
+
     void Awake()
     {
         if (instance == null)
@@ -23,6 +26,7 @@ public class ThunderAttackManager : MonoBehaviour
 
     public void StartThunderAttackPattern(float duration, EnemyStats stats, Transform spawnPoint)
     {
+        GameEventsManager.TriggerFinalBossPatternStarted(iconSO, duration);
         ThunderAttackPatternRoutine(duration, stats, spawnPoint);
     }
 

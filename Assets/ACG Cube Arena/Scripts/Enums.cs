@@ -45,3 +45,12 @@ public enum EquipmentRarity
     Epic,
     Legendary,
 }
+
+public enum FinalBossPattern
+{
+    Crimson,
+    Light,
+    Thunder,
+    Wind,
+    Root,
+}
