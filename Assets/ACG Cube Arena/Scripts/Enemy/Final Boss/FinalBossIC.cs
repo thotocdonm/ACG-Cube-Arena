@@ -17,12 +17,14 @@ public class FinalBossIC : Enemy
     private IAttackStrategy lightAttackStrategy;
     private IAttackStrategy thunderAttackStrategy;
     private IAttackStrategy windAttackStrategy;
+    private IAttackStrategy rootAttackStrategy;
 
     [Header("Attack Cooldowns")]
     [SerializeField] private float crimsonAttackCooldown;
     [SerializeField] private float lightAttackCooldown;
     [SerializeField] private float thunderAttackCooldown;
     [SerializeField] private float windAttackCooldown;
+    [SerializeField] private float rootAttackCooldown;
 
     [Header("Attack Strategies Color")]
     [SerializeField] private Color normalAttackStrategyColor;
@@ -39,6 +41,9 @@ public class FinalBossIC : Enemy
 
     [SerializeField] private Color windAttackStrategyColor;
     [SerializeField, ColorUsage(true, true)] private Color windAttackStrategyHDRColor;
+
+    [SerializeField] private Color rootAttackStrategyColor;
+    [SerializeField, ColorUsage(true, true)] private Color rootAttackStrategyHDRColor;
 
     private List<IAttackStrategy> attackStrategies = new List<IAttackStrategy>();
     private List<float> attackStrategyCooldowns = new List<float>();
@@ -65,18 +70,21 @@ public class FinalBossIC : Enemy
         lightAttackStrategy = new LightAttackStrategy(this, rb, animator, playerTarget, enemyStats);
         thunderAttackStrategy = new ThunderAttackStrategy(this, rb, animator, playerTarget, enemyStats);
         windAttackStrategy = new WindAttackStrategy(this, rb, animator, playerTarget, enemyStats);
+        rootAttackStrategy = new RootAttackStrategy(this, rb, animator, playerTarget, enemyStats);
 
 
         attackStrategies.Add(crimsonAttackStrategy);
         attackStrategies.Add(lightAttackStrategy);
         attackStrategies.Add(thunderAttackStrategy);
         attackStrategies.Add(windAttackStrategy);
+        attackStrategies.Add(rootAttackStrategy);
 
         attackStrategyCooldowns.Clear();
         attackStrategyCooldowns.Add(crimsonAttackCooldown);
         attackStrategyCooldowns.Add(lightAttackCooldown);
         attackStrategyCooldowns.Add(thunderAttackCooldown);
         attackStrategyCooldowns.Add(windAttackCooldown);
+        attackStrategyCooldowns.Add(rootAttackCooldown);
 
         for (int i = 0; i < attackStrategies.Count; i++)
         {
@@ -99,7 +107,7 @@ public class FinalBossIC : Enemy
                 animator.Play("Rotation");
                 Color color = GetColorForAttackStrategy(nextAttackStrategy);
                 Color hdrColor = GetHDRColorForAttackStrategy(nextAttackStrategy);
-                enemyStats.TransitionToColor(color, hdrColor, 2f, 3f);
+                enemyStats.TransitionToColor(color, hdrColor, 2f, 5f);
             }
 
 
@@ -160,6 +168,10 @@ public class FinalBossIC : Enemy
         {
             return windAttackStrategyColor;
         }
+        else if (attackStrategy == rootAttackStrategy)
+        {
+            return rootAttackStrategyColor;
+        }
         else
         {
             return normalAttackStrategyColor;
@@ -184,6 +196,10 @@ public class FinalBossIC : Enemy
         else if (attackStrategy == windAttackStrategy)
         {
             return windAttackStrategyHDRColor;
+        }
+        else if (attackStrategy == rootAttackStrategy)
+        {
+            return rootAttackStrategyHDRColor;
         }
         else
         {

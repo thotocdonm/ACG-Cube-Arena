@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private IchigoComboAttack ichigoComboAttack;
     [SerializeField] private IchigoSkillAttack ichigoSkillAttack;
-
+    [SerializeField] private GameObject rootedVFX;
     private bool isAttackHeld;
 
     [Header("Mouse Aim")]
@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
     public DashingState dashingState { get; private set; }
     public IchigoAttackingState ichigoAttackingState { get; private set; }
     public IchigoChargingState ichigoChargingState { get; private set; }
+    public RootedState rootedState { get; private set; }
+    public bool IsRooted { get; private set; }
 
     public Rigidbody Rigidbody => rb;
     public StateMachine StateMachine => stateMachine;
@@ -63,6 +65,7 @@ public class PlayerController : MonoBehaviour
     public IchigoSkillAttack IchigoSkillAttack => ichigoSkillAttack;
     public bool IsAttackHeld => isAttackHeld;
     public LayerMask ObstacleLayer => obstacleLayer;
+    public GameObject RootedVFX => rootedVFX;
 
     void Awake()
     {
@@ -73,6 +76,7 @@ public class PlayerController : MonoBehaviour
         idleState = new IdleState(this, stateMachine);
         movingState = new MovingState(this, stateMachine);
         dashingState = new DashingState(this, stateMachine);
+        rootedState = new RootedState(this, stateMachine);
         ichigoAttackingState = new IchigoAttackingState(this, stateMachine);
         ichigoChargingState = new IchigoChargingState(this, stateMachine);
 
@@ -138,6 +142,7 @@ public class PlayerController : MonoBehaviour
         if (context.performed)
         {
             if(EventSystem.current.IsPointerOverGameObject()) return;
+            GameEventsManager.TriggerPlayerAttackAttempted();
             var currentState = stateMachine.CurrentState as PlayerBaseState;
             currentState?.HandleAttack();
         }
@@ -161,6 +166,7 @@ public class PlayerController : MonoBehaviour
         {
             if(stateMachine.CurrentState is IchigoChargingState)
             {
+                GameEventsManager.TriggerPlayerSkillAttempted();
                 ichigoSkillAttack.ReleaseSkill();
 
                 if(lastMoveInput.magnitude > 0.1f)
@@ -258,6 +264,25 @@ public class PlayerController : MonoBehaviour
     public void ResetExternalVelocity()
     {
         ExternalVelocity = Vector3.zero;
+    }
+
+    public void EnterRooted(float duration)
+    {
+        if (IsRooted) return;
+        IsRooted = true;
+        ChangeState(rootedState);
+        DOVirtual.DelayedCall(duration, () =>
+        {
+            ExitRooted();
+        });
+    }
+    
+    public void ExitRooted()
+    {
+        if(!IsRooted) return;
+        IsRooted = false;
+        if (LastMoveInput.magnitude > 0.1f) ChangeState(movingState);
+        else ChangeState(idleState);
     }
     
 

@@ -2418,6 +2418,7 @@ Transform:
   - {fileID: 262716105}
   - {fileID: 1125976755}
   - {fileID: 725303663}
+  - {fileID: 1450710912}
   m_Father: {fileID: 1892564234}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &105817073
@@ -22954,6 +22955,54 @@ Transform:
   - {fileID: 804066725}
   m_Father: {fileID: 798230342}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1450710911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1450710912}
+  - component: {fileID: 1450710913}
+  m_Layer: 0
+  m_Name: 'Root Attack Manager '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1450710912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450710911}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 101893089}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1450710913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450710911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c03a65e0b57f449b4332d1529e071f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootDuration: 5
+  rootWindowDuration: 5
+  damageInterval: 0.5
+  rootDamageMultiplier: 0.25
 --- !u!1001 &1451496713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27208,8 +27257,28 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
         type: 3}
+      propertyPath: rootAttackCooldown
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
       propertyPath: windAttackCooldown
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
+      propertyPath: rootAttackStrategyColor.b
+      value: 0.31933072
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
+      propertyPath: rootAttackStrategyColor.g
+      value: 0.9811321
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
+      propertyPath: rootAttackStrategyColor.r
+      value: 0.37886187
       objectReference: {fileID: 0}
     - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
         type: 3}
@@ -27228,6 +27297,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
         type: 3}
+      propertyPath: rootAttackStrategyHDRColor.b
+      value: 0.31933072
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
+      propertyPath: rootAttackStrategyHDRColor.g
+      value: 0.9811321
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
+      propertyPath: rootAttackStrategyHDRColor.r
+      value: 0.37886187
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
       propertyPath: windAttackStrategyHDRColor.b
       value: 0.28773585
       objectReference: {fileID: 0}
@@ -27240,6 +27324,46 @@ PrefabInstance:
         type: 3}
       propertyPath: windAttackStrategyHDRColor.r
       value: 0.28773585
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
+      propertyPath: lightAttackStrategyHDRColor.b
+      value: 0.4575472
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
+      propertyPath: lightAttackStrategyHDRColor.g
+      value: 0.97287095
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
+      propertyPath: lightAttackStrategyHDRColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
+      propertyPath: crimsonAttackStrategyHDRColor.b
+      value: 0.3443396
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
+      propertyPath: crimsonAttackStrategyHDRColor.g
+      value: 0.3443396
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262702407484372392, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
+      propertyPath: crimsonAttackStrategyHDRColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2983133643857471898, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955645412712259331, guid: 3c8c970b267c6bc478372f9644f59714,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8365965501250123522, guid: 3c8c970b267c6bc478372f9644f59714,
         type: 3}
@@ -68393,11 +68517,6 @@ PrefabInstance:
     - target: {fileID: 4251785501346533833, guid: aaee8c1010294e54dbad30b1e042a160,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4251785501346533833, guid: aaee8c1010294e54dbad30b1e042a160,
-        type: 3}
-      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
