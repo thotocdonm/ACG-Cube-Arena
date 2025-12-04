@@ -22,12 +22,17 @@ public class WaveManager : MonoBehaviour
     [Header("Elements")]
     private Transform playerTarget;
     [SerializeField] private GameObject bossSpawnAnchor;
+    [SerializeField] private GameObject finalBossSpawnIndicator;
 
     [Header("Enemy")]
     [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] private GameObject bossPrefab;
     [SerializeField] private GameObject finalBossPrefab;
     [SerializeField] private Transform enemyParent;
+
+    [Header("Final Boss")]
+    [SerializeField] private float finalBossIntroDuration = 18f;
+
 
     [Header("Wave Setting")]
     [SerializeField] private int initialEnemyCount = 5;
@@ -121,7 +126,7 @@ public class WaveManager : MonoBehaviour
         {
             currentEnemyCount = 1;
             currentWaveType = WaveType.FinalBoss;
-            StartCoroutine(SpawnEnemySequence(finalBossPrefab, 3));
+            StartCoroutine(SpawnFinalBosSequance());
         }
         else if (CurrentWave % 1 == 0)
         {
@@ -196,6 +201,31 @@ public class WaveManager : MonoBehaviour
             bossHealthBarUI.SetActive(true);
             bossHealthBarUI.GetComponent<BossHealthBarUI>().Initialize(enemyInstance.GetComponent<EnemyStats>());
         }
+
+    }
+
+    private IEnumerator SpawnFinalBosSequance()
+    {
+        // Show Indicator
+        finalBossSpawnIndicator.SetActive(true);
+        DOVirtual.DelayedCall(finalBossIntroDuration, () => finalBossSpawnIndicator.SetActive(false));
+        AudioManager.instance.ChangeToFinalBossIntro();
+        yield return new WaitForSeconds(finalBossIntroDuration);
+
+        Debug.Log("Spawning Boss");
+        AudioManager.instance.ChangeToFinalBossBGM();
+        GameObject enemyInstance = Instantiate(finalBossPrefab, bossSpawnAnchor.transform.position + Vector3.up * 10f, Quaternion.identity, enemyParent);
+        Collider collider = enemyInstance.GetComponent<Collider>();
+        float halfHeight = collider.bounds.extents.y;
+        if (Physics.Raycast(enemyInstance.transform.position, Vector3.down, out var hit, 20f))
+        {
+            enemyInstance.transform.position = hit.point + Vector3.up * halfHeight;
+        }
+        enemyInstance.GetComponent<EnemyStats>().ApplyWaveModifier(CurrentWave, healthMultiplerIncreasePerWave, damageMultiplerIncreasePerWave);
+
+        // Initialize Boss Health Bar
+        bossHealthBarUI.SetActive(true);
+        bossHealthBarUI.GetComponent<BossHealthBarUI>().Initialize(enemyInstance.GetComponent<EnemyStats>());
 
     }
 

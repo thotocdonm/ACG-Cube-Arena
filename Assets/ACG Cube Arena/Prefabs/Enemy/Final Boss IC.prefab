@@ -5330,8 +5330,8 @@ GameObject:
   - component: {fileID: 6587014300917709916}
   - component: {fileID: 3190285313111368044}
   - component: {fileID: 8173609382229295296}
-  - component: {fileID: 2957814136284800680}
   - component: {fileID: 1262702407484372392}
+  - component: {fileID: 8838989208854809721}
   m_Layer: 8
   m_Name: Final Boss IC
   m_TagString: Enemy
@@ -5427,24 +5427,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2957814136284800680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8562988350213724176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3164b3e31c0d6640b68171d7eb4f500, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBarUI: {fileID: 0}
-  dmgTextAnchor: {fileID: 1631908256630348576}
-  stats: {fileID: 11400000, guid: 9eb672ac82cfbaa4fb35a68866c2b826, type: 2}
-  flashDuration: 0.1
-  flashColor: {r: 1, g: 1, b: 1, a: 1}
-  flashColorHDR: {r: 4, g: 4, b: 4, a: 0}
 --- !u!114 &1262702407484372392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5465,6 +5447,11 @@ MonoBehaviour:
   recoveryDuration: 2
   chargingVFXPrefab: {fileID: 5539071807207100160}
   normalAttackProjectileSpawnPoint: {fileID: 1764337088748303337}
+  phase1Stats: {fileID: 11400000, guid: 9eb672ac82cfbaa4fb35a68866c2b826, type: 2}
+  phase2Stats: {fileID: 11400000, guid: 332d0d41f6a06bc489c45531a3e94051, type: 2}
+  phase1Visual: {fileID: 2983133643857471898}
+  phase2Visual: {fileID: 5955645412712259331}
+  phase2SpawnPoint: {fileID: 0}
   crimsonAttackCooldown: 60
   lightAttackCooldown: 60
   thunderAttackCooldown: 60
@@ -5482,6 +5469,25 @@ MonoBehaviour:
   windAttackStrategyHDRColor: {r: 0.28773585, g: 0.28773585, b: 0.28773585, a: 0}
   rootAttackStrategyColor: {r: 0.37886187, g: 0.9811321, b: 0.31933072, a: 0}
   rootAttackStrategyHDRColor: {r: 0.37886187, g: 0.9811321, b: 0.31933072, a: 0}
+--- !u!114 &8838989208854809721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8562988350213724176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16a785947a4541140a532c875cd3571e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarUI: {fileID: 0}
+  dmgTextAnchor: {fileID: 1631908256630348576}
+  stats: {fileID: 11400000, guid: 9eb672ac82cfbaa4fb35a68866c2b826, type: 2}
+  flashDuration: 0.1
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashColorHDR: {r: 1.8778619, g: 1.8778619, b: 1.8778619, a: 0}
+  isPhase2: 0
 --- !u!1001 &3969887793504172248
 PrefabInstance:
   m_ObjectHideFlags: 0

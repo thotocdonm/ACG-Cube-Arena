@@ -39,9 +39,14 @@ public class BossHealthBarUI : MonoBehaviour
         fillImage.fillAmount = fillAmount;
         bossHealthText.text = $"{currentHealth} / {maxHealth}";
     }
-    
-    private void OnBossHealthChangedCallback(int currentHealth)
+
+    private void OnBossHealthChangedCallback(int currentHealth, bool reInitialize = false)
     {
+        if(reInitialize)
+        {
+            Initialize(trackedBossStats);
+        }
         UpdateHealth(currentHealth, (int)trackedBossStats.MaxHealth.GetValue());
     }
+    
 }

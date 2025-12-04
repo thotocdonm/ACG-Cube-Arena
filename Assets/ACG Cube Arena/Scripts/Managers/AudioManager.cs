@@ -10,9 +10,13 @@ public class AudioManager : MonoBehaviour
 
     [Header("BGMs & SFXs")]
     [SerializeField] private AudioSource bgmAudioSource;
+    [SerializeField] private AudioSource finalBossBGM;
+    [SerializeField] private AudioSource finalBossIntroBGM;
     [SerializeField] private AudioSource[] allSFXAudioSources;
+    [SerializeField] private AudioSource[] allBGMAudioSources;
     [SerializeField] private Slider bgmVolumeSlider;
     [SerializeField] private Slider sfxVolumeSlider;
+    
 
     [Header("Player")]
     [SerializeField] private AudioSource[] ichigoAudioSources;
@@ -23,6 +27,7 @@ public class AudioManager : MonoBehaviour
     [Header("Enemy")]
     [SerializeField] private AudioSource enemyHitAudioSource;
     [SerializeField] private AudioSource enemySpawnAudioSource;
+    [SerializeField] private AudioSource shellBreak;
 
     [Header("Mage Enemy")]
     [SerializeField] private AudioSource mageChargeAudioSource;
@@ -76,9 +81,11 @@ public class AudioManager : MonoBehaviour
     public void SetBGMVolume(float volume)
     {
         bgmVolume = volume;
-        bgmAudioSource.volume = bgmVolume;
+        foreach (AudioSource audioSource in allBGMAudioSources)
+        {
+            audioSource.volume = bgmVolume;
+        }
         bgmVolumeSlider.value = bgmVolume;
-
     }
     public void SetSFXVolume(float volume)
     {
@@ -167,9 +174,32 @@ public class AudioManager : MonoBehaviour
     {
         buttonHoverAudioSource.Play();
     }
-    
+
     public void PlayStatUpgradeSound()
     {
         statUpgradeAudioSource.Play();
+    }
+
+    public void PlayShellBreakSound()
+    {
+        shellBreak.Play();
+    }
+
+    public void ChangeToFinalBossIntro()
+    {
+        foreach (AudioSource audioSource in allBGMAudioSources)
+        {
+            audioSource.Stop();
+        }
+        finalBossIntroBGM.Play();
+    }
+
+    public void ChangeToFinalBossBGM()
+    {
+        foreach (AudioSource audioSource in allBGMAudioSources)
+        {
+            audioSource.Stop();
+        }
+        finalBossBGM.Play();
     }
 }

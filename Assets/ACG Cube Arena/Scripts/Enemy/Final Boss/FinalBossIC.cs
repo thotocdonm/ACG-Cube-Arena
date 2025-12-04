@@ -11,6 +11,15 @@ public class FinalBossIC : Enemy
     [SerializeField] private Transform normalAttackProjectileSpawnPoint;
     private EnemyStats enemyStats;
 
+    [Header("Boss Stats")]
+    [SerializeField] private EnemyStatsSO phase1Stats;
+    [SerializeField] private EnemyStatsSO phase2Stats;
+
+    [Header("Boss Visuals Settings")]
+    [SerializeField] private GameObject phase1Visual;
+    [SerializeField] private GameObject phase2Visual;
+    private Transform phase2SpawnPoint;
+
     [Header("Attack Strategies")]
     private IAttackStrategy normalAttackStrategy;
     private IAttackStrategy crimsonAttackStrategy;
@@ -46,7 +55,6 @@ public class FinalBossIC : Enemy
     [SerializeField, ColorUsage(true, true)] private Color rootAttackStrategyHDRColor;
 
     private List<IAttackStrategy> attackStrategies = new List<IAttackStrategy>();
-    private List<float> attackStrategyCooldowns = new List<float>();
     private Dictionary<IAttackStrategy, float> attackStrategyCooldownsDict = new Dictionary<IAttackStrategy, float>();
     private Dictionary<IAttackStrategy, float> attackLastUsedTimeDict = new Dictionary<IAttackStrategy, float>();
 
@@ -54,6 +62,16 @@ public class FinalBossIC : Enemy
     {
         base.Awake();
         UpdateAttackStrategy();
+        BossStats.onTriggerPhase2 += OnTriggerPhase2;
+        phase2SpawnPoint = transform;
+    }
+
+
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        BossStats.onTriggerPhase2 -= OnTriggerPhase2;
     }
 
     protected override void Start()
@@ -62,7 +80,26 @@ public class FinalBossIC : Enemy
         StartCoroutine(AttackPatternCoroutine());
     }
 
-    private void UpdateAttackStrategy()
+    private void OnTriggerPhase2()
+    {
+        StartCoroutine(Phase2TransitionCoroutine());
+    }
+
+    private IEnumerator Phase2TransitionCoroutine()
+    {
+        transform.position = phase2SpawnPoint.position;
+        GameUIManager.instance.FadeToWhite(2f);
+        yield return new WaitForSeconds(2f);
+        AudioManager.instance.PlayShellBreakSound();
+        UpdateAttackStrategy(true);
+        phase1Visual.SetActive(false);
+        phase2Visual.SetActive(true);
+        enemyStats.ChangeBaseStats(phase2Stats);
+        yield return new WaitForSeconds(2f);
+
+    }
+
+    private void UpdateAttackStrategy(bool isPhase2 = false)
     {
         enemyStats = GetEnemyStats();
         normalAttackStrategy = new NormalAttackStrategy(this, rb, animator, playerTarget, enemyStats, chargingVFXPrefab, normalAttackProjectileSpawnPoint);
@@ -71,27 +108,63 @@ public class FinalBossIC : Enemy
         thunderAttackStrategy = new ThunderAttackStrategy(this, rb, animator, playerTarget, enemyStats);
         windAttackStrategy = new WindAttackStrategy(this, rb, animator, playerTarget, enemyStats);
         rootAttackStrategy = new RootAttackStrategy(this, rb, animator, playerTarget, enemyStats);
-
-
-        attackStrategies.Add(crimsonAttackStrategy);
-        attackStrategies.Add(lightAttackStrategy);
-        attackStrategies.Add(thunderAttackStrategy);
-        attackStrategies.Add(windAttackStrategy);
-        attackStrategies.Add(rootAttackStrategy);
-
-        attackStrategyCooldowns.Clear();
-        attackStrategyCooldowns.Add(crimsonAttackCooldown);
-        attackStrategyCooldowns.Add(lightAttackCooldown);
-        attackStrategyCooldowns.Add(thunderAttackCooldown);
-        attackStrategyCooldowns.Add(windAttackCooldown);
-        attackStrategyCooldowns.Add(rootAttackCooldown);
-
-        for (int i = 0; i < attackStrategies.Count; i++)
+        List<IAttackStrategy> allStrategies = new List<IAttackStrategy>()
         {
-            attackStrategyCooldownsDict.Add(attackStrategies[i], attackStrategyCooldowns[i]);
-            attackLastUsedTimeDict[attackStrategies[i]] = -Mathf.Infinity;
+            crimsonAttackStrategy,
+            lightAttackStrategy,
+            thunderAttackStrategy,
+            windAttackStrategy,
+            rootAttackStrategy
+        };
+
+        attackStrategies.Clear();
+        attackStrategyCooldownsDict.Clear();
+        attackLastUsedTimeDict.Clear();
+
+        attackStrategies.Add(normalAttackStrategy);
+
+        if (isPhase2)
+        {
+            attackStrategies.AddRange(allStrategies);
+        }
+        else
+        {
+            List<IAttackStrategy> randomStrategies = GetRandomElements(allStrategies, 2);
+            attackStrategies.AddRange(randomStrategies);
+        }
+        
+        foreach (var strategy in attackStrategies)
+        {
+            attackStrategyCooldownsDict.Add(strategy, GetCooldownForStrategy(strategy));
+            attackLastUsedTimeDict.Add(strategy, -Mathf.Infinity);
+        }
+    }
+
+    private List<IAttackStrategy> GetRandomElements(List<IAttackStrategy> source, int count)
+    {
+        List<IAttackStrategy> temp = new List<IAttackStrategy>(source);
+        List<IAttackStrategy> result = new List<IAttackStrategy>();
+
+        for (int i = 0; i < count && temp.Count > 0; i++)
+        {
+            int index = Random.Range(0, temp.Count);
+            result.Add(temp[index]);
+            temp.RemoveAt(index);
         }
 
+        return result;
+    }
+
+    private float GetCooldownForStrategy(IAttackStrategy strategy)
+    {
+        if (strategy is CrimsonAttackStrategy) return crimsonAttackCooldown;
+        if (strategy is LightAttackStrategy) return lightAttackCooldown;
+        if (strategy is ThunderAttackStrategy) return thunderAttackCooldown;
+        if (strategy is WindAttackStrategy) return windAttackCooldown;
+        if (strategy is RootAttackStrategy) return rootAttackCooldown;
+        if (strategy is NormalAttackStrategy) return 0f;
+
+        return 0f;
     }
 
 
@@ -107,6 +180,8 @@ public class FinalBossIC : Enemy
                 animator.Play("Rotation");
                 Color color = GetColorForAttackStrategy(nextAttackStrategy);
                 Color hdrColor = GetHDRColorForAttackStrategy(nextAttackStrategy);
+                Debug.Log("Color: " + color);
+                Debug.Log("HDR Color: " + hdrColor);
                 enemyStats.TransitionToColor(color, hdrColor, 2f, 5f);
             }
 

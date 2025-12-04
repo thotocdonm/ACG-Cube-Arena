@@ -40,6 +40,7 @@ public class GameUIManager : MonoBehaviour
 
     [Header("Fade Panel")]
     [SerializeField] private Image fadeImage;
+    [SerializeField] private Image whiteFadeImage;
 
 
     void Awake()
@@ -165,12 +166,20 @@ public class GameUIManager : MonoBehaviour
             }
         }
     }
-    
+
     public void ExitToMenu()
     {
         fadeImage.DOFade(1, 2).SetUpdate(true).SetEase(Ease.InOutSine).OnComplete(() =>
         {
             SceneManager.LoadScene(0);
+        });
+    }
+    
+    public void FadeToWhite(float duration)
+    {
+        whiteFadeImage.DOFade(1, duration).SetUpdate(true).SetEase(Ease.InOutSine).OnComplete(() =>
+        {
+            whiteFadeImage.DOFade(0, duration).SetUpdate(true).SetEase(Ease.InOutSine);
         });
     }
 }

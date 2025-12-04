@@ -8,25 +8,25 @@ public class EnemyStats : MonoBehaviour
 {
 
     [Header("Elements")]
-    [SerializeField] private HealthBarUI healthBarUI;
+    [SerializeField] protected HealthBarUI healthBarUI;
     [SerializeField] protected Transform dmgTextAnchor;
     
 
     [Header("Base Stats")]
-    [SerializeField] private EnemyStatsSO stats;
+    [SerializeField] protected EnemyStatsSO stats;
 
     [Header("Hit Feedback")]
-    [SerializeField] private float flashDuration;
-    [SerializeField] private Color flashColor = Color.white;
-    [SerializeField,ColorUsage(true, true)] private Color flashColorHDR;
+    [SerializeField] protected float flashDuration;
+    [SerializeField] protected Color flashColor = Color.white;
+    [SerializeField,ColorUsage(true, true)] protected Color flashColorHDR;
     public static Action<int, Vector3, bool, Vector3> onEnemyHit;
-    public static Action<int> onBossHealthChanged;
-    private MeshRenderer[] allRenderers;
-    private Color[] originalColors;
-    private Color[] originalEmissionColors;
-    private Coroutine flashCoroutine;
-    private Coroutine transitionColorCoroutine;
-    private EnemyType enemyType;
+    public static Action<int, bool> onBossHealthChanged;
+    protected MeshRenderer[] allRenderers;
+    protected Color[] originalColors;
+    protected Color[] originalEmissionColors;
+    protected Coroutine flashCoroutine;
+    protected Coroutine transitionColorCoroutine;
+    protected EnemyType enemyType;
 
     public Stat MaxHealth { get; private set; }
     public Stat MoveSpeed { get; private set; }
@@ -39,7 +39,7 @@ public class EnemyStats : MonoBehaviour
     public GameObject ProjectilePrefab { get; private set; }
 
 
-    public int CurrentHealth { get; private set; }
+    public int CurrentHealth { get; protected set; }
 
     void Awake()
     {
@@ -58,7 +58,7 @@ public class EnemyStats : MonoBehaviour
         enemyType = stats.enemyType;
         Debug.Log("Enemy Type: " + enemyType);
 
-        allRenderers = GetComponentsInChildren<MeshRenderer>();
+        allRenderers = GetComponentsInChildren<MeshRenderer>(true);
         originalColors = new Color[allRenderers.Length];
         originalEmissionColors = new Color[allRenderers.Length];
         for (int i = 0; i < allRenderers.Length; i++)
@@ -89,9 +89,13 @@ public class EnemyStats : MonoBehaviour
         TakeDamage(10, false, transform.position);
     }
 
-    public void TakeDamage(int damage, bool isCritical, Vector3 hitPoint)
+    public virtual void TakeDamage(int damage, bool isCritical, Vector3 hitPoint)
     {
         CurrentHealth -= damage;
+        if(CurrentHealth < 0)
+        {
+            CurrentHealth = 0;
+        }
         if(healthBarUI != null)
         {
             healthBarUI.SetHealth(CurrentHealth);
@@ -100,7 +104,7 @@ public class EnemyStats : MonoBehaviour
         onEnemyHit?.Invoke(damage, dmgTextAnchor.position, isCritical, hitPoint);
         if(stats.enemyType == EnemyType.Boss)
         {
-            onBossHealthChanged?.Invoke(CurrentHealth);
+            onBossHealthChanged?.Invoke(CurrentHealth, false);
         }
         if (CurrentHealth <= 0)
         {
@@ -114,7 +118,7 @@ public class EnemyStats : MonoBehaviour
         flashCoroutine = StartCoroutine(FlashCoroutine());
     }
 
-    private IEnumerator FlashCoroutine()
+    protected IEnumerator FlashCoroutine()
     {
         foreach (MeshRenderer renderer in allRenderers)
         {
@@ -137,7 +141,7 @@ public class EnemyStats : MonoBehaviour
         flashCoroutine = null;
     }
 
-    private IEnumerator TransitionToColorCoroutine(Color targetColor, Color targetHDRColor, float transitionDuration, float stayDuration)
+    protected IEnumerator TransitionToColorCoroutine(Color targetColor, Color targetHDRColor, float transitionDuration, float stayDuration)
     {
         foreach (MeshRenderer renderer in allRenderers)
         {
@@ -210,11 +214,25 @@ public class EnemyStats : MonoBehaviour
 
     private void SetHealthBarUI()
     {
-        if(healthBarUI != null)
+        if (healthBarUI != null)
         {
             healthBarUI.SetMaxHealth(MaxHealth.GetValue());
             healthBarUI.SetHealth(MaxHealth.GetValue());
         }
+    }
+    
+    public void ChangeBaseStats(EnemyStatsSO newStats)
+    {
+        stats = newStats;
+        MaxHealth.SetBaseValue(newStats.maxHealth);
+        MoveSpeed.SetBaseValue(newStats.moveSpeed);
+        AttackDamage.SetBaseValue(newStats.attackDamage);
+        AttackCooldown.SetBaseValue(newStats.attackCooldown);
+        DetectionRange.SetBaseValue(newStats.detectionRange);
+        AttackRange.SetBaseValue(newStats.attackRange);
+
+        CurrentHealth = (int)MaxHealth.GetValue();
+        onBossHealthChanged?.Invoke(CurrentHealth, true);
     }
     
 }
