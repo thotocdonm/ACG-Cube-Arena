@@ -13,6 +13,9 @@ public class SaveData
     public float bgmVolume;
     public float sfxVolume;
 
+    public FullscreenMode fullscreenMode;
+    public ResolutionPreset resolutionPreset;
+
     public SaveData()
     {
         diamonds = 0;

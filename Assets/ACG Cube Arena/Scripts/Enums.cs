@@ -54,3 +54,19 @@ public enum FinalBossPattern
     Wind,
     Root,
 }
+
+public enum FullscreenMode
+{
+    FullscreenWindowed,
+    Windowed
+}
+
+public enum ResolutionPreset
+{
+    //16:9
+    R_1280x720,
+    R_1920x1080,
+    R_2560x1440,
+    R_3840x2160,
+}
+
