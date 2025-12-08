@@ -40,6 +40,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private int wavesPerEnemyCount = 5;
     [SerializeField] private int enemyCountIncrease = 2;
     [SerializeField] private int finalWave = 20;
+    [SerializeField] private int wavesPerBossSpawn = 5;
     [SerializeField] private float healthMultiplerIncreasePerWave = 0.1f;
     [SerializeField] private float damageMultiplerIncreasePerWave = 0.05f;
     [SerializeField] private int diamondsEarnedPerWave = 50;
@@ -97,6 +98,7 @@ public class WaveManager : MonoBehaviour
         CurrentWaveState = WaveState.Preparing;
         startWaveTrigger.SetActive(true);
         openShopTrigger.SetActive(true);
+        OpenShopTrigger.instance.ResetShopTrigger();
         UpdateWaveText();
     }
 
@@ -128,7 +130,7 @@ public class WaveManager : MonoBehaviour
             currentWaveType = WaveType.FinalBoss;
             StartCoroutine(SpawnFinalBosSequance());
         }
-        else if (CurrentWave % 1 == 0)
+        else if (CurrentWave % wavesPerBossSpawn == 0)
         {
             currentEnemyCount = 1;
             currentWaveType = WaveType.Boss;

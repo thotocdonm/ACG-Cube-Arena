@@ -5442,7 +5442,7 @@ MonoBehaviour:
   meleeHitbox: {fileID: 0}
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 2103
   spawnIndicator: {fileID: 0}
   recoveryDuration: 2
   chargingVFXPrefab: {fileID: 5539071807207100160}
@@ -5451,7 +5451,6 @@ MonoBehaviour:
   phase2Stats: {fileID: 11400000, guid: 332d0d41f6a06bc489c45531a3e94051, type: 2}
   phase1Visual: {fileID: 2983133643857471898}
   phase2Visual: {fileID: 5955645412712259331}
-  phase2SpawnPoint: {fileID: 0}
   crimsonAttackCooldown: 60
   lightAttackCooldown: 60
   thunderAttackCooldown: 60

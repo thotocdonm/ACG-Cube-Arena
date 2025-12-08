@@ -4,23 +4,33 @@ using UnityEngine;
 
 public class OpenShopTrigger : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static OpenShopTrigger instance;
+
+    private bool isShopOpen = false;
+
+    void Awake()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !isShopOpen)
         {
             GameUIManager.instance.ShowShopPanel();
+            isShopOpen = true;
         }
+    }
+    
+    public void ResetShopTrigger()
+    {
+        isShopOpen = false;
     }
 }

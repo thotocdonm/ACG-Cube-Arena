@@ -15,6 +15,7 @@ public class ItemDescriptionContainer : MonoBehaviour
     [SerializeField] private Button buyButton;
     [SerializeField] private TextMeshProUGUI buyButtonText;
     [SerializeField] private TextMeshProUGUI recycleButtonText;
+    [SerializeField] private TextMeshProUGUI itemSlotText;
     private ItemDataSO itemData;
 
     [Header("Test")]
@@ -44,6 +45,7 @@ public class ItemDescriptionContainer : MonoBehaviour
         itemName.color = ResourcesManager.instance.GetRarityColor(itemData.rarity);
         itemBorder.color = ResourcesManager.instance.GetRarityColor(itemData.rarity);
         itemDescription.text = itemData.description;
+        itemSlotText.text = itemData.equipmentType.ToString();
         if(buyButtonText != null)
         {
             buyButtonText.text = $"Buy (-{itemData.price})";

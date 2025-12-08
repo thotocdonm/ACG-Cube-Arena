@@ -928,6 +928,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 94da8dcc0845bda48929e0ccee1ff40c, type: 2}
   flashDuration: 0.1
   flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashColorHDR: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &4529956696778577223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -943,7 +944,7 @@ MonoBehaviour:
   meleeHitbox: {fileID: 0}
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 2103
   chargingVFX: {fileID: 5454340643973939053}
   sparkVFX: {fileID: 2077918045032137592}
   aoeAttackIndicator: {fileID: 3112914512275057448, guid: ce7e07c905d7c704e9912b9f885115ae,

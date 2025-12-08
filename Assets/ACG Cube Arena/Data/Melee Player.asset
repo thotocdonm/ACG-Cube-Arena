@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Melee Player
   m_EditorClassIdentifier: 
   playerName: Ichigo
-  maxHealth: 1e+9
+  maxHealth: 200
   moveSpeed: 5
-  attackDamage: 30
-  criticalChance: 50
+  attackDamage: 20
+  criticalChance: 10
   criticalDamage: 150
-  skillCooldownReduction: 20
+  skillCooldownReduction: 0
   dashDistance: 10
   dashDuration: 0.2
-  dashCooldownReduction: 20
+  dashCooldownReduction: 0
   projectilePrefab: {fileID: 0}
   projectileSpeed: 0

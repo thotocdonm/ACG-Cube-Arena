@@ -431,7 +431,7 @@ MonoBehaviour:
   meleeHitbox: {fileID: 3979054919645701417}
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 2103
   chargeIndicator: {fileID: 8488860130791776504}
   telegraphDuration: 1
   chargeSpeed: 10
@@ -454,6 +454,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 68482805e67c4864cbe8c3d9745cc382, type: 2}
   flashDuration: 0.1
   flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashColorHDR: {r: 0, g: 0, b: 0, a: 0}
 --- !u!95 &8696007180758844483
 Animator:
   serializedVersion: 5
