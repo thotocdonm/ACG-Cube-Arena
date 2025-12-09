@@ -27,6 +27,7 @@ public class GameStateManager : MonoBehaviour
     void Start()
     {
         CurrentGameState = GameState.MainMenu;
+        Time.timeScale = 1;
     }
 
     public void ChangeGameState(GameState newGameState)

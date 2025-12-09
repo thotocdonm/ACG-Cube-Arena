@@ -20,7 +20,7 @@ public class HitStopManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        originalTimeScale = Time.timeScale;
+        originalTimeScale = 1;
         
     }
     // Start is called before the first frame update
