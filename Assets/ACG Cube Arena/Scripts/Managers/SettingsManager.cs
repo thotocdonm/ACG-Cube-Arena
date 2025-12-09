@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
 public class SettingsManager : MonoBehaviour
@@ -12,6 +14,11 @@ public class SettingsManager : MonoBehaviour
     [Header("Elements")]
     [SerializeField] private TextMeshProUGUI fullscreenModeText;
     [SerializeField] private TextMeshProUGUI resolutionPresetText;
+    [SerializeField] private CinemachineVirtualCamera virtualCamera;
+
+    [Header("FOV Settings")]
+    [SerializeField] private float minFov = 60f;
+    [SerializeField] private float maxFov = 80f;
 
     private int currentFullscreenModeIndex;
     private int currentResolutionPresetIndex;
@@ -30,12 +37,12 @@ public class SettingsManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        SaveLoadManager.onDataLoaded += onDataLoadedCallback;
+        SaveLoadManager.onDataLoaded += OnDataLoadedCallback;
     }
 
     void OnDestroy()
     {
-        SaveLoadManager.onDataLoaded -= onDataLoadedCallback;
+        SaveLoadManager.onDataLoaded -= OnDataLoadedCallback;
     }
     // Start is called before the first frame update
     void Start()
@@ -49,7 +56,42 @@ public class SettingsManager : MonoBehaviour
 
     }
 
-    private void onDataLoadedCallback(SaveData saveData)
+    public void SetFOV(InputAction.CallbackContext context)
+    {
+        if (GameStateManager.instance.CurrentGameState != GameState.Game) return;
+        
+        Debug.Log("SetFOV" + context.ReadValue<float>());
+        if (context.performed)
+        {
+            Debug.Log("Performed");
+            float z = context.ReadValue<float>();
+            if (z > 0)
+            {
+                DecreaseFOV();
+            }
+            else if (z < 0)
+            {
+                IncreaseFOV();
+            }
+        }
+    }
+    
+    private void IncreaseFOV()
+    {
+        if (virtualCamera.m_Lens.FieldOfView < maxFov)
+        {
+            virtualCamera.m_Lens.FieldOfView++;
+        }
+    }
+    private void DecreaseFOV()
+    {
+        if (virtualCamera.m_Lens.FieldOfView > minFov)
+        {
+            virtualCamera.m_Lens.FieldOfView--;
+        }
+    }
+
+    private void OnDataLoadedCallback(SaveData saveData)
     {
         currentFullscreenModeIndex = (int)saveData.fullscreenMode;
         currentResolutionPresetIndex = (int)saveData.resolutionPreset;

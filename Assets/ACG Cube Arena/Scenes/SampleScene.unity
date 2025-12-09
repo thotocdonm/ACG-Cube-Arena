@@ -27723,6 +27723,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fullscreenModeText: {fileID: 1061789139}
   resolutionPresetText: {fileID: 1029147718}
+  virtualCamera: {fileID: 1478049938}
+  minFov: 60
+  maxFov: 80
 --- !u!1 &1691977652 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 953768564270958135, guid: 84e7a2ff8853d634f99e1a9d968d1010,
@@ -27797,6 +27800,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1378295999}
     m_Modifications:
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 950469544}
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2092679529514993508, guid: 0171218cdb52d16428487ab786f5f9c7,
         type: 3}
       propertyPath: m_Pivot.x
@@ -69766,11 +69804,66 @@ PrefabInstance:
       propertyPath: playerHealthBarUI
       value: 
       objectReference: {fileID: 369772960}
+    - target: {fileID: 2386974382206509212, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785737259873354464, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785737259873354464, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionId
+      value: d86591d7-8378-4e9c-a0ab-03dacf76f699
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785737259873354464, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionName
+      value: Gameplay/Change FOV[/Mouse/scroll/y]
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785737259873354464, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785737259873354464, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2785737259873354464, guid: aaee8c1010294e54dbad30b1e042a160,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 991740376}
+    - target: {fileID: 2785737259873354464, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1686832773}
+    - target: {fileID: 2785737259873354464, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785737259873354464, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetFOV
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785737259873354464, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2785737259873354464, guid: aaee8c1010294e54dbad30b1e042a160,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3821937965056482382, guid: aaee8c1010294e54dbad30b1e042a160,
         type: 3}
       propertyPath: maxChargeMultiplier

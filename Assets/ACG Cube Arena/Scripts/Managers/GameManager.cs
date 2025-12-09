@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Confined;
         Application.targetFrameRate = 120;
     }
 
@@ -21,5 +21,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
