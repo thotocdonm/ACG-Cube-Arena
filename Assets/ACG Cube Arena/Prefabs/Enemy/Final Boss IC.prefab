@@ -5454,8 +5454,8 @@ MonoBehaviour:
   crimsonAttackCooldown: 60
   lightAttackCooldown: 60
   thunderAttackCooldown: 60
-  windAttackCooldown: 30
-  rootAttackCooldown: 30
+  windAttackCooldown: 20
+  rootAttackCooldown: 20
   normalAttackStrategyColor: {r: 0.7490196, g: 0.5568628, b: 0.7137255, a: 1}
   normalAttackStrategyHDRColor: {r: 2.9960785, g: 2.2142708, b: 2.841166, a: 1}
   crimsonAttackStrategyColor: {r: 1, g: 0.3443396, b: 0.3443396, a: 1}

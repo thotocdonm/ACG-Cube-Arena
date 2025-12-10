@@ -99,7 +99,7 @@ public class PlayerStats : MonoBehaviour
 
     public void TakeDamage(int damage, bool isBypassIframe = false)
     {
-
+        if(GameStateManager.instance.CurrentGameState != GameState.Game) return;
         if (!isBypassIframe)
         {
             if (Time.time < lastHitTime + iFrameDuration)

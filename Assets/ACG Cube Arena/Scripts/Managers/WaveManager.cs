@@ -148,13 +148,22 @@ public class WaveManager : MonoBehaviour
             }
         }
 
-        yield return StartCoroutine(WaitForWaveEnd());
+        if (currentWaveType == WaveType.FinalBoss || currentWaveType == WaveType.Boss)
+        {
+            yield return new WaitUntil(() => currentEnemyCount == 0);
+        }
+        else
+        {
+            yield return StartCoroutine(WaitForWaveEnd());
+        }
+       
 
         EndWave();
     }
 
     private IEnumerator WaitForWaveEnd()
     {
+
         float timer = 0f;
         while (true)
         {

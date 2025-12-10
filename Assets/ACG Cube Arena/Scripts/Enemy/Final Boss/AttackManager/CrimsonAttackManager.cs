@@ -73,7 +73,7 @@ public class CrimsonAttackManager : MonoBehaviour
         aoeVFXInstance.transform.localScale = new Vector3(1, 1, 1);
         DOVirtual.DelayedCall(2f, () => VFXPoolManager.instance.crimsonAoeVFXPool.Release(aoeVFXInstance));
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1f);
 
         // AudioManager.instance.PlayMageAttackSound();
 
