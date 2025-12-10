@@ -31475,7 +31475,7 @@ PrefabInstance:
     - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TogglePausePanel
+      value: GoBack
       objectReference: {fileID: 0}
     - target: {fileID: 657419688088344147, guid: 0171218cdb52d16428487ab786f5f9c7,
         type: 3}

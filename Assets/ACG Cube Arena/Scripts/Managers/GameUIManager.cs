@@ -174,7 +174,7 @@ public class GameUIManager : MonoBehaviour
             SceneManager.LoadScene(0);
         });
     }
-    
+
     public void FadeToWhite(float duration)
     {
         whiteFadeImage.DOFade(1, duration).SetUpdate(true).SetEase(Ease.InOutSine).OnComplete(() =>
@@ -182,4 +182,11 @@ public class GameUIManager : MonoBehaviour
             whiteFadeImage.DOFade(0, duration).SetUpdate(true).SetEase(Ease.InOutSine);
         });
     }
+    
+    #if UNITY_EDITOR
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(10, 30, 200, 20), "Current Game State: " + GameStateManager.instance.CurrentGameState);
+    }
+    #endif
 }
