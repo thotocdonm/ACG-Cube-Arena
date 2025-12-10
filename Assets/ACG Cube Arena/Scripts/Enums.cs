@@ -67,6 +67,5 @@ public enum ResolutionPreset
     R_1280x720,
     R_1920x1080,
     R_2560x1440,
-    R_3840x2160,
 }
 

@@ -16,8 +16,7 @@ public class TooltipContainerUI : MonoBehaviour
     [SerializeField] private Image priceIcon;
 
     [Header("Offset Settings")]
-    [SerializeField] private Vector2 offsetRight = new Vector2(200f, 10f);
-    [SerializeField] private Vector2 offsetLeft = new Vector2(-200f, 10f);
+    [SerializeField] private float offsetValue;
 
     private Canvas canvas;
 
@@ -35,8 +34,12 @@ public class TooltipContainerUI : MonoBehaviour
             canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
             out Vector2 localPoint
         );
-        Vector2 offset = localPoint.x < 0 ? offsetRight : offsetLeft;
-        transform.position = new Vector3(mousePos.x + offset.x, mousePos.y + offset.y, 0f);
+
+        Vector2 offset = localPoint.x < 0 ? new Vector2(offsetValue, 100f) : new Vector2(-offsetValue, 100f);
+        Vector2 screenSize = new Vector2(Screen.width, Screen.height);
+        Debug.Log("Offset:" + (screenSize.x / offset.x));
+        Debug.Log("Offset:" + (screenSize.y / offset.y));
+        transform.position = new Vector3(mousePos.x + (screenSize.x / offset.x), mousePos.y + (screenSize.y / offset.y), 0f);
 
     }
 

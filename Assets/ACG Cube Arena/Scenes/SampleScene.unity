@@ -33508,8 +33508,7 @@ MonoBehaviour:
   nextLevelText: {fileID: 291522835}
   priceText: {fileID: 179860078}
   priceIcon: {fileID: 1654815072}
-  offsetRight: {x: 200, y: 10}
-  offsetLeft: {x: -200, y: 10}
+  offsetValue: 5
 --- !u!1 &2043411043
 GameObject:
   m_ObjectHideFlags: 0
@@ -60928,7 +60927,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -15.463198, z: 0, w: -17.681612}
+  m_margin: {x: -388.22437, y: -15.463198, z: -392.4011, w: -17.681612}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -73203,7 +73202,7 @@ PrefabInstance:
     - target: {fileID: 7488110495409038812, guid: 3e9849321eb0ea64d994dbad3c490dd7,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -63
+      value: -62.999756
       objectReference: {fileID: 0}
     - target: {fileID: 7488110495409038812, guid: 3e9849321eb0ea64d994dbad3c490dd7,
         type: 3}

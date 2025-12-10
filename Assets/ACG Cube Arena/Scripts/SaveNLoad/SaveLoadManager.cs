@@ -27,11 +27,18 @@ public class SaveLoadManager : MonoBehaviour
         saveFilePath = Path.Combine(Application.persistentDataPath, "saveData.json");
 
         CurrencyManager.onDiamondsChanged += OnDiamondsChangedCallback;
-        LoadGame();
+        SettingsManager.onSettingsChange += OnSettingsChangedCallback;
+        
     }
     void OnDestroy()
     {
         CurrencyManager.onDiamondsChanged -= OnDiamondsChangedCallback;
+        SettingsManager.onSettingsChange -= OnSettingsChangedCallback;
+    }
+
+    void Start()
+    {
+        LoadGame();
     }
 
     public void SaveGame()
@@ -72,6 +79,11 @@ public class SaveLoadManager : MonoBehaviour
     }
 
     private void OnDiamondsChangedCallback(int diamonds)
+    {
+        SaveGame();
+    }
+
+    private void OnSettingsChangedCallback()
     {
         SaveGame();
     }

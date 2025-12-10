@@ -148,9 +148,35 @@ public class WaveManager : MonoBehaviour
             }
         }
 
-        yield return new WaitUntil(() => currentEnemyCount <= 0);
+        yield return StartCoroutine(WaitForWaveEnd());
 
         EndWave();
+    }
+
+    private IEnumerator WaitForWaveEnd()
+    {
+        float timer = 0f;
+        while (true)
+        {
+            if (currentEnemyCount <= 0)
+            {
+                yield break;
+            }
+
+            if (enemyParent.childCount == 0)
+            {
+                timer += Time.deltaTime;
+                if (timer >= 5f)
+                {
+                    yield break;
+                }
+            }
+            else
+            {
+                timer = 0f;
+            }
+            yield return null;
+        }
     }
 
     private IEnumerator SpawnEnemySequence(GameObject enemyPrefab, float indicatorScale)
@@ -300,4 +326,11 @@ public class WaveManager : MonoBehaviour
     {
         GameUIManager.instance.GameOver(totalDiamondsEarned);
     }
+
+#if UNITY_EDITOR
+    private void OnGUI()
+    {
+        GUI.Label(new Rect(500, 10, 200, 20), $"Current Enemy Count: {currentEnemyCount}");
+    }
+    #endif
 }

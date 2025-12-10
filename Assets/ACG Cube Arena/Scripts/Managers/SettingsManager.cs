@@ -47,7 +47,7 @@ public class SettingsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -97,6 +97,7 @@ public class SettingsManager : MonoBehaviour
         currentResolutionPresetIndex = (int)saveData.resolutionPreset;
         UpdateUI();
         ApplySettings();
+        Debug.Log("Applied Settings");
     }
 
     public void FullscreenModeRightArrow()
@@ -176,7 +177,6 @@ public class SettingsManager : MonoBehaviour
             case ResolutionPreset.R_1280x720: return "1280 x 720";
             case ResolutionPreset.R_1920x1080: return "1920 x 1080";
             case ResolutionPreset.R_2560x1440: return "2560 x 1440";
-            case ResolutionPreset.R_3840x2160: return "3840 x 2160";
         }
         return "unknown";
     }
@@ -201,8 +201,6 @@ public class SettingsManager : MonoBehaviour
                 return new Resolution { width = 1920, height = 1080 };
             case ResolutionPreset.R_2560x1440:
                 return new Resolution { width = 2560, height = 1440 };
-            case ResolutionPreset.R_3840x2160:
-                return new Resolution { width = 3840, height = 2160 };
         }
 
         return Screen.currentResolution;

@@ -132,6 +132,8 @@ public class SkillTreeManager : MonoBehaviour
     
     private void RecaculateAllUpgradeableStats()
     {
+        if (upgradeableStats == null) return;
+        
         foreach (StatUpgradeDataSO statUpgradeData in upgradeableStats)
         {
             ApplySkillUpgrade(statUpgradeData);
