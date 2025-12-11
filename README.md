@@ -28,7 +28,7 @@ Option 2: Run from Unity
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/yourproject.git
+git clone https://github.com/thotocdonm/ACG-Cube-Arena.git
 
 # Open the project in Unity (Version 2022.3.62f2)
 ```
