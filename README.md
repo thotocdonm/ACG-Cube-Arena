@@ -1,6 +1,6 @@
 # ACG Cube Arena
 
-![Project Logo or Screenshot](https://imgbox.com/u9DRIThw)
+<img src="https://images2.imgbox.com/fa/12/u9DRIThw_o.png" width="200" height="200">
 
 Fast-paced top‑down 3D arena action game built with Unity. Fight through waves of enemies, upgrade your items, and defeat the final boss to escape from the arena.
 
