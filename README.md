@@ -47,9 +47,9 @@ git clone https://github.com/thotocdonm/ACG-Cube-Arena.git
 
 👹 Mini boss + Final boss fight
 
-🎥 Virtural camera using Cinemachine
+🎥 Virtual camera using Cinemachine
 
-💡 Lightweight UI + skill tree tooltip system
+💡 Lightweight UI + Skill tree tooltip system
 
 ## Development
 
